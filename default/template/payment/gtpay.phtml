@@ -1,0 +1,46 @@
+<form action="<?php echo $action; ?>" method="post">
+<table class="table table-striped txn_id_table">
+ <tr>
+ <td>Transaction ID:</td>
+  <td><?php echo $gtpay_tranx_id?><br/>
+  <small><strong>Please note down this ID.</strong></small>
+  
+  </td>
+  <td><img src="<?php echo $this->basepath()?>/img/interswitchicon.png"></td>
+ </tr>
+</table>
+ 
+ <input type="hidden" name="gtpay_mert_id" value="<?php echo $gtpay_mert_id; ?>" />
+<input type="hidden" name="gtpay_tranx_id" value="<?php echo $gtpay_tranx_id ; ?>" />
+<input type="hidden" name="gtpay_tranx_amt" value="<?php echo $gtpay_tranx_amt ; ?>" />
+  <?php if(!empty($gtpay_tranx_curr )):?>
+<input type="hidden" name="gtpay_tranx_curr" value="<?php echo $gtpay_tranx_curr ; ?>" />
+  <?php endif;?>
+
+<input type="hidden" name="gtpay_cust_id" value="<?php echo $gtpay_cust_id ; ?>" />
+<input type="hidden" name="gtpay_cust_name" value="<?php echo $gtpay_cust_name ; ?>" />
+<input type="hidden" name="gtpay_tranx_memo" value="<?php echo $gtpay_tranx_memo ; ?>" />  
+
+<?php if(!empty($gtpay_gway_name )):?>
+<input type="hidden" name="gtpay_gway_name" value="<?php echo $gtpay_gway_name ; ?>" />
+<?php endif;?>
+<?php if(!empty($gtpay_gway_first )):?> 
+<input type="hidden" name="gtpay_gway_first" value="<?php echo $gtpay_gway_first ; ?>" />
+<?php endif;?>  
+
+<input type="hidden" name="gtpay_tranx_hash" value="<?php echo $gtpay_tranx_hash ; ?>" />
+
+
+<input type="hidden" name="gtpay_tranx_noti_url" value="<?php echo $gtpay_tranx_noti_url ; ?>" />
+
+
+ 
+ 
+ 
+ 
+  <div class="buttons">
+    <div class="right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="button btn btn-primary" />
+    </div>
+  </div>
+</form>

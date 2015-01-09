@@ -1,0 +1,272 @@
+<? $this->layout('layout/templates/'.TID.'/default'); ?>		
+	<!-- BREADCRUMBS -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="bcrumbs">
+					 
+                    
+                    	<?php $count = count($breadcrumbs); $counter=0;?>
+							    <?php foreach ($breadcrumbs as $breadcrumb) { $counter++; ?>
+							    
+    <li><?php if($counter < $count):?> <a href="<?php echo $breadcrumb['href']; ?>"> <?php endif; ?> <?php echo $breadcrumb['text']; ?> <?php if($counter < $count):?></a><?php endif; ?> </li>
+    <?php } ?>
+                    
+                    
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- BREADCRUMBS -->
+
+	<!-- PRODUCT SINGLE -->
+	<section class="product-single"> 
+		<div class="container">
+			<div class="row">
+				<div class=" <?php if($images):?>col-md-7<?php else: ?> col-md-5 <?php endif;?>">
+					<div class="row">
+						<div class="product-slide <?php if($images):?> col-md-9 <?php else: ?> col-md-12 <?php endif;?>">
+                        <?php if ($thumb) { ?>
+							<img class="img_01 img-responsive" src="<?php echo $thumb; ?>" data-zoom-image="<?php echo $popup; ?>" alt="<?php echo $heading_title; ?>" /> 
+                              <?php } ?>	
+						</div>
+                        
+                        
+                       <?php if ($images) { ?>
+						<div id="gal1" class="col-md-3"> 
+                        <?php foreach ($images as $image) { ?>
+							<a href="#" data-image="<?php echo $image['thumb']; ?>" data-zoom-image="<?php echo $image['popup']; ?>"> <img class="img_01" src="<?php echo $image['thumb']; ?>" alt="" /> </a>  
+                            
+                             <?php } ?>
+						</div>
+                         <?php } ?>	
+                        
+                        
+                        
+                        
+					</div>
+				</div>
+				<div class="  <?php if($images):?>col-md-5<?php else: ?> col-md-7 <?php endif;?> product-single-info">
+					<h4><?php echo $heading_title; ?></h4>
+					<h5> 
+                       
+        <?php if (!$special) { ?>
+        <span class="price">
+        <?php echo $price; ?>
+           </span>
+        <?php } else { ?>
+        <span class="price">
+        <span class="price-old"><?php echo $price; ?></span>  <?php echo $special; ?> 
+           </span>
+        
+        <?php } ?>
+        <br />
+        <?php if ($tax) { ?>
+        <span class="price-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></span><br />
+        <?php } ?>
+        <?php if ($points) { ?>
+        <span class="reward"><small><?php echo $text_points; ?> <?php echo $points; ?></small></span><br />
+        <?php } ?>
+        
+        
+        <?php if ($discounts) { ?>
+        <br />
+        <div class="discount">
+          <?php foreach ($discounts as $discount) { ?>
+          <?php echo sprintf($text_discount, $discount['quantity'], $discount['price']); ?><br />
+          <?php } ?>
+        </div>
+        <?php } ?>
+                         
+                      <?php if ($review_status) { ?>
+						<span class="rating">
+						<span class="star">
+                        <?php for($i=1;$i<=$rating;$i++): ?>
+							<span class="yes"><img src="<?php echo $this->layoutPath()?>/images/icon/star.png" alt=""/></span>
+                            <?php endfor; ?>
+							 
+                            
+						</span>
+						<em><?php echo $reviews; ?> | <a href="javascript:;" onclick="$('#tab-review').trigger('click');">Add Review</a></em>
+						</span>
+                        
+                          <?php } ?>
+                        <div style="clear:both"></div>
+                        
+					</h5>
+					<div class="product-details">
+						<p>
+                                <?php if ($manufacturer) { ?>
+        <span><?php echo $text_manufacturer; ?></span> <a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a><br />
+        <?php } ?>
+        <span><?php echo $text_model; ?></span> <?php echo $model; ?><br />
+        <?php if ($reward) { ?>
+        <span><?php echo $text_reward; ?></span> <?php echo $reward; ?><br />
+        <?php } ?>
+        <span><?php echo $text_stock; ?></span> <?php echo $stock; ?><br />
+                        
+                        
+						</p>
+					</div>
+					 
+					<div class="clearfix"></div>
+					<div class="product-option  product-info">
+                    <?php require_once DIR_TEMPLATE.'/store/common/product/product_options.phtml';?>	
+                    
+						<ul>
+							<li>
+								<form>
+									<input name="quantity" value="<?php echo $minimum; ?>"  min="<?php echo $minimum; ?>" step="1" type="text" placeholder="1">
+								</form>
+							</li>
+							<li>
+								<a href="javascript:;"  id="button-cart"  class="add-btn">Add to Cart</a>
+							</li>
+							<li>
+								<a href="javascript:;" class="wish-btn"  onclick="addToWishList('<?php echo $product_id; ?>');" >+ Add to Wishlist</a>
+								<a href="javascript:;" class="wish-btn"  onclick="addToCompare('<?php echo $product_id; ?>');" >+ Add to Compare</a>
+							</li>
+						</ul>
+					</div>
+					<div class="clearfix"></div>
+					<div class="product-share">
+						<h6>Share</h6>
+						<!-- AddThis Button BEGIN -->
+          <div class="addthis_default_style"><a class="addthis_button_compact"></a> <a class="addthis_button_email"></a><a class="addthis_button_print"></a> <a class="addthis_button_facebook"></a> <a class="addthis_button_twitter"></a></div>
+          <script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js"></script> 
+          <!-- AddThis Button END --> 
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+
+			<div class="clearfix"></div>
+
+			<!-- PRODUCT INFO TABS -->
+			<div class="row">
+				<div class="col-md-12 products-tabs-info">
+					<ul id="tabs-titles">
+						<li class="current"><span><?php echo $tab_description; ?></span></li>
+                         <?php if ($attribute_groups) { ?>
+                        <li><span><?php echo $tab_attribute; ?></span></li>
+                        <?php } ?>
+                        
+                        <?php if ($review_status) { ?>
+					      <li id="tab-review"><span><?php echo $tab_review; ?></span></li>
+                        <?php } ?>
+					</ul>
+					<ul id="tabs-contents">
+					 
+						<li>
+							<div class="content">
+								<p><?php echo $description; ?></p>
+							</div>
+						</li>
+                       <?php if ($attribute_groups) { ?>
+                        <li>
+							<div class="content">
+								<p>  <table class="attribute">
+										      <?php foreach ($attribute_groups as $attribute_group) { ?>
+										      <thead>
+										        <tr>
+										          <td colspan="2"><?php echo $attribute_group['name']; ?></td>
+										        </tr>
+										      </thead>
+										      <tbody>
+										        <?php foreach ($attribute_group['attribute'] as $attribute) { ?>
+										        <tr>
+										          <td><?php echo $attribute['name']; ?></td>
+										          <td><?php echo $attribute['text']; ?></td>
+										        </tr>
+										        <?php } ?>
+										      </tbody>
+										      <?php } ?>
+										    </table></p>
+							</div>
+						</li>
+                        <?php } ?>
+                        
+                             <?php if ($review_status) { ?>
+					      <li>
+							<div class="content">
+								<p><?php require_once DIR_TEMPLATE.'/store/common/product/product_review.phtml';?></p>
+							</div>
+						</li>
+                        <?php } ?>
+                        
+                        
+                        
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- PRODUCT SINGLE -->
+    <?php if ($products) { ?>
+
+	<!-- RELATED PRODUCTS -->
+	<div class="product-tabs">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="section-title"><span>Related Products</span></div>
+				</div>
+				<div class="col-md-12 no-padding">
+					<div id="p-slider1" class="owl-carousel owl-theme">
+						
+                         <?php foreach ($products as $product) { ?>
+                        <div class="item">
+							<div class="product-img">
+                              <?php if ($product['thumb']) { ?>
+								<a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" class="img-responsive" alt=""/></a>
+                                <?php } ?>
+								 
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="product-title"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></div>
+									 
+                                          <?php if ($product['price']) { ?>
+        <div class="product-price">>
+          <?php if (!$product['special']) { ?>
+          <?php echo $product['price']; ?>
+          <?php } else { ?>
+          <span class="price-old"><?php echo $product['price']; ?></span> <span class="price-new"><?php echo $product['special']; ?></span>
+          <?php } ?>
+        </div>
+        <?php } ?>
+         <?php if ($product['rating']) { ?>
+									<div class="star">
+                                    <?php for($i=1;$i<=$product['rating'];$i++):?>
+										<span class="yes"><img src="<?php echo $this->layoutPath()?>/images/icon/star.png" alt=""/></span>
+                                      <?php endfor; ?>
+										 
+									</div>
+            <?php } ?>                        
+                                    
+								</div>
+								<div class="col-md-12 product_hover">
+									<div class="cart-btns">
+										<div class="cb-btn-left"><a onclick="addToCart('<?php echo $product['product_id']; ?>');" href="javascript:;">ADD TO CART</a></div>
+										<div class="cb-btn-right"><a href="#">MORE INFO</a></div>
+									</div>
+									<div class="cart-add">
+										<div><a onclick="addToWishList('<?php echo $product['product_id']; ?>');" href="javascript:;">+ Add to Wishlist</a></div>
+										<div><a onclick="addToCompare('<?php echo $product['product_id']; ?>');" href="javascript:;" class="pull-right">+ Add to Compare</a></div>
+									</div>
+								</div>
+							</div>
+						</div>
+                         <?php } ?>
+
+
+						 
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- RELATED PRODUCTS -->
+     <?php } ?>
+
+<?php require_once DIR_TEMPLATE.'/store/common/product/product_footer.phtml'; ?> 

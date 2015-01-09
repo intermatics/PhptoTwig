@@ -1,0 +1,60 @@
+<?php $this->headtitle('Transaction Status')?>
+<div class="container-fluid">
+<h1>
+<?php if($success):?>
+<span style="color: blue;">Transaction Successfull</span>
+<?php else: ?>
+<span style="color: red;">Transaction Failed</span>
+<?php endif;?>
+</h1>
+
+<?php if($message):?>
+<h2><?php echo $message; ?></h2>
+<?php endif;?>
+
+<table class="table table-striped txn_id_table" 
+<?php if($success):?>
+style="color: blue"
+<?php else:?>
+style="color: red;"
+<?php endif;?>
+>
+
+<tr>
+<td>Amount:</td>
+<td><?php echo $trow->amount ?></td>
+</tr>
+<tr>
+<tr>
+<td>Transaction Id:</td>
+<td><?php echo $tid ?></td>
+</tr>
+<tr>
+<td>Order Number:</td>
+<td><?php echo $trow->order_id; ?></td>
+</tr>
+<?php $params = unserialize($trow->params); ?>
+<?php if(is_array($params)):?>
+<?php foreach($params as $key=>$value):?>
+<tr>
+<td><?php echo $key; ?>:</td>
+<td><?php echo $value; ?></td>
+</tr>
+<?php endforeach;?>
+<?php endif; ?>
+
+<?php if($success):?>
+<tr>
+<td> </td>
+<td><a href="<?php echo $complete_url?>" class="btn btn-primary">Complete Order</a></td>
+</tr>
+<?php else:?>
+<tr>
+<td> </td>
+<td><a href="<?php echo $complete_url?>" class="btn btn-primary">Try Again</a></td>
+</tr>
+<?php endif;?>
+
+
+</table>
+</div>

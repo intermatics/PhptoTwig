@@ -1,0 +1,627 @@
+
+
+<!-- container 12 start -->
+<!-- breadcrumb start -->
+<div class="container_12 cf">
+<div class="grid_12">
+
+<div class="oc_breadcrumb">
+ 
+
+	<?php $count = count($breadcrumbs); $counter=0;?>
+							    <?php foreach ($breadcrumbs as $breadcrumb) { $counter++; ?>
+							    
+     <a <?php if($counter < $count):?>href="<?php echo $breadcrumb['href']; ?>" <?php else:?> href="#" class="current" <?php endif; ?> > <?php echo $breadcrumb['text']; ?> <?php if($counter < $count):?>   /  <?php endif; ?></a>
+    <?php } ?>
+
+
+</div>
+
+</div>
+</div>
+<!-- breadcrumb end -->
+<!-- container 12 end -->
+
+
+
+
+
+
+<!-- container 12 start -->
+<div class="container_12 cf">
+
+
+<div class="grid_12">
+
+
+
+<div class="product-info">
+    
+    
+    <div class="span6">
+        <ul class="thumbnails row">
+			
+            <li class="span4">
+            <a href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>" class="cloud-zoom jackbox thumbnail" data-description="#description_1" data-group="images" data-thumbTooltip="<?php echo $heading_title; ?>" id='zoom1' rel="adjustX: 10, adjustY:-4, tint:'#000000',tintOpacity:0.2, zoomWidth:365, zoomHight: 275, position:'inside', showTitle:false">
+            <img src="<?php echo $thumb; ?>" title="product detail" alt="<?php echo $heading_title; ?>" id="image" />
+            </a>
+            </li>
+                        
+            
+            
+            
+            
+            
+            
+             <?php if ($images) { ?>
+            <li class="imgadli">
+            <div class="image-additional">
+                <div id="carousel94">
+                  <ul class="jcarousel-skin-opencart">
+                  
+                  <?php foreach ($images as $image) { ?>
+                                            <li>
+                        <a href="<?php echo $image['popup']; ?>" title="<?php echo $heading_title; ?>" class="cloud-zoom-gallery jackbox thumbnail" data-description="#description_2" data-group="images" data-thumbTooltip="Product Tooltip" rel="useZoom: 'zoom1', smallImage: '<?php echo $image['small']; ?>'">
+                        <img src="<?php echo $image['small']; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" />
+                        </a>
+                        </li>
+                        
+                          <?php } ?>
+                        
+						
+                        
+				</ul>
+                </div>
+            </div>
+            </li> 
+            
+            <script type="text/javascript"><!--
+            $('#carousel94 ul').jcarousel({
+               vertical:false,
+               visible:3,
+               /*wrap:'circular',*/
+               scroll:1
+            });
+            //--></script>
+            <?php } ?>
+            
+            
+	</ul>
+</div>
+
+
+
+
+
+						<!-- Sample div used as an item's description, will only appear inside JackBox start -->
+                        <div class="jackbox-description" id="description_1">
+                        
+                            <h3><?php echo $heading_title; ?></h3>
+                            
+                            <p><?php if ($manufacturer) { ?>
+        <span><?php echo $text_manufacturer; ?></span> <a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a><br />
+        <?php } ?>
+          
+          
+           <span><?php echo $text_model; ?></span> <?php echo $model; ?><br />
+            <?php if ($reward) { ?>
+        <span><?php echo $text_reward; ?></span> <?php echo $reward; ?><br />
+        <?php } ?>
+        <span><?php echo $text_stock; ?></span> <?php echo $stock; ?></p>
+                            
+                            <a href="javascript:;" onclick="addToCart('<?php echo $product_id; ?>');" class="sc_button medium orange">
+                            <span class="button_text">Add To Cart</span>
+                            <span class="icon_divider"></span>
+                            <span class="ecommerce_white_icons16 icon16_13 icon"></span>
+                            </a>
+                            
+                        </div>
+                        <!-- Sample div used as an item's description, will only appear inside JackBox end -->   
+                        
+                        
+                        
+                        
+                        
+                        <!-- Sample div used as an item's description, will only appear inside JackBox start -->
+                        <div class="jackbox-description" id="description_2">
+                        
+                            <h3><?php echo $heading_title; ?></h3>
+                            
+                            <p><?php if ($manufacturer) { ?>
+        <span><?php echo $text_manufacturer; ?></span> <a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a><br />
+        <?php } ?>
+          
+          
+           <span><?php echo $text_model; ?></span> <?php echo $model; ?><br />
+            <?php if ($reward) { ?>
+        <span><?php echo $text_reward; ?></span> <?php echo $reward; ?><br />
+        <?php } ?>
+        <span><?php echo $text_stock; ?></span> <?php echo $stock; ?></p>
+                            
+                            
+                            
+                            <a href="javascript:;"   class="sc_button medium orange">
+                            <span class="button_text">Add To Cart</span>
+                            <span class="icon_divider"></span>
+                            <span class="ecommerce_white_icons16 icon16_13 icon"></span>
+                            </a>                            
+                            
+                        </div>
+                        <!-- Sample div used as an item's description, will only appear inside JackBox end -->     
+        
+
+ 
+<div class="right">
+
+
+
+
+  <div id="tabs" class="htabs">
+  <a class="info" href="#tab-information">Information</a>
+  <a href="#tab-description">Description</a>
+   <?php if ($review_status) { ?>
+  <a href="#tab-review">Reviews</a>
+   <?php } ?>
+    <?php if ($attribute_groups) { ?>
+    <a href="#tab-attribute"><?php echo $tab_attribute; ?></a>
+    <?php } ?>
+  </div>
+  
+  <div id="tab-information" class="tab-content">
+  <!--Price Start-->
+  <div class="price">
+  
+  <div class="prDetailMain">
+  
+  <h4><?php echo $heading_title; ?></h4>
+  
+  <div class="prDetailMainLeft">
+         <?php if ($price) { ?>
+ 		<span class="textPrice"><?php echo $text_price; ?></span>
+        <?php if (!$special) { ?>
+        <?php echo $price; ?>
+        <?php } else { ?>
+        <span class="price-old"><?php echo $price; ?></span> <span class="price-new"><?php echo $special; ?></span>
+        <?php } ?>
+        <br />
+        <?php if ($tax) { ?>
+        <span class="price-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></span><br />
+        <?php } ?>
+        <?php if ($points) { ?>
+        <span class="reward"><small><?php echo $text_points; ?> <?php echo $points; ?></small></span><br />
+        <?php } ?>
+        <?php if ($discounts) { ?>
+        <br />
+        <div class="discount">
+          <?php foreach ($discounts as $discount) { ?>
+          <?php echo sprintf($text_discount, $discount['quantity'], $discount['price']); ?><br />
+          <?php } ?>
+        </div>
+        <?php } ?>
+   
+      <?php } ?>
+  
+  
+  
+  </div>
+            
+  <div class="prDetailMainRight"><div>
+      <div class="options"> 
+     
+     <?php require_once DIR_TEMPLATE.'/store/common/product/product_options.phtml';?>	
+
+	</div>
+      
+  <div class="qty">
+  <span class="qtytxt">Qty :</strong>
+  <a class="qtyBtn mines" href="javascript:void(0);">-</a>
+  <input id="qty" type="text" class="w30" name="quantity" size="2" value="1" />      
+  <a class="qtyBtn plus" href="javascript:void(0);">+</a>           
+  </div>
+      <input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
+								 
+                                        	
+  <a  class="button"   id="button-cart"   href="javascript:;"   >
+	<span class="button_text">Add To Cart</span>
+    <span class="icon_divider"></span>
+    <span class="ecommerce_white_icons16 icon16_13 icon"></span>
+  </a>
+  
+ 
+        
+                <?php if ($minimum > 1) { ?>
+        <div class="minimum"><?php echo $text_minimum; ?></div>
+        <?php } ?>
+  
+  </div>
+  </div>
+  </div>
+  </div>
+  <!--Price End-->
+    
+  
+  
+	<div class="description">
+    	<div class="prDetailMain">
+        <div class="prDetailMainLeft">
+           <?php if ($manufacturer) { ?>
+        <span><?php echo $text_manufacturer; ?></span> <a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a><br />
+        <?php } ?>
+          
+          
+           <span><?php echo $text_model; ?></span> <?php echo $model; ?><br />
+            <?php if ($reward) { ?>
+        <span><?php echo $text_reward; ?></span> <?php echo $reward; ?><br />
+        <?php } ?>
+        <span><?php echo $text_stock; ?></span> <?php echo $stock; ?>
+    </div>  
+            
+            
+        <div class="prDetailMainRight">
+		<div class="cart">
+        <div class="wishlistWrap">
+        <a class="wish-list tooltip" title='Add to Wish List' onclick="addToWishList('<?php echo $product_id; ?>');"><span>Add to Wish List</span></a>
+        </div>
+                    
+        <div class="compareWrap">  
+        <a class="compare-icon tooltip" title="Add to Compare" onclick="addToCompare('<?php echo $product_id; ?>');"><span>Add to Compare</span>
+        </a>
+        </div>
+                    
+        </div>
+              
+              	
+		
+            <?php if ($review_status) { ?>
+        <div class="review">
+        	<div class="reviewWrap">
+            <div class="writeWrap"><a class="tooltip" title="Write A Review" onclick="#">Write a review</a></div>
+			<img src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" />
+           &nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $reviews; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp; <a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $text_write; ?></a>
+		</div>
+        
+    
+            <?php } ?>
+        
+		</div>
+        </div>                     
+        </div>
+         
+	</div>
+        
+     
+     
+     
+     
+ 
+            
+    
+    
+    
+	<div class="share">
+   
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-546c83022950b4d2" async="async"></script>
+
+
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_native_toolbox"></div>
+ 
+	</div>
+    
+        
+	</div>
+  
+
+  <div id="tab-description" class="tab-content"  ><?php echo $description; ?></div>
+
+
+	<?php if ($review_status) { ?>
+       
+       	 <div id="tab-review" class="tab-content"   >
+    <div id="review"></div>
+    <h2 id="review-title"><?php echo $text_write; ?></h2>
+    <b><?php echo $entry_name; ?></b><br />
+    <input type="text" name="name" value="" class="form-control" />
+    <br />
+    <br />
+    <b><?php echo $entry_review; ?></b>
+    <textarea name="text" cols="40" rows="8" style="width: 98%;"  class="form-control" ></textarea>
+    <span style="font-size: 11px;"><?php echo $text_note; ?></span><br />
+    <br />
+    <b><?php echo $entry_rating; ?></b> <span><?php echo $entry_bad; ?></span>&nbsp;
+    <input type="radio" name="rating" value="1" />
+    &nbsp;
+    <input type="radio" name="rating" value="2" />
+    &nbsp;
+    <input type="radio" name="rating" value="3" />
+    &nbsp;
+    <input type="radio" name="rating" value="4" />
+    &nbsp;
+    <input type="radio" name="rating" value="5" />
+    &nbsp;<span><?php echo $entry_good; ?></span><br />
+    <br />
+    <b><?php echo $entry_captcha; ?></b><br />
+    <input type="text" name="captcha" value=""   class="form-control" />
+    <br />  
+    <img src="<?php echo $this->basepath(); ?>/store/product/product/captcha" alt="" id="captcha" /><br />
+    <br />
+    <div class="buttons">
+      <div class="right"><a id="button-review" class="button btn"><?php echo $button_continue; ?></a></div>
+    </div>
+  </div>
+  
+       <?php } ?>
+       
+         <?php if ($attribute_groups) { ?>
+         
+  <div id="tab-attribute" class="tab-content" >
+    <table class="attribute">
+      <?php foreach ($attribute_groups as $attribute_group) { ?>
+      <thead>
+        <tr>
+          <td colspan="2"><?php echo $attribute_group['name']; ?></td>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($attribute_group['attribute'] as $attribute) { ?>
+        <tr>
+          <td><?php echo $attribute['name']; ?></td>
+          <td><?php echo $attribute['text']; ?></td>
+        </tr>
+        <?php } ?>
+      </tbody>
+      <?php } ?>
+    </table>
+  </div>
+  
+  <?php } ?>
+  
+    
+    
+
+   
+</div>
+</div>
+ 
+
+
+
+<script type="text/javascript"><!--
+$('.colorbox').colorbox({
+	overlayClose: true,
+	opacity: 0.5
+});
+</script> 
+ 
+<style>
+ul.thumbnails {padding:0px; margin:0px; list-style:none; *zoom:1;}
+.thumbnails > li {float: left; margin: 0 20px 25px 0px;}
+.thumbnail { display:block; padding:0; line-height:1; }
+
+
+a.thumbnail:before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #474948;
+  -webkit-transition: all 200ms ease-in-out;
+  -moz-transition: all 200ms ease-in-out;
+  -o-transition: all 200ms ease-in-out;
+  -ms-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+}
+a.thumbnail:hover:before {
+  -webkit-opacity: 0.5;
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+}
+
+.thumbnail > img { display:block; max-width:100%; margin-left:auto; margin-right:auto; }
+.thumbnail .caption { padding:9px; }
+.smlThumb { width:auto; }
+.span2 { width:80px; float:left; margin:0 24px 10px 0; }
+.span4 { width:300px; }
+.span6 { width:320px; float:left; }
+.row {margin-left:0px; *zoom: 1; }
+.zfr { float:right!important; margin:0 0 25px 0!important; }
+.imgadli { margin:-30px 0 0px 0!important; }
+.row:before,
+.row:after { display:table; content:""; }
+.row:after { clear:both; }
+
+.cloud-zoom-big {border:none; overflow:hidden; margin:5px 0 0 -9px;}
+
+.right { float:right; width:620px; }
+
+#wrap { z-index:0!important;
+	-webkit-box-shadow: 0 2px 4px rgba(71, 73, 72, 0.19999999999999996);
+  	-moz-box-shadow: 0 2px 4px rgba(71, 73, 72, 0.19999999999999996);
+  	box-shadow: 0 2px 4px rgba(71, 73, 72, 0.19999999999999996);
+}
+#wrap:hover {
+	-webkit-box-shadow: 0 3px 5px rgba(71, 73, 72, 0.5);
+  	-moz-box-shadow: 0 3px 5px rgba(71, 73, 72, 0.5);
+  	box-shadow: 0 3px 5px rgba(71, 73, 72, 0.5);
+}
+.mousetrap { cursor:move!important; }
+
+.span2 a:hover { border:solid 1px #a6a6a6; }
+
+
+
+
+/* TABLETS
+-----------------------------------------------------------------------------------------------------------------------------*/
+
+@media only screen and (min-width: 760px) and (max-width: 979px) {
+
+.right { 
+	float:right; 
+	width:380px; 
+}
+
+
+.tab-content {
+	width:358px;
+}
+
+}
+
+/* TABLETS END
+-----------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+
+
+@media screen and (min-width:0px) and (max-width:760px) {
+
+.thumbnails > li.span4 { float:none; margin:0 auto; text-align:center; }
+ul.thumbnails {padding:0px; margin:0px auto; list-style:none; *zoom:1;}
+.thumbnails > li {float:none; margin:0 0 25px 0;}
+
+.right { float:none; width:auto; }
+.smlThumb { text-align:center; }
+.span2 { width:80px; float:none; margin:5px 24px 10px 0; display:inline-block; }
+
+}
+
+
+</style>
+
+
+
+
+<script type="text/javascript" src="js/cloud-zoom.1.0.2.min.js"></script>
+<script type="text/javascript" src="jackbox/js/jackbox-packed.min.js"></script>
+<script type="text/javascript" src="jackbox/js/jackbox.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	jQuery(".jackbox[data-group]").jackBox("init");
+});
+</script>
+
+
+
+
+
+</div>
+
+
+
+</div>
+<!-- container 12 end -->
+
+
+
+
+
+
+
+
+<?php if ($products) { ?>
+<!-- container 12 start -->
+<div class="container_12">
+
+<div class="grid_12">
+
+
+<div class="headerbd">
+<h1>Related Products</h1>
+<div class="header-bottom-line"></div>
+
+
+
+<div class="heading_button">
+	<div class="prev_button" id="latest_prev">Prev</div>
+	<div class="next_button" id="latest_next">Next</div>
+</div>
+</div>
+
+
+
+
+
+
+<!-- owl carousel start -->
+<div class="latest">
+ <?php foreach ($products as $product) { ?>
+<div class="item">
+    
+	<div class="procont">
+      	
+        <?php if ($product['thumb']) { ?>
+        <div class="image">
+        <div class="promosale"></div>
+        <a href="<?php echo $product['href']; ?>" title="Product"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
+        
+        	<div class="quickview">
+            <a class="jackbox" data-group="images" data-thumbTooltip="Product Tooltip" data-description="#description_1" href="<?php echo $product['thumb']; ?>">
+            Quickview</a>
+            </div>
+            
+        </div>
+         <?php } ?>
+        
+        <div class="title">
+        
+        <h3><?php echo $product['name']; ?></h3>
+        
+      
+           <?php if ($product['price']) { ?>
+        <div class="price">
+          <?php if (!$product['special']) { ?>
+          <?php echo $product['price']; ?>
+          <?php } else { ?>
+          <span class="oldprice"><?php echo $product['price']; ?></span> <span class="newprice"><?php echo $product['special']; ?></span>
+          <?php } ?>
+        </div>
+        <?php } ?>
+        
+        
+        <div class="detail">
+		<a href="<?php echo $product['href']; ?>" class="clothing_icons16 icon16_3 tooltip_s" title="<?php echo $product['name']; ?>"></a>
+        <a href="#"  onclick="addToCart('<?php echo $product['product_id']; ?>');" class="ecommerce_icons16 icon16_13 tooltip_s" title="Add To Cart"></a>
+        <a href="#" onclick="addToCompare('<?php echo $product_id; ?>');" class="displayoptions_icons16 icon16_4 tooltip_s" title="Compare"></a>
+        </div>
+         
+           <?php if ($product['rating']) { ?>
+        <div class="rating"><img src="'<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+        <?php } ?>
+        
+        </div>
+        
+	</div>
+        
+</div>
+     
+ <?php } ?>
+    
+</div>
+<!-- owl carousel end -->
+
+
+
+</div>
+
+</div>
+<!-- container 12 end -->
+<?php } ?>
+
+
+
+
+
+
+
+
+
+<?php require_once DIR_TEMPLATE.'/store/common/product/product_footer.phtml'; ?> 

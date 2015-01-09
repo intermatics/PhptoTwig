@@ -1,0 +1,63 @@
+<?php echo $header; ?> 
+<div id="content"> 
+  <div class="oc_breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <?php } ?>
+  </div>
+  <h1><?php echo $heading_title; ?></h1> 
+  <table class="list">
+    <thead>
+      <tr>
+      <td class="left">ID</td>
+        <td class="left"><?php echo $column_date_added; ?></td>
+        <td class="left">Status</td>
+        <td class="left">Payment Method</td>
+        <td class="right"> </td>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if ($paginator) { ?>
+      <?php foreach ($paginator  as $transaction) { ?>
+      <tr>
+      <td class="left">STOC<?php echo $transaction->store_transaction_id; ?></td>
+        <td class="left"><?php echo date('d/M/Y',$transaction->date); ?></td>
+        <td class="left"><?php echo getStatus($transaction->status);?></td>
+        <td class="left"><?php echo $transaction->payment_method;?></td>
+        <td class="center"><a class="btn btn-primary btn-sm" href="<?php echo $this->url('store/account',array('controller'=>'Ordertransaction','action'=>'view','id'=>$transaction->store_transaction_id));?>">View</a></td>
+      </tr>
+      <?php } ?>
+      <?php } else { ?>
+      <tr>
+        <td class="center" colspan="5"><?php echo $text_empty; ?></td>
+      </tr>
+      <?php } ?>
+    </tbody>
+  </table>
+  <div class="pagination">
+  
+                 <?php
+ // add at the end of the file after the table
+ echo $this->paginationControl(
+     // the paginator object
+     $this->paginator,
+     // the scrolling style
+     'sliding',
+     // the partial to use to render the control
+     array('partial/paginator.phtml', 'Store'),
+     // the route to link to when a user clicks a control link
+     array(
+         'route' => 'store/account',
+		 'controller'=>'ordertransaction',
+		 'action'=>'index', 
+     )
+ );
+ ?>
+  
+  
+  </div>
+  <div class="buttons">
+    <div class="right"><a href="<?php echo $continue; ?>" class="button btn btn-primary"><?php echo $button_continue; ?></a></div>
+  </div>
+  <?php echo $content_bottom; ?></div>
+<?php echo $footer; ?>

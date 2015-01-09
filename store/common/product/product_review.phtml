@@ -1,0 +1,33 @@
+	 <div id="tab-review" class="tab-content">
+    <div id="review"></div>
+    <h2 id="review-title"><?php echo $text_write; ?></h2>
+    <b><?php echo $entry_name; ?></b><br />
+    <input type="text" name="name" value="" class="form-control" />
+    <br />
+    <br />
+    <b><?php echo $entry_review; ?></b>
+    <textarea name="text" cols="40" rows="8" style="width: 98%;"  class="form-control" ></textarea>
+    <span style="font-size: 11px;"><?php echo $text_note; ?></span><br />
+    <br />
+    <b><?php echo $entry_rating; ?></b> <span><?php echo $entry_bad; ?></span>&nbsp;
+    <input type="radio" name="rating" value="1" />
+    &nbsp;
+    <input type="radio" name="rating" value="2" />
+    &nbsp;
+    <input type="radio" name="rating" value="3" />
+    &nbsp;
+    <input type="radio" name="rating" value="4" />
+    &nbsp;
+    <input type="radio" name="rating" value="5" />
+    &nbsp;<span><?php echo $entry_good; ?></span><br />
+    <br />
+    <b><?php echo $entry_captcha; ?></b><br />
+    <input type="text" name="captcha" value=""   class="form-control" />
+    <br />  
+    <img src="<?php echo $this->basepath(); ?>/store/product/product/captcha" alt="" id="captcha" /><br />
+    <br />
+    <div class="buttons">
+      <div class="right"><a id="button-review" class="button btn"><?php echo $button_continue; ?></a></div>
+    </div>
+  </div>
+  

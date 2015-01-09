@@ -1,0 +1,601 @@
+{% extends template %}
+
+{% block content %}
+
+
+			<!-- Begin Main Slide -->
+                {% set slideshow = getTemplateRecord('slideshow') %}
+              {% if slideshow['enabled'] %}
+			<section class="main-slide">
+				<div class="container">
+					<div id="owl-second-demo" class="owl-carousel main-demo second-demo_">
+                {% set options = slideshow['values'] %}
+                    {% for i in 1..10 %}
+                    
+                    
+                    {% if not options['slideshow_image'~i] is empty %}
+						<div class="item"><img src="{{ resizeMerchantImage(options['slideshow_image'~i],1170,501,basePath())|raw }}"  >
+							<div class="item-caption">
+								<div class="item-caption-inner">
+                                {% if not options['toptext'~i] is empty %}
+									<p class="item-cat"><a  href="{{ options['link'~i] }}"   >{{ options['toptext'~i] }}</a></p>
+                                {% endif %}  
+                                
+                                    {% if not options['maintext'~i] is empty %}
+									<h2>{{ options['maintext'~i]|raw }}</h2>
+                                     {% endif %}   
+                                     
+                                     {% if not options['bt'~i] is empty %}
+									<a href="{{ options['link'~i] }}" class="btn btn-white">{{ options['bt'~i] }}</a>
+                                    {% endif %}   
+								</div>
+							</div>
+						</div>
+                      {% endif %}
+                        
+                      {% endfor %}
+					 
+                        
+                        
+                        
+					</div>
+				</div>
+			</section>
+			<!-- End Main Slide -->
+            {% endif %}
+			{%  set homeads = getTemplateRecord('homeads') %}
+            
+            {% if homeads['enabled'] %}
+			<!-- Begin Ads -->
+			<section class="collections">
+				<div class="container">
+					<div class="row">
+                    
+                    {% set options = homeads['values']  %} 
+                    {% for i in 1..3 %}
+                     {% if not options['homepagead_image'~i] is empty %}
+						<div class="col-xs-4 collect-item">
+							<a href="{{ options['link'~i] }}" class="collect-item-thumb"><img src="{{ resizeMerchantImage(options['homepagead_image'~i],480,305,basePath()) }}" class="img-responsive" ></a>
+                             {% if not options['title'~i] is empty %}
+							<h2>{{ options['title'~i] }}</h2>
+                            {% endif %}
+                             {% if not options['maintext'~i] is empty %}
+							<p>{{ options['maintext'~i]|raw }}</p>{% endif %}
+                            
+                              {% if not options['bt'~i] is empty %}
+							<a href="{{ options['link'~i] }}" class="btn">{{ options['bt'~i] }}</a>
+                            {% endif %}
+						</div>
+                        {% endif %}
+                        
+					 {% endfor %}
+                        
+                        
+					</div>
+				</div>
+			</section>
+			<!-- End Ads -->
+            
+            {% endif %}
+            
+            {% set homesm = getTemplateRecord('homesm') %}
+			
+            {% if homesm['enabled'] %}
+			<!-- Begin Lookbook Women -->
+			<section id="lookbook">
+				<div class="container">
+					<div id="bg-red" class="lookbook"  style=" {% if not homesm['values']['color'] is empty %} background-color:#{{ homesm['values']['color'] }};  {% endif %} {% if not homesm['values']['fcolor'] is empty %} color:#{{ homesm['values']['fcolor'] }};  {% endif %}" >
+						<h2 style="  {% if not homesm['values']['fcolor'] is empty %} color:#{{ homesm['values']['fcolor'] }};  {% endif %}">{{ homesm['values']['title']|raw }}</h2>
+						<p>{{ homesm['values']['message']|raw }}</p>
+					</div>
+				</div>
+			</section>
+			<!-- End Lookbook Women -->
+            {% endif %}
+          
+          
+          
+          
+
+ 
+{% set homelp = getTemplateRecord('homelp') %}
+{% set misc = getTemplateRecord('misc') %}
+ 
+   {% if homelp['enabled'] %}
+   
+			<!-- Begin Top Selling -->
+			<section class="products-slide">
+				<div class="container">
+					<h2 class="title"><span>{{ misc['values']['latest_products'] }}</span></h2>
+					<div class="row">
+						<div id="owl-product-slide" class="owl-carousel product-slide">
+					
+                    		 
+                            {% for i in 1..8 %}
+                            {% if not homelp['values']['product'~i] is empty and  productExists(homelp['values']['product'~i]|trim)  %}
+                            {% set product = getProduct(homelp['values']['product'~i]|trim) %}
+							
+							
+							
+							{%	if product['image'] %}
+					 {% set image = resizeMerchantImage(product['image'], config.get('config_image_product_width'), config.get('config_image_product_height'),basePath()) %}
+				{% else %}
+					{% set image = false %}
+				{% endif %}
+	
+				{% if (config.get('config_customer_price') and customer.isLogged()) or not config.get('config_customer_price') %} 
+					{% set price = currency.format(tax.calculate(product['price'], product['tax_class_id'], config.get('config_tax'))) %}
+                    
+				{% else %}
+					{% set price = false %}
+				{% endif %}
+	
+				{% if product['special'] %} 
+				{%	set special = currency.format(tax.calculate(product['special'], product['tax_class_id'], config.get('config_tax'))) %}
+				{% else %}
+					{% set special = false %}
+				{% endif %}
+	
+				{% if config.get('config_tax') %}
+					{% set tax = currency.format(product['special'] ? product['special'] : product['price']) %}
+				{% else %}
+					{% set tax = false %}
+				{% endif %}
+	
+				{% if config.get('config_review_status') %}
+					{% set rating = product['rating'] %}
+				{% else %}
+					{% set rating = false %}
+				{% endif %}
+							  
+							
+							
+							 
+                    		<div class="col-md-12">
+								<div class="item product">
+									<div class="product-thumb-info">
+										
+										<div class="product-thumb-info-image">
+											<span class="product-thumb-info-act">
+												<a href="{{ basePath() }}/store/product/product?product_id={{ homelp['values']['product'~i]|trim }}" class="view-product">
+													<span><i class="fa fa-external-link"></i></span>
+												</a>
+												<a href="javascript:;" onclick="addToCart('{{ homelp['values']['product'~i]|trim }}');"  class="add-to-cart-product">
+													<span><i class="fa fa-shopping-cart"></i></span>
+												</a>
+											</span>
+											<img alt="" class="img-responsive" src="{{ image }}">
+										</div>
+										
+										<div class="product-thumb-info-content">
+												<span class="price pull-right">
+												
+												 
+											        {% if not special %}
+											        {{ price }}
+											        {% else %}
+											        <span class="price-old">{{ price }}</span> <span class="price-new">{{ special }}</span>
+											        {% endif %}
+											       
+											     
+												
+												
+												</span>
+												<h4><a href="{{ basePath() }}/store/product/product?product_id={{ homelp['values']['product'~i]|trim }}">{{ product['name'] }}</a></h4>
+												<span class="item-cat pull-right"><small>
+												 {% if tax %}
+											        <span class="price-tax">Tax: {{ tax }}</span>
+											        {% endif %}
+												</small></span>
+											</div>
+									</div>
+								</div>
+							</div>
+                            {% endif %}
+                            
+                            
+                             {% endfor %}   
+                            
+					 
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- End Top Selling -->
+
+ {% endif %}      
+            
+            {% set paralax = getTemplateRecord('homepslider') %}
+            
+			{% if paralax['enabled'] %}
+            
+            {% if not misc['values']['paralax_image'] is empty %}
+            <style>
+            .parallax-shop {
+    background-image: url('{{ resizeMerchantImage(misc['values']['paralax_image'],2200,1634,basePath()) }}');
+    
+}</style>
+            {% endif %}
+            
+			<!-- Begin Parallax -->
+			<section class="pi-parallax parallax-shop" data-stellar-background-ratio="0.6" >
+				<div class="container">
+					<div id="owl-text-slide" class="owl-carousel">
+                     {% set options = paralax['values'] %}
+                    {% for i in 1..5 %}
+                    	
+                        {% if not options['title'~i] is empty  %}
+						<div class="item">
+							<div class="intro">
+								<h2>{{ options['title'~i] }}</h2>
+								<span class="divider"></span>
+								<p>{{ options['maintext'~i]|raw }}</p>
+								<a href="{{ options['link'~i ] }}" class="btn btn-white">{{ options['bt'~i] }}</a>
+							</div>
+						</div>
+                        {% endif %}
+                        
+                        {% endfor %}
+						
+                        
+                        
+					</div>
+				</div>
+			</section>
+			<!-- End Parallax -->
+			{% endif %}
+            
+            
+            
+			<!-- Begin List Thumbs -->
+			<section class="list-thumbs">
+				<div class="container">
+					<div class="row">
+                       {% set featured = getTemplateRecord('homefeaturedp') %}
+                    
+                    	{% if(featured['enabled']) %}
+                    
+						<div class="col-sm-4 featured">
+							<h3>{{ misc['values']['featured_products'] }}</h3>
+							<div class="row">
+								<div id="owl-featured-slide" class="owl-carousel product-slide product-thumbs-slide">
+									<div class="col-md-12">
+										<div class="item">
+											<ul class="list-unstyled list-thumbs-pro">
+                                            
+                                            	 
+                                                {% for i in 1..3 %}
+                                                 
+                            {% if not featured['values']['product'~i] and productExists(featured['values']['product'~i]) %}
+                            {% set product = getProduct(featured['values']['product'~i]|trim) %}
+							
+							
+							
+					{% if product['image'] %}
+					{% set image = resizeMerchantImage(product['image'], config.get('config_image_product_width'), config.get('config_image_product_height'),basePath()) %}
+				{% else %}
+					{% set image = false %}
+				{% endif %}
+	
+				{% if (config.get('config_customer_price') and customer.isLogged()) or not config.get('config_customer_price') %}
+				{% set price = currency.format(tax.calculate(product['price'], product['tax_class_id'], config.get('config_tax'))) %}
+				{% else %}
+					{% set price = false %}
+				{% endif %}
+	
+				{% if product['special'] %}
+					{% set special = currency.format(tax.calculate(product['special'], product['tax_class_id'], config.get('config_tax'))) %}
+				{% else %}
+					{% set special = false %}
+				{% endif %}
+	
+				{% if config.get('config_tax') %}
+					{% set tax = currency.format(product['special'] ? product['special'] : product['price']) %}
+				{% else %}
+					{%set tax = false %}
+				{% endif %}
+	
+				{% if config.get('config_review_status') %}
+					{% set rating = product['rating'] %}
+				{% else %}
+					{% set rating = false %}
+				{% endif %}
+							  
+							
+							 
+                                            
+                                            
+												<li class="product">
+													<div class="product-thumb-info">
+														<div class="product-thumb-info-image">
+															<a href="{{ basePath() }}/store/product/product?product_id={{ featured['values']['product'~i]|trim }}"><img alt="" width="60" src="{{ image }}"></a>
+														</div>
+														
+														<div class="product-thumb-info-content">
+															<h4><a href="{{ basePath() }}/store/product/product?product_id={{ featured['values']['product'~i]|trim }}">{{ product['name'] }}</a></h4>
+												 
+															<span class="price">
+											       {% if not special %}
+											        {{ price }}
+											        {% else %}
+											        <span class="price-old">{{ price }}</span> <span class="price-new">{{ special }}</span>
+											        {% endif %}</span>
+														</div>
+													</div>
+												</li>
+                                                {% endif %}
+                                                {% endfor %}
+                                                
+                                                
+                                                
+                                                
+										 
+											</ul>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="item">
+											<ul class="list-unstyled list-thumbs-pro">
+												                	 
+                                                {% for i in 4..6 %}
+                                                 
+                            {% if not featured['values']['product'~i] and productExists(featured['values']['product'~i]|trim)  %}
+                            {% set product = getProduct(featured['values']['product'~i]|trim) %}
+							
+							
+							
+							{%	if product['image'] %}
+					{% set image = resizeMerchantImage(product['image'], config.get('config_image_product_width'), config.get('config_image_product_height'),basePath()) %}
+				{% else %}
+					{% set image = false %}
+				{% endif %}
+	
+				{% if (config.get('config_customer_price') and customer.isLogged()) or not config.get('config_customer_price') %}
+					price = currency.format(tax.calculate(product['price'], product['tax_class_id'], config.get('config_tax')));
+				{% else %}
+					price = false;
+				{% endif %}
+	
+				{% if (product['special']) %}
+				{% set special = currency.format(tax.calculate(product['special'], product['tax_class_id'], config.get('config_tax'))) %}
+				{% else %}
+					{ set special = false %}
+				{% endif %}
+	
+				{% if (config.get('config_tax')) %}
+				{% set	tax = currency.format(product['special'] ? product['special'] : product['price']) %}
+				{% else %}
+					{% set tax = false %}
+				{% endif %}
+	
+				{% if (config.get('config_review_status')) %}
+					{% set rating = product['rating'] %}
+				{% else %}
+					{% set rating = false %}
+				{% endif %}
+							  
+							
+							 
+                                            
+                                            
+												<li class="product">
+													<div class="product-thumb-info">
+														<div class="product-thumb-info-image">
+															<a href="{{ basePath() }}/store/product/product?product_id={{ featured['values']['product'~i]|trim }}"><img alt="" width="60" src="{{ image }}"></a>
+														</div>
+														
+														<div class="product-thumb-info-content">
+															<h4><a href="{{ basePath() }}/store/product/product?product_id={{ featured['values']['product'~i]|trim }}">{{ product['name'] }}</a></h4>
+												 
+															<span class="price">
+											        {% if not special %}
+											        {{ price }}
+											        {% else %}
+											        <span class="price-old">{{ price }}</span> <span class="price-new">{{ special }}</span>
+											        {% endif %}</span>
+														</div>
+													</div>
+												</li>
+                                                {% endif %}
+                                                {% endfor %}
+												
+												
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+                        
+                        {% endif %}
+                        
+                         {% set bestsellers = getTemplateRecord('homepagebest') %}
+                    
+                    	{% if bestsellers['enabled'] %}
+                        
+                        
+						<div class="col-sm-4 bestseller">
+							<h3>{{ misc['values']['bestsellers'] }}</h3>
+							<ul class="list-unstyled list-thumbs-pro">
+                            
+                            
+                            
+                            
+                            
+								    
+                                    {% for i in 1..3 %}            
+                                                 
+                            {% if not bestsellers['values']['product'~i] and productExists(bestsellers['values']['product'~i]|trim) %}
+                            {% set product = getProduct(bestsellers['values']['product'~i]|trim) %}
+							
+							
+							
+				 {% if product['image'] %}
+					{% set image = resizeMerchantImage(product['image'], config.get('config_image_product_width'), config.get('config_image_product_height'),basePath()) %}
+				{% else %}
+				   {% set image = false %}
+				{% endif %}
+	
+				{% if ((config.get('config_customer_price') and customer.isLogged()) or not config.get('config_customer_price')) %}
+					{% set price = currency.format(tax.calculate(product['price'], product['tax_class_id'], config.get('config_tax'))) %}
+				{% else %}
+					{% set price = false %}
+				{% endif %}
+	
+				{% if product['special'] %}
+					{% set special = currency.format(tax.calculate(product['special'], product['tax_class_id'], config.get('config_tax'))) %}
+				{% else %}
+					{% set special = false %}
+				{% endif %}
+	
+				{% if (config.get('config_tax')) %}
+					{% set tax = currency.format(product['special'] ? product['special'] : product['price']) %}
+				{% else %}
+					{% set tax = false %}
+				{% endif %}
+	
+				{% if (config.get('config_review_status'))  %}
+					{% set rating = product['rating'] %}
+				{% else %}
+					{% set rating = false %}
+				{% endif %}
+							  
+							
+							
+							 
+                                            
+                                            
+												<li class="product">
+													<div class="product-thumb-info">
+														<div class="product-thumb-info-image">
+															<a href="{{ basePath() }}/store/product/product?product_id={{ featured['values']['product'~i]|trim }}"><img alt="" width="60" src="{{ image }}"></a>
+														</div>
+														
+														<div class="product-thumb-info-content">
+															<h4><a href="{{ basePath() }}/store/product/product?product_id={{ featured['values']['product'~i]|trim }}">{{ product['name'] }}</a></h4>
+												 
+															<span class="price">
+											        {% if special %}
+											        {{ price }}
+											        {% else %}
+											        <span class="price-old">{{ price }}</span> <span class="price-new">{{ special }}</span>
+											        {% endif %}</span>
+														</div>
+													</div>
+												</li>
+                                                {% endif %}
+                                                {% endfor %}
+                                
+                                
+                                
+                                
+                                
+							</ul>
+						</div>
+                        
+                        {% endif %}
+                        
+                            {% set bestsellers = getTemplateRecord('homepagetrends') %}
+                    
+                    	{% if(bestsellers['enabled']) %}
+						<div class="col-sm-4 trends">
+							<h3>{{ misc['values']['trends'] }}</h3>
+							<ul class="list-unstyled list-thumbs-pro">
+                            
+                            
+                            
+                            
+                            
+								                	{% for i in 1..3 %}
+                                                
+                                                 
+                            {% if not bestsellers['values']['product'~i] and productExists(bestsellers['values']['product'~i]|trim) %}
+                           {% set product = getProduct(bestsellers['values']['product'~i]|trim) %}
+							
+							
+							
+							{%	if (product['image']) %}
+					{% set image = resizeMerchantImage(product['image'], config.get('config_image_product_width'), config.get('config_image_product_height'),basePath()) %}
+				{% else %}
+					{% set image = false %}
+				{% endif %}
+	
+				{% if ((config.get('config_customer_price') and customer.isLogged()) or not config.get('config_customer_price')) %}
+					{% set price = currency.format(tax.calculate(product['price'], product['tax_class_id'], config.get('config_tax')))%}
+				{% else %}
+					{% set price = false %}
+				{% endif %}
+	
+				{% if (product['special']) %}
+					{% set special = currency.format(tax.calculate(product['special'], product['tax_class_id'], config.get('config_tax'))) %}
+				{% else %}
+					{% set special = false %}
+				{% endif %}
+	
+				{% if (config.get('config_tax')) %}
+					{% set tax = currency.format(product['special'] ? product['special'] : product['price']) %}
+				{% else %}
+					{%  set tax = false %}
+				{% endif %}
+	
+				{% if (config.get('config_review_status')) %}
+					{%  set rating = product['rating'] %}
+				{% else %}
+					{%  set rating = false %}
+				{% endif %}
+							  
+							
+							
+							  
+                                            
+                                            
+												<li class="product">
+													<div class="product-thumb-info">
+														<div class="product-thumb-info-image">
+															<a href="{{ basePath() }}/store/product/product?product_id={{ featured['values']['product'~i]|trim }}"><img alt="" width="60" src="{{ image }}"></a>
+														</div>
+														
+														<div class="product-thumb-info-content">
+															<h4><a href="{{ basePath() }}/store/product/product?product_id={{ featured['values']['product'~i]|trim }}">{{ product['name'] }}</a></h4>
+												 
+															<span class="price">
+											        {% if not special  %}
+											        {{ price }}
+											        {% else %}
+											        <span class="price-old">{{ price }}</span> <span class="price-new">{{ special }}</span>
+											        {% endif %}</span>
+														</div>
+													</div>
+												</li>
+                                                {% endif %}
+                                                
+                                                {% endfor %}
+                                
+                                
+                                
+                                
+                                
+							</ul>
+						</div>
+                         {% endif %}
+                        
+					</div>
+                    
+                    {% set footerhtml = getTemplateRecord('homepagehtml') %}
+                    
+                    {% if(footerhtml['enabled']) %}
+                    {{ footerhtml['values']['code']|raw }}
+					 
+                    {% endif %}
+                    
+                    
+                    
+                    
+				</div>
+			</section>
+			<!-- End List Thumbs -->
+			
+	 
+
+
+{% endblock content %}

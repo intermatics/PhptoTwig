@@ -1,0 +1,352 @@
+
+
+	<? $this->layout('layout/templates/'.TID.'/default'); ?>		
+		<!-- Begin Main -->
+		<div role="main" class="main product-info">
+		
+			<!-- Begin page top -->
+			<section class="page-top">
+				<div class="container">
+					<div class="page-top-in">
+						<ol class="breadcrumb pull-left"> 
+							<?php $count = count($breadcrumbs); $counter=0;?>
+							    <?php foreach ($breadcrumbs as $breadcrumb) { $counter++; ?>
+							    
+    <li><?php if($counter < $count):?> <a href="<?php echo $breadcrumb['href']; ?>"> <?php endif; ?> <?php echo $breadcrumb['text']; ?> <?php if($counter < $count):?></a><?php endif; ?> </li>
+    <?php } ?>
+							
+						</ol>
+						<ul class="pager pull-right">
+							<li>&nbsp</li>
+						 
+						</ul>
+					</div>
+				</div>
+			</section>
+			<!-- End page top -->
+			
+			<div class="container">
+		 
+			
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="product-preview">
+						
+							<ul class="bxslider">
+							 <?php if ($thumb) { ?>
+								<li><img class="img-responsive" src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" ></li>
+							  <?php } ?>
+								  <?php if ($images) { ?>
+								   <?php foreach ($images as $image) { ?>
+								<li><img  class="img-responsive" src="<?php echo $image['small']; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>"></li> 
+								  <?php } ?>
+								
+								  <?php } ?>
+								
+								
+								
+							</ul>
+
+							<ul class="list-inline" id="bx-pager">
+							<?php if ($thumb) { ?>
+								<li><a data-slide-index="0" href="#"><img alt="" class="img-responsive"  src="<?php echo $thumb; ?>" ></a></li>
+							<?php } $counter=1; ?>	
+								  <?php if ($images) { ?>
+								   <?php foreach ($images as $image) { ?>
+								<li><a data-slide-index="<?php echo $counter; ?>" href="#"><img alt="" class="img-responsive" src="<?php echo $image['small']; ?>"></a></li>
+								<?php $counter++; } ?>
+								
+								  <?php } ?>
+							 </ul>
+							
+							
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="summary entry-summary">
+
+							<h3><?php echo $heading_title; ?></h3>
+							
+							<?php if ($review_status) { ?>
+							<div class="reviews-counter clearfix">
+							<?php if(!empty($rating)):?>
+								<div class="rating <?php echo convert_number_to_words($rating) ?>-stars pull-left">
+									<div class="star-rating"></div>
+									<div class="star-bg"></div>
+								</div>
+								
+								<span><?php echo $rating; ?> Reviews</span>
+								<?php endif;?>
+							</div>
+							 <?php } ?>
+							       
+							<p class="price">
+								 
+								   
+        <?php if (!$special) { ?>
+        <span class="amount"><?php echo $price; ?></span>
+        <?php } else { ?>
+        <span class="price price-old"><?php echo $price; ?></span> <span class="price-new"><?php echo $special; ?></span>
+        <?php } ?>
+        <br />
+        <?php if ($tax) { ?>
+        <span class="price-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></span><br />
+        <?php } ?>
+        <?php if ($points) { ?>
+        <span class="reward"><small><?php echo $text_points; ?> <?php echo $points; ?></small></span><br />
+        <?php } ?>
+        <?php if ($discounts) { ?>
+        <br />
+        <div class="discount">
+          <?php foreach ($discounts as $discount) { ?>
+          <?php echo sprintf($text_discount, $discount['quantity'], $discount['price']); ?><br />
+          <?php } ?>
+        </div>
+        <?php } ?>
+       
+							</p>
+							<?php if(false):?>
+							<ul class="list-inline list-select clearfix">
+								<li>
+									<div class="list-sort">
+										<select class="formDropdown">
+											<option>Select Size</option>
+											<option>XS</option>
+											<option>S</option>
+											<option>M</option>
+											<option>L</option>
+											<option>XL</option>
+											<option>XXL</option>
+										</select>
+									</div>
+								</li>
+								<li class="color"><a href="shop-product-detail1.html#" class="color1"></a></li>
+								<li class="color"><a href="shop-product-detail1.html#" class="color2"></a></li>
+								<li class="color"><a href="shop-product-detail1.html#" class="color3"></a></li>
+								<li class="color"><a href="shop-product-detail1.html#" class="color4"></a></li>
+							</ul>
+							<?php endif; ?>
+			
+		<?php require_once DIR_TEMPLATE.'/store/common/product/product_options.phtml';?>	
+							 <form method="post" class="cart">
+								<div class="quantity pull-left">
+									<input type="button" class="minus" value="-"  onclick="changeQuantity('-');">
+									<input type="text" class="input-text qty" title="Qty" value="<?php echo $minimum; ?>" name="quantity" id="quantityinput" min="<?php echo $minimum; ?>" step="1">
+									<input type="button" class="plus" value="+" onclick="changeQuantity('+');">
+									    <input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
+													
+									<script type="text/javascript">
+										function changeQuantity(type)
+										{
+											 
+											var qty = $('#quantityinput').val();
+											if(type=='+')
+											{
+												qty++;
+											}
+											else
+											{
+												qty--;
+											}
+											$('#quantityinput').val(qty);
+
+											validateQty();
+										}
+										
+										function validateQty()
+										{
+											var qty = $('#quantityinput').val();
+											if(qty < <?php echo $minimum; ?>)
+											{
+												qty =   <?php echo $minimum; ?>;
+											}
+											$('#quantityinput').val(qty);
+										}
+										
+									</script>
+								</div>
+								<a href="javascript:;" title="Add to compare" onclick="addToCompare('<?php echo $product_id; ?>');" class="btn btn-grey">
+									<span><i class="fa fa-exchange"></i></span>
+								</a>
+								<a href="javascript:;" title="Add to wishlist" onclick="addToWishList('<?php echo $product_id; ?>');" class="btn btn-grey">
+									<span><i class="fa fa-heart"></i></span>
+								</a>
+								<button type="button"    id="button-cart"  class="btn btn-primary btn-icon"><i class="fa fa-shopping-cart"></i> <?php echo $button_cart; ?></button>
+							 </form>
+							 <div class="share"><!-- AddThis Button BEGIN -->
+          <div class="addthis_default_style"><a class="addthis_button_compact"></a> <a class="addthis_button_email"></a><a class="addthis_button_print"></a> <a class="addthis_button_facebook"></a> <a class="addthis_button_twitter"></a></div>
+          <script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js"></script> 
+          <!-- AddThis Button END --> 
+        </div> <br/>
+							<ul class="list-unstyled product-meta">
+								 
+								 <?php if ($manufacturer) { ?>
+        <li><span><?php echo $text_manufacturer; ?></span> <a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></li>
+        <?php } ?>
+        <li><span><?php echo $text_model; ?></span> <?php echo $model; ?></li>
+        <?php if ($reward) { ?>
+        <li><span><?php echo $text_reward; ?></span> <?php echo $reward; ?></li>
+        <?php } ?>
+        <li><span><?php echo $text_stock; ?></span> <?php echo $stock; ?></li>
+							</ul>
+							
+							<div class="panel-group" id="accordion">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="shop-product-detail1.html#collapseOne"><?php echo $tab_description; ?></a> </h4>
+									</div>
+									<div id="collapseOne" class="panel-collapse collapse in">
+										<div class="panel-body"> 
+											<?php echo $description; ?>
+										</div>
+									</div>
+								</div>
+								 <?php if ($attribute_groups) { ?>
+								 
+								   
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="shop-product-detail1.html#collapseTwo"><?php echo $tab_attribute; ?></a> </h4>
+									</div>
+									<div id="collapseTwo" class="panel-collapse collapse">
+										<div class="panel-body"> 
+										<p>
+										  <table class="attribute">
+										      <?php foreach ($attribute_groups as $attribute_group) { ?>
+										      <thead>
+										        <tr>
+										          <td colspan="2"><?php echo $attribute_group['name']; ?></td>
+										        </tr>
+										      </thead>
+										      <tbody>
+										        <?php foreach ($attribute_group['attribute'] as $attribute) { ?>
+										        <tr>
+										          <td><?php echo $attribute['name']; ?></td>
+										          <td><?php echo $attribute['text']; ?></td>
+										        </tr>
+										        <?php } ?>
+										      </tbody>
+										      <?php } ?>
+										    </table>
+										</p> </div>
+									</div>
+								</div>
+								 
+								
+								  <?php } ?>
+								 <?php if ($review_status) { ?>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="shop-product-detail1.html#collapseThree">Reviews</a> </h4>
+									</div>
+									<div id="collapseThree" class="panel-collapse collapse">
+										<div class="panel-body post-comments">
+									<?php require_once DIR_TEMPLATE.'/store/common/product/product_review.phtml';?>
+										
+										<?php if(false):?>
+											<ul class="comments">
+												<li>
+													<div class="comment">
+														<div class="img-circle"> <img class="avatar" width="50" alt="" src="<?php echo $this->layoutPath() ?>/images/content/blog/avatar.png"> </div>
+														<div class="comment-block">
+															<span class="comment-by"> <strong>Frank Reman</strong></span>
+															<span class="date"><small><i class="fa fa-clock-o"></i> January 12, 2013</small></span>
+															<p>Lorem ipsum dolor sit amet.</p>
+														</div>
+													</div>
+												</li>
+												<li>
+													<div class="comment">
+														<div class="img-circle"> <img class="avatar" width="50" alt="" src="<?php echo $this->layoutPath() ?>/images/content/blog/avatar.png"> </div>
+														<div class="comment-block">
+															<span class="comment-by"> <strong>Frank Reman</strong></span>
+															<span class="date"><small><i class="fa fa-clock-o"></i> July 11, 2014</small></span>
+															<p>Nam viverra euismod odio, gravida pellentesque urna varius vitae, gravida pellentesque urna varius vitae</p>
+														</div>
+													</div>
+												</li>
+												<li>
+													<div class="comment">
+														<div class="img-circle"> <img class="avatar" width="50" alt="" src="<?php echo $this->layoutPath() ?>/images/content/blog/avatar.png"> </div>
+														<div class="comment-block">
+															<span class="comment-by"> <strong>Frank Reman</strong></span>
+															<span class="date"><small><i class="fa fa-clock-o"></i> July 11, 2014</small></span>
+															<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+														</div>
+													</div>
+												</li>
+											</ul>
+										<?php endif;?>
+										
+										</div>
+									</div>
+								</div>
+								<?php } ?>
+								
+								
+							</div>
+							
+
+						</div>
+					</div>
+				</div>
+			</div>
+			 <?php if ($products) { ?>
+			<!-- Begin Related Products -->
+			<section class="products-slide">
+				<div class="container">
+					<h2 class="title"><span>Related Products</span></h2>
+					<div class="row">
+						<div id="owl-product-slide" class="owl-carousel product-slide">
+							
+							<?php foreach ($products as $product) { ?>
+							<div class="col-md-12">
+								<div class="item product">
+									<div class="product-thumb-info">
+										
+										<div class="product-thumb-info-image">
+											<span class="product-thumb-info-act">
+												<a href="<?php echo $product['href']; ?>" class="view-product">
+													<span><i class="fa fa-external-link"></i></span>
+												</a>
+												<a onclick="addToCart('<?php echo $product['product_id']; ?>');"  class="add-to-cart-product">
+													<span><i class="fa fa-shopping-cart"></i></span>
+												</a>
+											</span>
+											<img alt="" class="img-responsive" src="<?php echo $product['thumb']; ?>">
+										</div>
+										
+										<div class="product-thumb-info-content">
+											<span class="price pull-right">
+											
+											<?php if ($product['price']) { ?>
+        
+									          <?php if (!$product['special']) { ?>
+									          <?php echo $product['price']; ?>
+									          <?php } else { ?>
+									          <span class="price-old"><?php echo $product['price']; ?></span> <span class="price-new"><?php echo $product['special']; ?></span>
+									          <?php } ?>
+									 
+									        <?php } ?>
+																				
+											</span>
+											<h4><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></h4>
+											<span class="item-cat"><small><img src="<?php echo $this->basepath()?>/static/oc_catalog/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></small></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<?php } ?>
+							
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- End Top Selling -->
+			 <?php } ?>
+			
+			<?php echo $column_left; ?><?php echo $column_right; ?>
+		</div>
+		<!-- End Main -->
+		
+<?php require_once DIR_TEMPLATE.'/store/common/product/product_footer.phtml'; ?>

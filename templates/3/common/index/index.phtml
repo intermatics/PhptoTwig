@@ -1,0 +1,408 @@
+
+
+<?php  $slideshow = $this->getTemplateRecord('slideshow'); ?>
+<?php if($slideshow['enabled']): ?>
+<!-- container 12 start banner -->
+<div class="container_12 cf">
+<div class="grid_12">
+ <?php $options = $slideshow['values']; ?>
+
+
+<div class="camera_wrap camera_azure_skin" id="camera_wrap_1">
+
+ <?php for($i=1; $i<=10;$i++): ?>
+  <?php if(!empty($options['slideshow_image'.$i])): ?>
+    <div data-thumb="<?php   echo resizeMerchantImage($options['slideshow_image'.$i],940,450,$this->basePath()) ?>" data-src="<?php   echo resizeMerchantImage($options['slideshow_image'.$i],940,450,$this->basePath()) ?>">
+    	<div class="camera_caption fadeFromBottom">
+               
+                <?php if(!empty($options['toptext'.$i])): ?>
+									 
+                                     <h1><?php echo $options['toptext'.$i] ?></h1>
+                                <?php endif; ?> 
+                  <?php if(!empty($options['subheading'.$i])): ?>
+									<h2><?php echo $options['subheading'.$i] ?></h2>
+                                     <?php endif; ?>   
+                                     
+                                       <?php if(!empty($options['maintext'.$i])): ?>
+									<p><?php echo $options['maintext'.$i] ?></p>
+                                     <?php endif; ?>   
+                 
+                 <?php if(!empty($options['bt'.$i]) && !empty($options['link'.$i])): ?>
+									<a href="<?php echo $options['link'.$i] ?>" ><?php echo $options['bt'.$i] ?></a>
+                                    <?php endif; ?>  
+        </div>
+	</div>
+  <?php endif; ?>   
+    
+<?php endfor; ?>            
+            
+</div>
+
+
+</div>
+</div>
+<!-- container 12 end banner -->
+<?php endif; ?>
+
+
+
+
+
+
+
+
+ 
+<?php
+//get products table
+$productTable = $this->getClass('Store\Model\Catalog\Product');
+$homelp = $this->getTemplateRecord('homelp');
+$misc = $this->getTemplateRecord('misc');
+ ?>
+ 
+ 
+   <?php $featured = $this->getTemplateRecord('homefeaturedp'); ?>
+                    
+<?php if($featured['enabled']):?>
+<!-- container 12 start -->
+<div class="container_12 cf mg">
+
+<div class="grid_12">
+
+
+<div class="headerbd">
+<h1><?php echo @$misc['values']['featured_products']; ?></h1>
+<div class="header-bottom-line"></div>
+
+
+
+<div class="heading_button">
+	<div class="prev_button" id="featured_prev">Prev</div>
+	<div class="next_button" id="featured_next">Next</div>
+</div>
+
+</div>
+
+
+
+
+
+
+<!-- owl carousel start -->
+<div class="featured">
+
+<?php for($i=1; $i<=8;$i++): ?>
+
+
+ <?php if(!empty($featured['values']['product'.$i]) && $productTable->productExists(trim($featured['values']['product'.$i]))):?>
+                            <?php $product = $productTable->getProduct(trim($featured['values']['product'.$i]));
+							
+							
+							
+								if ($product['image']) {
+					$image = resizeMerchantImage($product['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'),$this->basePath());
+				} else {
+					$image = false;
+				}
+	
+				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+					$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$price = false;
+				}
+	
+				if ((float)$product['special']) {
+					$special = $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$special = false;
+				}
+	
+				if ($this->config->get('config_tax')) {
+					$tax = $this->currency->format((float)$product['special'] ? $product['special'] : $product['price']);
+				} else {
+					$tax = false;
+				}
+	
+				if ($this->config->get('config_review_status')) {
+					$rating = (int)$product['rating'];
+				} else {
+					$rating = false;
+				}
+							  
+							
+							
+							 ?>
+                             
+
+
+<div class="item">
+    
+	<div class="procont">
+      	
+        <div class="image">
+         
+        <a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($featured['values']['product'.$i]); ?>" title="<?php echo $product['name']; ?>"><img src="<?php echo $image ?>" alt="Product One" title="<?php echo $product['name']; ?>" /></a>
+        
+        	<div class="quickview">
+            <a class="jackbox" data-group="images" data-thumbTooltip="Enlarge"  href="<?php echo $image ?>">
+            Quickview</a>
+            </div>
+            
+        </div>
+        
+        
+        <div class="title">
+        
+        <h3><?php echo $product['name']; ?></h3>
+        
+        <div class="price">
+        <?php if (!$special) { ?>
+											        <?php echo $price; ?>
+											        <?php } else { ?>
+											        <span class="oldprice"><?php echo $price; ?></span> <span class="newprice"><?php echo $special; ?></span>
+											        <?php } ?>
+ 
+        </div>
+        
+        
+        <div class="detail">
+		<a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($featured['values']['product'.$i]); ?>" class="clothing_icons16 icon16_3 tooltip_s" title="Product Details"></a>
+        <a href="javascript:;" onclick="addToCart('<?php echo trim($featured['values']['product'.$i]); ?>');" class="ecommerce_icons16 icon16_13 tooltip_s" title="Add To Cart"></a>
+        <a  onclick="addToCompare('<?php echo trim($featured['values']['product'.$i]); ?>');" class="displayoptions_icons16 icon16_4 tooltip_s" title="Compare"></a>
+        </div>
+        
+        
+<?php if($rating):?>
+		<div class="rating"> 
+        <img src="<?php echo $this->layoutPath(); ?>/images/stars-<?php echo $rating; ?>.png"   />
+        </div>
+  <?php endif; ?>
+  
+        
+        </div>
+        
+	</div>
+        
+</div>
+
+<?php endif; ?>
+    
+    
+<?php endfor; ?>
+
+
+
+
+ 
+
+    
+    
+    
+    
+</div>
+<!-- owl carousel end -->
+
+
+
+</div>
+
+</div>
+<!-- container 12 end -->
+<?php endif; ?>
+
+
+
+
+
+
+<?php  $homeads = $this->getTemplateRecord('homeads'); ?>
+ <?php if($homeads['enabled']): ?>
+<!-- container 12 start -->
+<div class="container_12">
+
+
+<div class="grid_12">
+
+
+<div id="banner0" class="banner">
+	<ul class="hadverts">
+    	     <?php $options = $homeads['values']; ?>
+                    <?php for($i=1; $i<=3;$i++): ?>
+                    
+                     <?php if(!empty($options['homepagead_image'.$i])): ?>
+    	<li <?php if($i==3):?> class="last" <?php endif; ?>><a href="<?php echo $options['link'.$i] ?>" class="advert"><img src="<?php   echo resizeMerchantImage($options['homepagead_image'.$i],300,150,$this->basePath()) ?>"  /></a></li>
+         <?php endif; ?>
+                        
+					 <?php endfor; ?>
+       
+         
+	
+	</ul>
+</div>
+
+
+</div>
+
+
+</div>
+<!-- container 12 end -->
+<?php endif; ?>
+
+
+
+
+
+
+
+<!-- container 12 start -->
+<div class="container_12 cf mg">
+
+<div class="grid_12">
+
+
+<div class="headerbd">
+<h1><?php echo @$misc['values']['latest_products']; ?></h1>
+<div class="header-bottom-line"></div>
+
+
+
+<div class="heading_button">
+	<div class="prev_button" id="latest_prev">Prev</div>
+	<div class="next_button" id="latest_next">Next</div>
+</div>
+
+</div>
+
+
+
+
+<?php $featured = $this->getTemplateRecord('homelp'); ?>
+
+<!-- owl carousel start -->
+<div class="latest">
+
+<?php for($i=1; $i<=8;$i++): ?>
+
+
+ <?php if(!empty($featured['values']['product'.$i]) && $productTable->productExists(trim($featured['values']['product'.$i]))):?>
+                            <?php $product = $productTable->getProduct(trim($featured['values']['product'.$i]));
+							
+							
+							
+								if ($product['image']) {
+					$image = resizeMerchantImage($product['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'),$this->basePath());
+				} else {
+					$image = false;
+				}
+	
+				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+					$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$price = false;
+				}
+	
+				if ((float)$product['special']) {
+					$special = $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$special = false;
+				}
+	
+				if ($this->config->get('config_tax')) {
+					$tax = $this->currency->format((float)$product['special'] ? $product['special'] : $product['price']);
+				} else {
+					$tax = false;
+				}
+	
+				if ($this->config->get('config_review_status')) {
+					$rating = (int)$product['rating'];
+				} else {
+					$rating = false;
+				}
+							  
+							
+							
+							 ?>
+                             
+
+
+<div class="item">
+    
+	<div class="procont">
+      	
+        <div class="image">
+        
+        <a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($featured['values']['product'.$i]); ?>" title="<?php echo $product['name']; ?>"><img src="<?php echo $image ?>" alt="Product One" title="<?php echo $product['name']; ?>" /></a>
+        
+        	<div class="quickview">
+            <a class="jackbox" data-group="images" data-thumbTooltip="Enlarge"  href="<?php echo $image ?>">
+            Quickview</a>
+            </div>
+            
+        </div>
+        
+        
+        <div class="title">
+        
+        <h3><?php echo $product['name']; ?></h3>
+        
+        <div class="price">
+        <?php if (!$special) { ?>
+											        <?php echo $price; ?>
+											        <?php } else { ?>
+											        <span class="oldprice"><?php echo $price; ?></span> <span class="newprice"><?php echo $special; ?></span>
+											        <?php } ?>
+ 
+        </div>
+        
+        
+        <div class="detail">
+		<a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($featured['values']['product'.$i]); ?>" class="clothing_icons16 icon16_3 tooltip_s" title="Product Details"></a>
+        <a href="javascript:;" onclick="addToCart('<?php echo trim($featured['values']['product'.$i]); ?>');" class="ecommerce_icons16 icon16_13 tooltip_s" title="Add To Cart"></a>
+        <a  onclick="addToCompare('<?php echo trim($featured['values']['product'.$i]); ?>');" class="displayoptions_icons16 icon16_4 tooltip_s" title="Compare"></a>
+        </div>
+        
+        
+<?php if($rating):?>
+		<div class="rating"> 
+        <img src="<?php echo $this->layoutPath(); ?>/images/stars-<?php echo $rating; ?>.png"   />
+        </div>
+  <?php endif; ?>
+  
+        
+        </div>
+        
+	</div>
+        
+</div>
+
+<?php endif; ?>
+    
+    
+<?php endfor; ?>
+
+
+
+
+ 
+
+    
+    
+    
+    
+</div>
+<!-- owl carousel end -->
+
+         <?php $footerhtml = $this->getTemplateRecord('homepagehtml'); ?>
+                    
+                    <?php if($footerhtml['enabled']): ?>
+                    <?php echo @$footerhtml['values']['code']; ?>
+					 
+                    <?php endif; ?>
+                    
+
+
+</div>
+
+</div>
+<!-- container 12 end -->
+<?php echo $column_left; ?>
+<?php echo $column_right; ?>

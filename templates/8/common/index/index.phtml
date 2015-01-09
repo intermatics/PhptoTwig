@@ -1,0 +1,264 @@
+   <?php
+$slideshow = $this->getTemplateRecord('slideshow'); 
+$homeads = $this->getTemplateRecord('homeads');
+$misc = $this->getTemplateRecord('misc');
+?>
+<?php if($slideshow['enabled']): ?>
+			<div class="container">
+				 
+                
+                <div class="revolution_slider relative w_full m_bottom_30">
+						<div class="w_full relative r_slider">
+							<ul>
+								  <?php $options = $slideshow['values']; ?>
+                 <?php for($i=1; $i<=10;$i++): ?>
+                  <?php if(!empty($options['slideshow_image'.$i])): ?>
+								<li data-transition="Random Flat and Premium" data-slotamount="7">
+								   <img src="<?php   echo resizeMerchantImage($options['slideshow_image'.$i],1900,550,$this->basePath()) ?>" alt="" data-bgfit="cover" data-bgposition="center center">
+                                     <?php if(!empty($options['toptext'.$i])): ?>
+								   <div class="caption sfr str"  data-x="right" data-hoffset="-90" data-y="115" data-speed="1000" data-start="1200" data-easing="easeOutBack">
+								   		<p class="color_white fw_light tt_uppercase slider_fs_3"><?php echo $options['toptext'.$i] ?></p>
+								  	</div>
+                                    <?php endif;  ?>
+                                    
+                                     <?php if(!empty($options['maintext'.$i])): ?>
+								  	<div class="caption sfr str t_align_r" data-x="right" data-hoffset="-90" data-y="156" data-speed="700" data-start="1350" data-easing="easeOutBack">
+								  		<h1 class="color_white  second_font tt_uppercase fw_thin slider_fs_1"><?php echo strip_tags($options['maintext'.$i],'<b><i><br>' )?></h1>
+								  	</div>
+                                    <?php endif;  ?>
+                                    
+                                     <?php if(!empty($options['bt'.$i])): ?>
+								  	<div class="caption sfr str" data-start="1500" data-x="right" data-hoffset="-90" data-y="368" data-speed="700" data-easing="easeOutBack">
+										<a href="<?php echo $options['link'.$i] ?>" class="d_inline_b button_type_5 bg_transparent slider_button color_white tt_uppercase fw_light slider_fs_2"><?php echo $options['bt'.$i] ?></a>
+									</div>
+                                     <?php endif;  ?>
+                                    
+                                    
+								</li>
+									<!--slide-->
+                    <?php endif; ?>
+				<?php endfor; ?>
+							</ul>
+						</div>
+					</div>
+                
+                
+                
+                
+                
+                
+                
+			</div>
+            
+            
+            
+            
+            
+<?php endif; ?>        
+    
+    		<?php if($homeads['enabled']): ?>
+			<!--main content-->
+			<section class="section_offset">
+				<div class="container">
+					<div class="row">
+                         <?php $options = $homeads['values']; ?>
+                    <?php for($i=1; $i<=3;$i++): ?>
+                     <?php if(!empty($options['homepagead_image'.$i])): ?>
+						<div class="col-lg-4 col-md-4 col-sm-6 m_sm_bottom_30 animated hidden" data-animation="fadeInDown"  data-animation-delay="<?php echo (($i - 1 ) * 150)  ?>">
+							<!--banner-->
+							<figure class="relative wrapper scale_image_container r_image_container">
+								<img src="<?php   echo resizeMerchantImage($options['homepagead_image'.$i],360,270,$this->basePath()) ?>" alt="" class="tr_all scale_image">
+								<!--caption-->
+								<figcaption class="caption_type_1 pos_2 tr_all">
+                                
+                                 <?php if(!empty($options['header'.$i])): ?>
+									<div class="d_inline_b color_white fw_light caption_title tt_uppercase bg_lbrown_translucent">
+										<?php echo $options['header'.$i]; ?>
+									</div>
+                                    <?php endif; ?>
+                                    
+									<div class="caption_inner">
+                                     <?php if(!empty($options['title'.$i])): ?>
+										<h3 class="color_white second_font fw_light m_bottom_5 w_break"><?php echo $options['title'.$i]; ?></h3>
+                                         <?php endif; ?>
+                                        
+                                         
+										<p class="color_light fw_light color_light_2">
+                                        <?php if(!empty($options['maintext'.$i])): ?>
+                                       		<?php echo strip_tags($options['maintext'.$i],'<b><i><br><strong>') ?>
+                                         <?php endif; ?>
+										<?php if(!empty($options['bt'.$i])): ?>
+                                        <a href="<?php echo $options['link'.$i] ?>" class="color_lbrown color_white_hover"><?php echo $options['bt'.$i] ?></a>
+                                        <?php endif; ?>
+                                        </p>
+                                        
+                                        
+									</div>
+								</figcaption>
+							</figure>
+						</div>
+                        <?php endif; ?>
+                        
+					<?php endfor; ?>	
+						
+					</div>
+				</div>
+			</section>
+            <?php endif; ?>    
+            
+            
+			<!--featured products-->
+			<div class="section_offset p_bottom_0 m_bottom_5">
+				<div class="container">
+					<div class="d_table m_bottom_5 w_full animated hidden" data-animation="fadeInDown">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 v_align_m d_table_cell f_none">
+							<h5 class="second_font color_dark tt_uppercase fw_light d_inline_m m_bottom_4"><?php if(!empty($misc['values']['featured_products'])){ echo @$misc['values']['featured_products']; } else{ echo 'Featured'; }; ?></h5>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 t_align_r d_table_cell f_none">
+							<!--carousel navigation-->
+							<div class="clearfix d_inline_b">
+								<button class="featured_prev black_hover button_type_4 grey state_2 tr_all d_block f_left vc_child m_right_5"><i class="fa fa-angle-left d_inline_m"></i></button>
+								<button class="featured_next black_hover button_type_4 grey state_2 tr_all d_block f_left vc_child"><i class="fa fa-angle-right d_inline_m"></i></button>
+							</div>
+						</div>
+					</div>
+					<hr class="divider_bg m_bottom_15 animated hidden" data-animation="fadeInDown" data-animation-delay="100">
+					<div class="row">
+						<div class="owl-carousel" data-nav="featured_" data-owl-carousel-options='{
+									"stagePadding" : 15,
+									"margin" : 30,
+									"responsive" : {
+											"0" : {
+												"items" : 1
+											},
+											"320" : {
+												"items" : 2
+											},
+											"550" : {
+												"items" : 3
+											},
+											"992" : {
+												"items" : 4
+											}
+										}
+									}'>
+  <?php
+//get products table
+$productTable = $this->getClass('Store\Model\Catalog\Product'); 
+$homefeaturedp = $this->getTemplateRecord('homefeaturedp');
+
+ ?>                                    
+                        <?php if($homefeaturedp['enabled']): ?> 
+                                    <?php $homelp = $homefeaturedp;  ?>  
+                              <?php for($i=1; $i<=15;$i++): ?>
+                                        	 <?php if(!empty($homelp['values']['product'.$i]) && $productTable->productExists(trim($homelp['values']['product'.$i]))):?>
+                                             
+                                              <?php $product = $productTable->getProduct(trim($homelp['values']['product'.$i]));
+							
+								if ($product['image']) {
+					$image = resizeMerchantImage($product['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'),$this->basePath());
+				} else {
+					$image = false;
+				}
+	
+				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+					$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$price = false;
+				}
+	
+				if ((float)$product['special']) {
+					$special = $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$special = false;
+				}
+	
+				if ($this->config->get('config_tax')) {
+					$tax = $this->currency->format((float)$product['special'] ? $product['special'] : $product['price']);
+				} else {
+					$tax = false;
+				}
+	
+				if ($this->config->get('config_review_status')) {
+					$rating = (int)$product['rating'];
+				} else {
+					$rating = false;
+				}
+							  
+							
+							
+							 ?>        
+							<!--owl item-->
+							<div class="animated hidden" data-animation="fadeInDown" data-animation-delay="200">
+								<!--product-->
+								<div class="frame_container qv_container">
+									<figure class="relative r_image_container">
+										 
+										<div class="m_bottom_15 relative">
+											  <?php if ($image) { ?>
+												<a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>"><img src="<?php echo $image; ?>" alt="" class="c_image_1 tr_all" style="border:none"></a>
+												  <?php } ?>
+											<a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>"   class="tr_all color_white second_font qv_style_button quick_view tt_uppercase t_align_c d_block clickable d_xs_none"><i class="fa fa-eye d_inline_m m_right_10"></i><span class="fs_medium">Details</span></a>
+										</div>
+										<figcaption class="t_align_c">
+											<ul>
+												<li><a class="second_font sc_hover d_xs_block" href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></li>
+												 
+												<li>
+													      <?php if ($product['rating']) { ?>
+														 <div class="rating"><img src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+                                                     
+                                                        
+														<span class="color_light reviews d_none">
+															<a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>" class="sc_hover fs_medium fw_light"><?php echo $product['reviews']; ?> Review(s)</a> | <a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>" class="color_dark sc_hover fs_medium fw_light">Add Your Review</a>
+														</span>
+                                                           <?php } ?>
+												</li>
+                                                
+                                                  <?php if ($product['price']) { ?>
+												<li class="m_bottom_16">
+                                                
+                                              <?php if (!$special) { ?>
+        <b class="scheme_color d_block"> <?php echo $price; ?></b>
+        <?php } else { ?>
+      <s> <?php echo $price; ?></s> <b class="scheme_color d_block"><?php echo $special; ?></b>
+        <?php } ?>
+       		 <?php if ($tax) { ?> 
+        <br />
+        <small>Tax: <?php echo $tax; ?></small>
+        <?php } ?>
+                                                
+                                                
+                                                </li>
+                                                 <?php } ?>
+                                                
+												<li>
+													<div class="clearfix d_inline_b">
+														<button  onclick="addToWishList('<?php echo $product['product_id']; ?>');" class="button_type_8 grey state_2 tr_delay color_dark t_align_c vc_child f_left m_right_3 tooltip_container relative"><i class="fa fa-heart fs_large d_inline_m"></i><span class="tooltip top fs_small color_white hidden animated" data-show="fadeInDown" data-hide="fadeOutUp">Add to Wishlist</span></button>
+														<button  onclick="addToCompare('<?php echo $product['product_id']; ?>');"  class="button_type_8 grey state_2 tr_delay color_dark t_align_c vc_child f_left m_right_3 tooltip_container relative"><i class="fa fa-arrow-right fs_small d_inline_m"></i><i class="fa fa-arrow-left fs_small d_inline_m"></i><span class="tooltip top fs_small color_white hidden animated" data-show="fadeInDown" data-hide="fadeOutUp">Add to Compare</span></button>
+														<button   onclick="addToCart('<?php echo $product['product_id']; ?>');"  class="button_type_8 tr_all lbrown state_2 f_left color_dark t_align_c vc_child tooltip_container relative"><i class="fa fa-shopping-cart fs_large d_inline_m"></i><span class="tooltip top fs_small color_white hidden animated" data-show="fadeInDown" data-hide="fadeOutUp">Add to Cart</span></button>
+													</div>
+												</li>
+											</ul>
+										</figcaption>
+									</figure>
+								</div>
+							</div>
+							<!--owl item-->
+                            <?php endif; ?>
+                            
+                            <?php endfor; ?>
+                            
+						<?php endif; ?>	
+							 
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			   <?php $footerhtml = $this->getTemplateRecord('homepagehtml'); ?>
+                    
+                    <?php if($footerhtml['enabled']): ?>
+                    <?php echo @$footerhtml['values']['code']; ?>
+					 
+                    <?php endif; ?>

@@ -1,0 +1,382 @@
+<? $this->layout('layout/templates/'.TID.'/default'); ?>		
+	 
+     		<!--breadcrumbs-->
+			<div class="breadcrumbs bg_grey_light_2 fs_medium fw_light">
+				<div class="container">
+                
+                   <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <?php echo $breadcrumb['separator']; ?><a  class="sc_hover" href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <?php } ?>
+                
+				</div>
+			</div>
+			<!--main content-->
+			<div class="page_section_offset">
+				<div class="container">
+					<section>
+						<main class="clearfix m_xs_bottom_30">
+							<div class="row">
+								<div class="col-lg-6 col-md-6 col-sm-6 m_bottom_20 m_xs_bottom_15">
+                                
+                                 <?php if ($thumb || $images) { ?>
+									<div class="wrapper">
+                                    <?php if ($thumb) { ?>
+										<div class="d_block relative r_image_container">
+											<img id="zoom" src="<?php echo $thumb; ?>" alt="" data-zoom-image="<?php echo $popup; ?>">
+											 
+										</div>
+                                        <?php } ?>
+                                        
+                                         <?php if ($images) { ?>
+										<!--thumbnails-->
+										<div class="product_thumbnails_wrap relative">
+											<div class="owl-carousel" id="thumbnails" data-nav="thumbnails_product_" data-owl-carousel-options='{
+												"responsive" : {
+													"0" : {
+														"items" : 3
+													},
+													"321" : {
+														"items" : 5
+													},
+													"769" : {
+														"items" : 3
+													},
+													"992" : {
+														"items" : 5
+													}
+												},
+												"stagePadding" : 40,
+												"margin" : 10,
+												"URLhashListener" : false
+											}'>	
+                                             <?php if ($thumb) { ?>
+                                            <a href="#" data-image="<?php echo $thumb; ?>" data-zoom-image="<?php echo $popup; ?>" class="d_block">
+													<img src="<?php echo $thumb; ?>" alt="">
+												</a>
+                                             <?php } ?>
+                                            
+                                             <?php foreach ($images as $image) { ?>
+												<a href="#" data-image="<?php echo $image['thumb']; ?>" data-zoom-image="<?php echo $image['popup']; ?>" class="d_block">
+													<img src="<?php echo $image['thumb']; ?>" alt="">
+												</a>
+                                                 <?php } ?>
+                                                
+												 
+											</div>
+											<button class="thumbnails_product_prev black_hover type_2 button_type_4 grey state_2 tr_all d_block vc_child"><i class="fa fa-angle-left d_inline_m"></i></button>
+											<button class="thumbnails_product_next black_hover type_2 button_type_4 grey state_2 tr_all d_block vc_child"><i class="fa fa-angle-right d_inline_m"></i></button>
+										</div>
+                                        
+                                         <?php } ?>
+                                        
+									</div>
+                                    
+                                     <?php } ?>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+								</div>
+								<div class="col-lg-6 col-md-6 col-sm-6 m_bottom_20 product-info">
+									<div class="wrapper">
+										<h3 class="second_font m_bottom_3 f_left product_title"><?php echo $heading_title; ?></h3>
+									 
+									</div>
+                                    
+                                     <?php if ($review_status) { ?>
+									<div class="relative m_bottom_18">
+										<ul class="rating_list wrapper hr_list d_inline_m tr_all m_right_5">
+                                        <?php for($i=1;$i<=5;$i++):?>
+                                        
+											<li <?php if($i<=$rating): ?> class="color_lbrown" <?php endif; ?> ><i class="fa fa-star tr_all"></i></li>
+                                            
+                                            
+                                          <?php endfor; ?> 
+                                            
+										</ul>
+											<span class="color_light d_inline_m m_top_2">
+											<a style="cursor:pointer" onclick="$('a[href=\'#tab3\']').trigger('click');  scrollToElement('#tab3');" class="sc_hover fs_medium fw_light"><?php echo $reviews; ?></a> | <a  style="cursor:pointer"    onclick="$('a[href=\'#tab3\']').trigger('click'); scrollToElement('#tab3');" class="color_dark sc_hover fs_medium fw_light">Add Your Review</a>
+										</span>
+									</div>
+                                    <script>
+                                    function scrollToElement(selector, time, verticalOffset) {
+time = typeof(time) != 'undefined' ? time : 1000;
+verticalOffset = typeof(verticalOffset) != 'undefined'
+element = $(selector);
+offset = element.offset();
+offsetTop = offset.top + verticalOffset;
+$( 'html, body' ).animate({
+scrollTop: offsetTop
+}, time);
+}
+                                    </script>
+                                    
+                                    
+                                    <?php } ?>
+                                    
+                                    
+                                    
+                                    
+                                    
+									<ul class="m_bottom_14">
+									 
+                                        
+                                        
+                                        
+                                        
+                                         <?php if ($manufacturer) { ?>
+        <li class="m_bottom_3"><span class="project_list_title second_font d_inline_b"><?php echo $text_manufacturer; ?></span> <span class="color_dark fw_light"><a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></span></li>
+        <?php } ?>
+        <li class="m_bottom_3"><span class="project_list_title second_font d_inline_b"><?php echo $text_model; ?></span> <span class="fw_light"><?php echo $model; ?></span></li>
+        <?php if ($reward) { ?>
+        <li class="m_bottom_3"><span class="project_list_title second_font d_inline_b"><?php echo $text_reward; ?></span> <span class="fw_light"> <?php echo $reward; ?></span></li>
+        <?php } ?>
+        <li class="m_bottom_3"><span class="project_list_title second_font d_inline_b"><?php echo $text_stock; ?></span> <span class="fw_light"> <?php echo $stock; ?></span></li>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+									</ul>
+									<hr class="divider_light m_bottom_15">
+									 
+									<div class="product_options m_bottom_20">
+                                      <?php if ($options) { ?>
+										<b class="second_font d_block m_bottom_10">Available Options</b>
+										<?php require_once DIR_TEMPLATE.'/store/common/product/product_options.phtml';?>	
+                    				  <?php } ?>
+										<hr class="divider_light">
+										<footer class="bg_grey_light_2">
+											<div class="fs_big second_font m_bottom_17"> 
+                                            
+                                            
+                                            
+                                              <?php if ($price) { ?>
+      <div class="price">
+	  
+	 <b class="scheme_color"> <?php echo $text_price; ?></b>
+        <?php if (!$special) { ?>
+        <?php echo $price; ?>
+        <?php } else { ?>
+        <s class="color_light"><?php echo $price; ?></s> <b class="scheme_color"><?php echo $special; ?></b>
+        <?php } ?>
+        <br />
+        <?php if ($tax) { ?>
+       <small><span class="price-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></span></small> <br />
+        <?php } ?>
+        <?php if ($points) { ?>
+        <span class="reward"><small><?php echo $text_points; ?> <?php echo $points; ?></small></span><br />
+        <?php } ?>
+        <?php if ($discounts) { ?>
+        <br />
+        <div class="discount">
+          <?php foreach ($discounts as $discount) { ?>
+       <small><?php echo sprintf($text_discount, $discount['quantity'], $discount['price']); ?></small><br />
+          <?php } ?>
+        </div>
+        <?php } ?>
+      </div>
+      <?php } ?>  
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            </div>
+											<div class="clearfix">
+												<div class="quantity clearfix t_align_c f_left f_md_none m_right_10 m_md_bottom_3">
+													<button class="f_left d_block minus black_hover tr_all bg_white">-</button>
+													<input type="text" value="<?php echo $minimum; ?>"   name="quantity"  readonly class="f_left color_light">
+                                                      <input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
+													<button class="f_left d_block black_hover tr_all bg_white">+</button>
+												</div>
+												<br class="d_md_block d_none">
+												<button  id="button-cart"    class="button_type_2 d_block f_sm_none m_sm_bottom_3 t_align_c lbrown state_2 tr_all second_font fs_medium tt_uppercase f_left m_right_3 product_button"><i class="fa fa-shopping-cart d_inline_m m_right_9"></i>Add To Cart</button>
+												<br class="d_sm_block d_none">
+												<button  onclick="addToWishList('<?php echo $product_id; ?>');" class="button_type_8 grey state_2 tr_delay color_dark t_align_c vc_child f_left m_right_3 tooltip_container relative"><i class="fa fa-heart fs_large d_inline_m"></i><span class="tooltip top fs_small color_white hidden animated" data-show="fadeInDown" data-hide="fadeOutUp">Add to Wishlist</span></button>
+												<button  onclick="addToCompare('<?php echo $product_id; ?>');" class="button_type_8 grey state_2 tr_delay color_dark t_align_c vc_child f_left m_right_3 tooltip_container relative"><i class="fa fa-arrow-right fs_small d_inline_m"></i><i class="fa fa-arrow-left fs_small d_inline_m"></i><span class="tooltip top fs_small color_white hidden animated" data-show="fadeInDown" data-hide="fadeOutUp">Add to Compare</span></button>
+											    <?php if ($minimum > 1) { ?>
+        <div class="minimum"><?php echo $text_minimum; ?></div>
+        <?php } ?>
+                                                
+											</div>
+										</footer>
+									</div>
+									 
+									<div class="d_inline_m addthis_widget_container">
+										<!-- AddThis Button BEGIN -->
+										<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+										      <div class="addthis_default_style"><a class="addthis_button_compact"><?php echo $text_share; ?></a> <a class="addthis_button_email"></a><a class="addthis_button_print"></a> <a class="addthis_button_facebook"></a> <a class="addthis_button_twitter"></a></div>
+          <script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js"></script> 
+										</div>
+										<!-- AddThis Button END -->
+									</div>
+								</div>
+							</div>
+						</main>
+						<!--tabs-->
+						<div class="tabs styled_tabs m_bottom_18 m_top_10">
+							<nav class="second_font">
+								<ul class="hr_list">
+									<li class="m_right_3"><a href="#tab1" class="color_light border_light_3 d_block"><?php echo $tab_description; ?></a></li>
+                                    <?php if ($attribute_groups) { ?>
+									<li class="m_right_3"><a href="#tab2" class="color_light border_light_3 d_block"><?php echo $tab_attribute; ?></a></li>
+                                    <?php } ?>
+                                    <?php if ($review_status) { ?>
+									<li class="m_right_3"><a href="#tab3" class="color_light border_light_3 d_block"><?php echo $tab_review; ?></a></li>
+                                    
+                                    <?php } ?>
+								 
+								</ul>
+							</nav>
+							<hr class="d_xs_none">
+							<div id="tab1" class="fw_light tab_content">
+						<?php echo $description; ?>
+							</div>
+                             <?php if ($attribute_groups) { ?>
+							<div id="tab2" class="tab_content">
+								     <table class="attribute">
+      <?php foreach ($attribute_groups as $attribute_group) { ?>
+      <thead>
+        <tr>
+          <td colspan="2"><?php echo $attribute_group['name']; ?></td>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($attribute_group['attribute'] as $attribute) { ?>
+        <tr>
+          <td><?php echo $attribute['name']; ?></td>
+          <td><?php echo $attribute['text']; ?></td>
+        </tr>
+        <?php } ?>
+      </tbody>
+      <?php } ?>
+    </table>
+							</div>
+                            <?php } ?>
+                            
+                            <?php if ($review_status) { ?>
+							<div id="tab3" class="tab_content">
+							 <?php require_once DIR_TEMPLATE.'/store/common/product/product_review.phtml';?>
+							</div>
+							<?php } ?>
+						</div>
+						
+                          <?php if ($products) { ?>
+                        <div class="d_table m_bottom_5 w_full">
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-8 v_align_m d_table_cell f_none">
+								<h5 class="second_font color_dark tt_uppercase fw_light d_inline_m m_bottom_4">Related Products</h5>	
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-4 t_align_r d_table_cell f_none">
+								<!--carousel navigation-->
+								<div class="clearfix d_inline_b">
+									<button class="rp_prev black_hover button_type_4 grey state_2 tr_all d_block f_left vc_child m_right_5"><i class="fa fa-angle-left d_inline_m"></i></button>
+									<button class="rp_next black_hover button_type_4 grey state_2 tr_all d_block f_left vc_child"><i class="fa fa-angle-right d_inline_m"></i></button>
+								</div>
+							</div>
+						</div>
+						<hr class="divider_bg m_bottom_15">
+						<div class="row">
+							<!--carousel-->
+							<div class="owl-carousel m_bottom_20 m_xs_bottom_0" data-nav="rp_" data-owl-carousel-options='{
+								"stagePadding" : 15,
+								"margin" : 30,
+								"responsive" : {
+										"0" : {
+											"items" : 1
+										},
+										"321" : {
+											"items" : 2
+										},
+										"768" : {
+											"items" : 3
+										},
+										"992" : {
+											"items" : 4
+										}
+									}
+								}'>
+						
+                         <?php foreach ($products as $product) { ?>
+								<figure class="relative r_image_container">
+										 
+										<div class="m_bottom_15 relative">
+											  <?php if ($product['thumb']) { ?>
+												<a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="" class="c_image_1 tr_all" style="border:none"></a>
+												  <?php } ?>
+											<a href="<?php echo $product['href']; ?>"   class="tr_all color_white second_font qv_style_button quick_view tt_uppercase t_align_c d_block clickable d_xs_none"><i class="fa fa-eye d_inline_m m_right_10"></i><span class="fs_medium">Details</span></a>
+										</div>
+										<figcaption class="t_align_c">
+											<ul>
+												<li><a class="second_font sc_hover d_xs_block" href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></li>
+												 
+												<li>
+													      <?php if ($product['rating']) { ?>
+														 <div class="rating"><img src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+                                                     
+                                                        
+														<span class="color_light reviews d_none">
+															<a href="<?php echo $product['href']; ?>" class="sc_hover fs_medium fw_light"><?php echo $product['reviews']; ?> Review(s)</a> | <a href="<?php echo $product['href']; ?>" class="color_dark sc_hover fs_medium fw_light">Add Your Review</a>
+														</span>
+                                                           <?php } ?>
+												</li>
+                                                
+                                                  <?php if ($product['price']) { ?>
+												<li class="m_bottom_16">
+                                                
+                                               <?php if (!$product['special']) { ?>
+        <b class="scheme_color d_block"><?php echo $product['price']; ?></b>
+        <?php } else { ?>
+      <s><?php echo $product['price']; ?></s> <b class="scheme_color d_block"><?php echo $product['special']; ?></b>
+        <?php } ?>
+        <?php if ($product['tax']) { ?>
+        <br />
+        <small><?php echo $text_tax; ?> <?php echo $product['tax']; ?></small>
+        <?php } ?>
+                                                
+                                                
+                                                </li>
+                                                 <?php } ?>
+                                                
+												<li>
+													<div class="clearfix d_inline_b">
+														<button  onclick="addToWishList('<?php echo $product['product_id']; ?>');" class="button_type_8 grey state_2 tr_delay color_dark t_align_c vc_child f_left m_right_3 tooltip_container relative"><i class="fa fa-heart fs_large d_inline_m"></i><span class="tooltip top fs_small color_white hidden animated" data-show="fadeInDown" data-hide="fadeOutUp">Add to Wishlist</span></button>
+														<button  onclick="addToCompare('<?php echo $product['product_id']; ?>');"  class="button_type_8 grey state_2 tr_delay color_dark t_align_c vc_child f_left m_right_3 tooltip_container relative"><i class="fa fa-arrow-right fs_small d_inline_m"></i><i class="fa fa-arrow-left fs_small d_inline_m"></i><span class="tooltip top fs_small color_white hidden animated" data-show="fadeInDown" data-hide="fadeOutUp">Add to Compare</span></button>
+														<button   onclick="addToCart('<?php echo $product['product_id']; ?>');"  class="button_type_8 tr_all lbrown state_2 f_left color_dark t_align_c vc_child tooltip_container relative"><i class="fa fa-shopping-cart fs_large d_inline_m"></i><span class="tooltip top fs_small color_white hidden animated" data-show="fadeInDown" data-hide="fadeOutUp">Add to Cart</span></button>
+													</div>
+												</li>
+											</ul>
+										</figcaption>
+									</figure>
+							   <?php } ?>
+                             
+                             
+							</div>
+						</div>
+                        
+                        <?php } ?>
+                        
+                        
+					</section>
+				</div>
+			</div>
+
+<?php require_once DIR_TEMPLATE.'/store/common/product/product_footer.phtml'; ?> 
+
+<script src="<?php echo $this->layoutPath() ?>/plugins/jquery.easytabs.min.js"></script>

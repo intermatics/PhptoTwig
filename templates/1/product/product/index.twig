@@ -1,0 +1,332 @@
+{% extends 'layout/templates/1/default.twig' %}
+	
+{% block content %}	
+    	<!-- Begin Main -->
+		<div role="main" class="main product-info">
+		
+			<!-- Begin page top -->
+			<section class="page-top">
+				<div class="container">
+					<div class="page-top-in">
+						<ol class="breadcrumb pull-left"> 
+							{% set count = breadcrumbs|length %} 
+                            
+                            {% set counter = 0 %}
+							   
+							 {% for breadcrumb in  breadcrumbs %}
+                             {% set counter = counter + 1 %}  
+    <li>{% if(counter < count) %} <a href="{{ breadcrumb['href'] }}"> {% endif %} {{ breadcrumb['text'] }} 
+    {% if(counter < count) %}</a>{% endif %} </li>
+    {% endfor %}
+							
+						</ol>
+						<ul class="pager pull-right">
+							<li>&nbsp</li>
+						 
+						</ul>
+					</div>
+				</div>
+			</section>
+			<!-- End page top -->
+			
+			<div class="container">
+		 
+			
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="product-preview">
+						
+							<ul class="bxslider">
+							 {% if (thumb) %}
+								<li><img class="img-responsive" src="{{ thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" ></li>
+							  {% endif %}
+								  {% if (images) %}
+								    
+                                   {% for image in images %}
+								<li><img  class="img-responsive" src="{{ image['small'] }}" title="{{ heading_title }}" alt="{{ heading_title }}"></li> 
+								  {% endfor %}
+								
+								  {% endif %}
+								
+								
+								
+							</ul>
+
+							<ul class="list-inline" id="bx-pager">
+							 
+                            {% if thumb %}
+								<li><a data-slide-index="0" href="#"><img alt="" class="img-responsive"  src="{{ thumb }}" ></a></li>
+                                {% endif %}
+                                {%  set counter = 1 %} 
+								  {% if (images) %}
+								   
+                                   {% for image in images %}
+								<li><a data-slide-index="{{ counter }}" href="#"><img alt="" class="img-responsive" src="{{ image['small'] }}"></a></li>
+                                {% set counter = counter + 1 %} 
+                                {% endfor %}
+								
+								  {% endif %}
+							 </ul>
+							
+							
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="summary entry-summary">
+
+							<h3>{{ heading_title }}</h3>
+							
+							 
+                            {% if review_satus %}
+							<div class="reviews-counter clearfix">
+							
+                            {% if not rating is empty %}
+								<div class="rating {{ numberToWords(rating) }}-stars pull-left">
+									<div class="star-rating"></div>
+									<div class="star-bg"></div>
+								</div>
+								
+								<span>{{ rating }} Reviews</span>
+								{% endif %}
+							</div>
+							 {% endif %}
+							       
+							<p class="price">
+								 
+								   
+        {% if not special %}
+        <span class="amount">{{ price }}</span>
+        {% else %}
+        <span class="price price-old">{{ price }}</span> <span class="price-new">{{ special }}</span>
+        {% endif %}
+        <br />
+        {% if (tax) %}
+        <span class="price-tax">{{ text_tax }} {{ tax }}</span><br />
+        {% endif %}
+        {% if (points) %}
+        <span class="reward"><small>{{ text_points }} {{ points }}</small></span><br />
+        {% endif %}
+        {% if (discounts) %}
+        <br />
+        <div class="discount"> 
+          {% for discount in discounts %}
+          {{ sprintf(text_discount, discount['quantity'], discount['price']) }}<br />
+          {% endfor %}
+        </div>
+        {% endif %}
+       
+							</p>
+							{% if(false) %}
+							<ul class="list-inline list-select clearfix">
+								<li>
+									<div class="list-sort">
+										<select class="formDropdown">
+											<option>Select Size</option>
+											<option>XS</option>
+											<option>S</option>
+											<option>M</option>
+											<option>L</option>
+											<option>XL</option>
+											<option>XXL</option>
+										</select>
+									</div>
+								</li>
+								<li class="color"><a href="shop-product-detail1.html#" class="color1"></a></li>
+								<li class="color"><a href="shop-product-detail1.html#" class="color2"></a></li>
+								<li class="color"><a href="shop-product-detail1.html#" class="color3"></a></li>
+								<li class="color"><a href="shop-product-detail1.html#" class="color4"></a></li>
+							</ul>
+							{% endif %}
+			
+		{{ include('store_twig/common/product/product_options.twig') }}
+        	
+							 <form method="post" class="cart">
+								<div class="quantity pull-left">
+									<input type="button" class="minus" value="-"  onclick="changeQuantity('-');">
+									<input type="text" class="input-text qty" title="Qty" value="{{ minimum }}" name="quantity" id="quantityinput" min="{{ minimum }}" step="1">
+									<input type="button" class="plus" value="+" onclick="changeQuantity('+');">
+									    <input type="hidden" name="product_id" size="2" value="{{ product_id }}" />
+													
+									<script type="text/javascript">
+										function changeQuantity(type)
+										{
+											 
+											var qty = $('#quantityinput').val();
+											if(type=='+')
+											{
+												qty++;
+											}
+											else
+											{
+												qty--;
+											}
+											$('#quantityinput').val(qty);
+
+											validateQty();
+										}
+										
+										function validateQty()
+										{
+											var qty = $('#quantityinput').val();
+											if(qty < {{ minimum }})
+											{
+												qty =   {{ minimum }};
+											}
+											$('#quantityinput').val(qty);
+										}
+										
+									</script>
+								</div>
+								<a href="javascript:;" title="Add to compare" onclick="addToCompare('{{ product_id }}');" class="btn btn-grey">
+									<span><i class="fa fa-exchange"></i></span>
+								</a>
+								<a href="javascript:;" title="Add to wishlist" onclick="addToWishList('{{ product_id }}');" class="btn btn-grey">
+									<span><i class="fa fa-heart"></i></span>
+								</a>
+								<button type="button"    id="button-cart"  class="btn btn-primary btn-icon"><i class="fa fa-shopping-cart"></i> {{ button_cart }}</button>
+							 </form>
+							 <div class="share"><!-- AddThis Button BEGIN -->
+          <div class="addthis_default_style"><a class="addthis_button_compact"></a> <a class="addthis_button_email"></a><a class="addthis_button_print"></a> <a class="addthis_button_facebook"></a> <a class="addthis_button_twitter"></a></div>
+          <script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js"></script> 
+          <!-- AddThis Button END --> 
+        </div> <br/>
+							<ul class="list-unstyled product-meta">
+								 
+								 {% if (manufacturer) %}
+        <li><span>{{ text_manufacturer }}</span> <a href="{{ manufacturers }}">{{ manufacturer }}</a></li>
+        {% endif %}
+        <li><span>{{ text_model }}</span> {{ model }}</li>
+        {% if (reward) %}
+        <li><span>{{ text_reward }}</span> {{ reward }}</li>
+        {% endif %}
+        <li><span>{{ text_stock }}</span> {{ stock }}</li>
+							</ul>
+							
+							<div class="panel-group" id="accordion">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="shop-product-detail1.html#collapseOne">{{ tab_description }}</a> </h4>
+									</div>
+									<div id="collapseOne" class="panel-collapse collapse in">
+										<div class="panel-body"> 
+											{{ description|raw }}
+										</div>
+									</div>
+								</div>
+								 {% if (attribute_groups) %}
+								 
+								   
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="shop-product-detail1.html#collapseTwo">{{ tab_attribute }}</a> </h4>
+									</div>
+									<div id="collapseTwo" class="panel-collapse collapse">
+										<div class="panel-body"> 
+										<p>
+										  <table class="attribute">
+										      {% for attribute_group in attribute_groups %}
+										      <thead>
+										        <tr>
+										          <td colspan="2">{{ attribute_group['name']|raw }}</td>
+										        </tr>
+										      </thead>
+										      <tbody>
+										        {% for attribute in attribute_group['attribute'] %}
+										        <tr>
+										          <td>{{ attribute['name']|raw }}</td>
+										          <td>{{ attribute['text']|raw }}</td>
+										        </tr>
+										        {% endfor %}
+										      </tbody>
+										      {% endfor %}
+										    </table>
+										</p> </div>
+									</div>
+								</div>
+								 
+								
+								  {% endif %}
+								 {% if (review_status) %}
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="shop-product-detail1.html#collapseThree">Reviews</a> </h4>
+									</div>
+									<div id="collapseThree" class="panel-collapse collapse">
+										<div class="panel-body post-comments">
+									{{ include('store_twig/common/product/product_review.twig') }}
+										
+										 
+										
+										</div>
+									</div>
+								</div>
+								{% endif %}
+								
+								
+							</div>
+							
+
+						</div>
+					</div>
+				</div>
+			</div>
+			 {% if (products) %}
+			<!-- Begin Related Products -->
+			<section class="products-slide">
+				<div class="container">
+					<h2 class="title"><span>Related Products</span></h2>
+					<div class="row">
+						<div id="owl-product-slide" class="owl-carousel product-slide">
+							
+							{% for product in products  %}
+							<div class="col-md-12">
+								<div class="item product">
+									<div class="product-thumb-info">
+										
+										<div class="product-thumb-info-image">
+											<span class="product-thumb-info-act">
+												<a href="{{ product['href'] }}" class="view-product">
+													<span><i class="fa fa-external-link"></i></span>
+												</a>
+												<a onclick="addToCart('{{ product['product_id'] }}');"  class="add-to-cart-product">
+													<span><i class="fa fa-shopping-cart"></i></span>
+												</a>
+											</span>
+											<img alt="" class="img-responsive" src="{{ product['thumb'] }}">
+										</div>
+										
+										<div class="product-thumb-info-content">
+											<span class="price pull-right">
+											
+											{% if (product['price']) %}
+        
+									          {% if not product['special'] %}
+									          {{ product['price'] }}
+									          {% else %}
+									          <span class="price-old">{{ product['price'] }}</span> <span class="price-new">{{ product['special'] }}</span>
+									          {% endif %}
+									 
+									        {% endif %}
+																				
+											</span>
+											<h4><a href="{{ product['href'] }}">{{ product['name'] }}</a></h4>
+											<span class="item-cat"><small><img src="{{ basepath() }}/static/oc_catalog/default/image/stars-{{ product['rating'] }}.png" alt="{{ product['reviews'] }}" /></small></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+							
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- End Top Selling -->
+			 {% endif %}
+			
+			{{ column_left }}{{ column_right }}
+		</div>
+		<!-- End Main -->
+		
+{{ include('store_twig/common/product/product_footer.twig') }}
+{% endblock content %}

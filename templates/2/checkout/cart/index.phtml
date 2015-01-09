@@ -1,0 +1,210 @@
+    <!--Middle Part Start-->
+    <div id="content">
+      <!--Breadcrumb Part Start-->
+      <div class="breadcrumb">    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <?php } ?></div>
+    <?php if (@$attention) { ?>
+<div class="attention"><?php echo $attention; ?><img src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/close.png" alt="" class="close" /></div>
+<?php } ?>
+<?php if (@$success) { ?>
+<div class="success"><?php echo $success; ?><img src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/close.png" alt="" class="close" /></div>
+<?php } ?>
+<?php if (@$error_warning) { ?>
+<div class="warning"><?php echo $error_warning; ?><img src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/close.png" alt="" class="close" /></div>
+<?php } ?>
+
+      <!--Breadcrumb Part End-->
+        <h1><?php echo $heading_title; ?>
+        
+    <?php if (@$weight) { ?>
+    &nbsp;(<?php echo $weight; ?>)
+    <?php } ?>
+  </h1>
+  <?php if($cart->hasProducts()): ?>
+<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+        <div class="cart-info">
+          <table>
+            <thead>
+              <tr>
+            <td class="image"><?php echo $column_image; ?></td>
+            <td class="name"><?php echo $column_name; ?></td>
+            <td class="model"><?php echo $column_model; ?></td>
+            <td class="quantity"><?php echo $column_quantity; ?></td>
+            <td class="price"><?php echo $column_price; ?></td>
+            <td class="total"><?php echo $column_total; ?></td>
+              </tr>
+            </thead>
+            <tbody>
+            
+            
+                  <?php foreach ($products as $product) { ?>
+          <tr>
+            <td class="image"><?php if ($product['thumb']) { ?>
+              <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
+              <?php } ?></td>
+            <td class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+              <?php if (!$product['stock']) { ?>
+              <span class="stock">***</span>
+              <?php } ?>
+              <div>
+                <?php foreach ($product['option'] as $option) { ?>
+                - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
+                <?php } ?>
+              </div>
+              <?php if ($product['reward']) { ?>
+              <small><?php echo $product['reward']; ?></small>
+              <?php } ?></td>
+            <td class="model"><?php echo $product['model']; ?></td>
+            <td class="quantity"><input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" />
+              &nbsp;
+              <input type="image" src="'<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/update.png" alt="<?php echo $button_update; ?>" title="<?php echo $button_update; ?>" />
+              &nbsp;<a href="<?php echo $product['remove']; ?>"><img src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
+            <td class="price"><?php echo $product['price']; ?></td>
+            <td class="total"><?php echo $product['total']; ?></td>
+          </tr>
+          <?php } ?>
+          <?php foreach ($vouchers as $vouchers) { ?>
+          <tr>
+            <td class="image"></td>
+            <td class="name"><?php echo $vouchers['description']; ?></td>
+            <td class="model"></td>
+            <td class="quantity"><input type="text" name="" value="1" size="1" disabled="disabled" />
+              &nbsp;<a href="<?php echo $vouchers['remove']; ?>"><img src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
+            <td class="price"><?php echo $vouchers['amount']; ?></td>
+            <td class="total"><?php echo $vouchers['amount']; ?></td>
+          </tr>
+          <?php } ?>
+              
+              
+              
+              
+          
+            </tbody>
+          </table>
+        </div>
+      </form>
+      
+      <?php if ($coupon_status || $voucher_status || $reward_status || $shipping_status) { ?>
+ 	 <h3><?php echo $text_next; ?></h3>
+      <div class="content">
+        <p><?php echo $text_next_choice; ?></p>
+         <?php if ($coupon_status) { ?>
+        <div class="accordion">
+          <div class="accordion-heading"><?php echo $text_use_coupon; ?></div>
+          <div class="accordion-content">
+            <div class="content" id="coupon">
+               <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+        <?php echo $entry_coupon; ?>&nbsp;
+        <input type="text" name="coupon" value="<?php echo $coupon; ?>" />
+        <input type="hidden" name="next" value="coupon" />
+        &nbsp;
+        <input type="submit" value="<?php echo $button_coupon; ?>" class="button btn btn-primary" />
+      </form>
+              
+            </div>
+          </div>
+        </div>
+        <?php } ?>
+         <?php if ($voucher_status) { ?>
+        <div class="accordion">
+          <div class="accordion-heading"><?php echo $text_use_voucher; ?></div>
+          <div class="accordion-content">
+            <div class="content" id="voucher">
+              <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+        <?php echo $entry_voucher; ?>&nbsp;
+        <input type="text" name="voucher" value="<?php echo $voucher; ?>" />
+        <input type="hidden" name="next" value="voucher" />
+        &nbsp;
+        <input type="submit" value="<?php echo $button_voucher; ?>" class="button btn btn-primary" />
+      </form>
+            </div>
+          </div>
+        </div>
+         <?php } ?>
+         
+         
+          <?php if ($reward_status) { ?>
+        <div class="accordion">
+          <div class="accordion-heading"><?php echo $text_use_reward; ?></div>
+          <div class="accordion-content">
+            <div class="content" id="voucher">
+             <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+        <?php echo $entry_reward; ?>&nbsp;
+        <input type="text" name="reward" value="<?php echo $reward; ?>" />
+        <input type="hidden" name="next" value="reward" />
+        &nbsp;
+        <input type="submit" value="<?php echo $button_reward; ?>" class="button btn btn-primary" />
+      </form>
+            </div>
+          </div>
+        </div>
+         <?php } ?>
+         
+         
+             <?php if ($shipping_status) { ?>
+        <div class="accordion">
+          <div class="accordion-heading">Estimate Shipping & Taxes</div>
+          <div class="accordion-content">
+            <div style="display: block;" class="content" id="shipping">
+              <p><?php echo $text_shipping_detail; ?></p>
+              <table>
+                <tbody>
+                  <tr>
+                    <td><span class="required">*</span> Country:</td>
+                    <td><select name="country_id">
+              <option value=""><?php echo $text_select; ?></option>
+              <?php foreach ($countries as $country) { ?>
+              <?php if ($country['country_id'] == $country_id) { ?>
+              <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select></td>
+                  </tr>
+                  <tr>
+                    <td><span class="required">*</span> <?php echo $entry_zone; ?>:</td>
+                    <td><select name="zone_id">
+            </select></td>
+                  </tr>
+                  <tr>
+                    <td><span class="required" id="postcode-required">*</span> Post Code:</td>
+                    <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
+                  </tr>
+                </tbody>
+              </table>
+                <input type="button" value="<?php echo $button_quote; ?>" id="button-quote" class="button btn btn-primary" />
+            </div>
+          </div>
+        </div>
+      <?php } ?>
+      </div>
+      
+       <?php } ?>
+      <div class="cart-total">
+    <table id="total">
+      <?php foreach ($totals as $total) { ?>
+      <tr>
+        <td class="right"><b><?php echo $total['title']; ?>:</b></td>
+        <td class="right"><?php echo $total['text']; ?></td>
+      </tr>
+      <?php } ?>
+    </table>
+  </div>
+      <div class="buttons">
+    <div class="right"><a href="<?php echo $checkout; ?>" class="button btn btn-primary"><?php echo $button_checkout; ?></a></div>
+    <div class="center"><a href="<?php echo $continue; ?>" class="button btn btn-primary"><?php echo $button_shopping; ?></a></div>
+  </div>
+   <?php require_once DIR_TEMPLATE.'/store/checkout/cart/cart_footer.phtml'; ?>
+  
+  <?php else: ?>
+<div style="margin-bottom: 100px">
+<h4>Your cart is empty</h4>
+</div>
+<?php endif;?>
+  
+    </div>
+    <!--Middle Part End-->
+    
+   

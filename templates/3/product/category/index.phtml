@@ -1,0 +1,227 @@
+<!-- container 12 start -->
+<!-- breadcrumb start -->
+<div class="container_12 cf">
+<div class="grid_12">
+
+<div class="oc_breadcrumb">
+
+    	<?php $count = count($breadcrumbs); $counter=0;?>
+							    <?php foreach ($breadcrumbs as $breadcrumb) { $counter++; ?>
+							    
+     <a <?php if($counter < $count):?>href="<?php echo $breadcrumb['href']; ?>" <?php else:?> href="#" class="current" <?php endif; ?> > <?php echo $breadcrumb['text']; ?> <?php if($counter < $count):?>  / <?php endif; ?></a>
+    <?php } ?>
+      
+
+</div>
+
+</div>
+</div>
+<!-- breadcrumb end -->
+<!-- container 12 end -->
+
+
+
+
+
+
+<!-- container 12 start -->
+<div class="container_12 cf">
+
+
+<div class="grid_12">
+
+<div id="column-left">
+    
+	  <?php if ($categories) { ?>
+<div class="box border-top">
+
+	<div class="box-heading" >Sub Categories</div>
+
+	<div class="box-content box-category filterable">
+  
+    <?php if (count($categories) <= 5) { ?>
+    <ul  class="list-unstyled list-cat">
+      <?php foreach ($categories as $category) { ?>
+      <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
+      <?php } ?>
+    </ul>
+    <?php } else { ?>
+    <?php for ($i = 0; $i < count($categories);) { ?>
+    <ul  id="portfolio-nav">
+      <?php $j = $i + ceil(count($categories) / 4); ?>
+      <?php for (; $i < $j; $i++) { ?>
+      <?php if (isset($categories[$i])) { ?>
+      <li><a href="<?php echo $categories[$i]['href']; ?>"><?php echo $categories[$i]['name']; ?></a></li>
+      <?php } ?>
+      <?php } ?>
+    </ul>
+    <?php } ?>
+    <?php } ?> 
+ 
+      
+	</div>
+</div>
+ <?php } ?>
+ 
+ <div class="box border-top">
+
+	<div class="box-heading" >Categories</div>
+
+	<div class="box-content box-category filterable"> 
+								    <ul class="box-category list-unstyled list-cat">
+      <?php foreach ($side_categories as $category) { ?>
+      <li>
+        <?php if ($category['category_id'] == $category_id) { ?>
+        <a href="<?php echo $category['href']; ?>" class="active"><?php echo $category['name'];  ?></a>
+        <?php } else { ?>
+        <a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
+        <?php } ?>
+         
+      </li>
+      <?php } ?>
+    </ul>
+	</div>
+</div>        
+        
+        
+        
+    
+
+  <?php echo $column_left; ?><?php echo $column_right; ?>
+
+
+</div>
+
+
+
+
+
+<div class="portfolio-grid">
+   
+      	<h1 style="margin-top:0px"><?php echo $heading_title; ?></h1>
+								<?php if ($thumb || $description) { ?>
+								<p>
+								
+								 <?php if ($thumb) { ?>
+    <div class="image"><img src="<?php echo $thumb; ?>" alt="<?php echo $heading_title; ?>" /></div>
+    <?php } ?>
+    <?php if ($description) { ?>
+    <?php echo $description; ?>
+    <?php } ?>
+								</p>
+								<?php } ?>
+                                <div style="text-align:right; padding:10px;">
+                                       	<select class="formDropdown"  onchange="location = this.value;">
+										 
+										    <?php foreach ($limits as $limits) { ?>
+								        <?php if ($limits['value'] == $limit) { ?>
+								        <option value="<?php echo $limits['href']; ?>" selected="selected"><?php echo $limits['text']; ?></option>
+								        <?php } else { ?>
+								        <option value="<?php echo $limits['href']; ?>"><?php echo $limits['text']; ?></option>
+								        <?php } ?>
+								        <?php } ?>
+									</select>
+                                    
+                                      	<select onchange="location = this.value;" class="formDropdown">
+										 
+										 
+									        <?php foreach ($sorts as $sorts) { ?>
+									        <?php if ($sorts['value'] == $sort . '-' . $order) { ?>
+									        <option value="<?php echo $sorts['href']; ?>" selected="selected"><?php echo $sorts['text']; ?></option>
+									        <?php } else { ?>
+									        <option value="<?php echo $sorts['href']; ?>"><?php echo $sorts['text']; ?></option>
+									        <?php } ?>
+									        <?php } ?>
+									     
+									</select>
+                                </div>
+                                
+                                
+                                        <?php if ($categories) { ?>
+  <h3><?php echo $text_refine; ?></h3>
+  <div class="category-list">
+    <?php if (count($categories) <= 5) { ?>
+    <ul>
+      <?php foreach ($categories as $category) { ?>
+      <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
+      <?php } ?>
+    </ul>
+    <?php } else { ?>
+    <?php for ($i = 0; $i < count($categories);) { ?>
+    <ul>
+      <?php $j = $i + ceil(count($categories) / 4); ?>
+      <?php for (; $i < $j; $i++) { ?>
+      <?php if (isset($categories[$i])) { ?>
+      <li><a href="<?php echo $categories[$i]['href']; ?>"><?php echo $categories[$i]['name']; ?></a></li>
+      <?php } ?>
+      <?php } ?>
+    </ul>
+    <?php } ?>
+    <?php } ?>
+  </div>
+  <?php } ?>
+  
+  <div class="product-grid">
+        
+	<ul id="thumbs">
+    
+       <?php foreach ($products as $product) {    ?>
+       
+      
+       
+	<li class="item">
+    <a href="<?php echo $product['href']; ?>" title="<?php echo $product['name']; ?>">
+        
+        <div>
+        	<div class="image">
+                <img class="primary" src="<?php echo $product['thumb']; ?>" title="<?php echo $product['name']; ?>" alt="<?php echo $product['name']; ?>" />
+                		
+            </div>
+        
+        
+            <div class="title">
+            	
+                <h3><?php echo $product['name']; ?></h3>
+                
+                <div class="prices"> <?php if (!$product['special']) { ?>
+											        <?php echo $product['price']; ?>
+											        <?php } else { ?>
+											        <span class="price-old"><?php echo $product['price']; ?></span><br> <span class="price-new"><?php echo $product['special']; ?></span>
+											        <?php } ?>
+            
+             <?php if ($product['tax']) { ?> 
+											        <span class="price-tax"><?php echo $text_tax; ?> <?php echo $product['tax']; ?></span>
+											        <?php } ?></div>
+                
+                <div class="rating"><img src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+                
+            </div>
+        </div> 
+     </a>     </li>
+     
+        <?php } ?>
+     
+ 
+    
+    </ul>
+	</div>
+	</div>
+  
+  
+  
+<ul class="page_navigation">
+				 
+                
+                <?php foreach($paginationObject->outputLinksArray as $value):?>
+								 <li> <a href="<?php echo $value['href']?>"><?php echo $value['text']?></a> </li>
+								<?php endforeach;?>
+        
+	</ul>
+    
+     <div class="results" style="padding:10px; text-align:right"><?php echo $paginationObject->outputText?></div>
+
+</div>
+
+
+</div>
+<!-- container 12 end -->

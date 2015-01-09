@@ -1,0 +1,294 @@
+<? $this->layout('layout/templates/'.TID.'/default'); ?>		
+	<!-- BREADCRUMBS -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="bcrumbs">
+					<li><a href="<?php echo $this->basePath(); ?>/">Home</a></li>
+					<li><?php echo $heading_title; ?></li>
+                    
+                    
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- BREADCRUMBS -->
+    	<?php if ($thumb || $description) { ?>
+								
+              <section class="container slider-wrap">                   
+                                <p>
+								
+								 <?php if ($thumb) { ?>
+    <div class="image"><img src="<?php echo $thumb; ?>" alt="<?php echo $heading_title; ?>" /></div>
+    <?php } ?>
+    <?php if ($description) { ?>
+    <?php echo $description; ?>
+    <?php } ?>
+								</p>
+								
+   
+    
+    </section>
+	
+	<?php } ?>
+  
+  
+<section class="category-wrap cat"  data-twttr-rendered="true"  id="cat">
+		<div class="container">
+			<div class="row">
+				<div class="category-products">
+                
+                
+                
+					<div class="container">
+						<div class="row">
+							<div class="col-md-9 cw-left">
+                            
+                            
+								<!-- FILTERS -->
+								<div class="p-filter">
+									<span>
+										<em>Sort by:</em> 
+										<div class="c-selectParent1">
+											<select    onchange="location = this.value;">
+										 
+										    <?php foreach ($limits as $limits) { ?>
+								        <?php if ($limits['value'] == $limit) { ?>
+								        <option value="<?php echo $limits['href']; ?>" selected="selected"><?php echo $limits['text']; ?></option>
+								        <?php } else { ?>
+								        <option value="<?php echo $limits['href']; ?>"><?php echo $limits['text']; ?></option>
+								        <?php } ?>
+								        <?php } ?>
+									</select>
+										</div>
+									</span>
+									<span>
+										<em>Show:</em>
+										<div class="c-selectParent2">
+											<select onchange="location = this.value;" >
+										 
+										 
+									        <?php foreach ($sorts as $sortss) { ?>
+									        <?php if ($sortss['value'] == $sort . '-' . $order) { ?>
+									        <option value="<?php echo $sorts['href']; ?>" selected="selected"><?php echo $sortss['text']; ?></option>
+									        <?php } else { ?>
+									        <option value="<?php echo $sortss['href']; ?>"><?php echo $sortss['text']; ?></option>
+									        <?php } ?>
+									        <?php } ?>
+									     
+									</select>
+										</div>
+									</span>
+									 
+								</div>
+								<!-- FILTERS -->
+
+								<!-- PAGE NAV -->
+								<div class="col-md-12 page-nav page-nav-top">
+									<div class="row">
+										<div class="col-md-6">
+											<span class="no767"><?php echo $paginationObject->outputText?></span>
+										</div>
+										<div class="col-md-6">
+											<ul>
+                                            <?php foreach($paginationObject->outputLinksArray as $value):?>
+								<li><a href="<?php echo $value['href']?>"><?php echo $value['text']?></a></li>
+								<?php endforeach;?>
+												 
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!-- PAGE NAV -->
+                                
+                                
+                        <?php if ($categories) { ?>
+                        
+                         
+  <h3><?php echo $text_refine; ?></h3>
+  <div class="category-list">
+    <?php if (count($categories) <= 5) { ?>
+    <ul style=" width:100%">
+      <?php foreach ($categories as $category) { ?>
+      <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
+      <?php } ?>
+    </ul>
+    <?php } else { ?>
+    <?php for ($i = 0; $i < count($categories);) { ?>
+    <ul>
+      <?php $j = $i + ceil(count($categories) / 4); ?>
+      <?php for (; $i < $j; $i++) { ?>
+      <?php if (isset($categories[$i])) { ?>
+      <li><a href="<?php echo $categories[$i]['href']; ?>"><?php echo $categories[$i]['name']; ?></a></li>
+      <?php } ?>
+      <?php } ?>
+    </ul>
+    <?php } ?>
+    <?php } ?>
+  </div>
+  
+   
+  <?php } ?>
+
+								<!-- PRODUCTS -->
+								<ul class="p-list">
+                                
+                                <?php foreach ($products as $product): ?>
+									<li class="cp-list">
+										<div class="product-img">
+											<a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" class="img-responsive" alt=""/></a>
+											 
+										</div>
+
+										<div class="row">
+											<div class="col-md-7">
+												<div class="product-title"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></div>
+											</div>
+											<div class="col-md-5">
+												<div class="product-price">
+                                                  <?php if (!$product['special']) { ?>
+											        <?php echo $product['price']; ?>
+											        <?php } else { ?>
+											        <span class="price-old"><?php echo $product['price']; ?></span> <span class="price-new"><?php echo $product['special']; ?></span>
+											        <?php } ?>
+                                                </div>
+                                                
+                                                
+											</div>
+											<div class="col-md-12 product_hover">
+												<div class="cart-btns">
+													<div class="cb-btn-left"><a href="javascript:;" onclick="addToCart('<?php echo $product['product_id']; ?>');" >ADD TO CART</a></div>
+													<div class="cb-btn-right"><a href="<?php echo $product['href']; ?>">MORE INFO</a></div>
+												</div>
+												<div class="cart-add">
+													<div><a href="javascript:;" onclick="addToWishList('<?php echo $product['product_id']; ?>');">+ Add to Wishlist</a></div>
+													<div><a href="javascript:;" onclick="addToCompare('<?php echo $product['product_id']; ?>');" class="pull-right">+ Add to Compare</a></div>
+												</div>
+											</div>
+										</div>
+									</li>
+								<?php endforeach;?>
+							 
+								</ul>
+								<!-- PRODUCTS -->
+
+								<!-- PAGE NAV -->
+								<div class="col-md-12 page-nav page-nav1">
+									<div class="row">
+										<div class="col-md-5">
+											<span><?php echo $paginationObject->outputText?></span>
+										</div>
+
+										<div class="col-md-3">
+											<span class="pn-select">
+											<em>Show:</em>
+											<div class="c-selectParent2">
+														<select onchange="location = this.value;" >
+										 
+										 
+									        <?php foreach ($sorts as $sortss) { ?>
+									        <?php if ($sortss['value'] == $sort . '-' . $order) { ?>
+									        <option value="<?php echo $sorts['href']; ?>" selected="selected"><?php echo $sortss['text']; ?></option>
+									        <?php } else { ?>
+									        <option value="<?php echo $sortss['href']; ?>"><?php echo $sortss['text']; ?></option>
+									        <?php } ?>
+									        <?php } ?>
+									     
+									</select>
+											</div>
+											</span>
+										</div>
+
+										<div class="col-md-4">
+											<ul>
+												
+                                                   <?php foreach($paginationObject->outputLinksArray as $value):?>
+								<li><a href="<?php echo $value['href']?>"><?php echo $value['text']?></a></li>
+								<?php endforeach;?>
+												 
+                                                 
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!-- PAGE NAV -->
+							</div>
+
+							<!-- SIDEBAR -->
+							<div class="col-md-3 cw-right">
+								<div class="aside">
+									<div class="side-content">
+                                    
+                                    
+                                    								  <?php if ($categories) { ?>
+  <h5>Sub Categories</h5>
+ 
+    <?php if (count($categories) <= 5) { ?>
+    <ul  class="box-category list-unstyled list-cat" style="margin-bottom:20px">
+      <?php foreach ($categories as $category) { ?>
+      <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
+      <?php } ?>
+    </ul>
+    <?php } else { ?>
+    <?php for ($i = 0; $i < count($categories);) { ?>
+    <ul>
+      <?php $j = $i + ceil(count($categories) / 4); ?>
+      <?php for (; $i < $j; $i++) { ?>
+      <?php if (isset($categories[$i])) { ?>
+      <li><a href="<?php echo $categories[$i]['href']; ?>"><?php echo $categories[$i]['name']; ?></a></li>
+      <?php } ?>
+      <?php } ?>
+    </ul>
+    <?php } ?>
+    <?php } ?> 
+  <?php } ?>
+                                    
+                                    
+                                    
+                                    
+                                    
+										<h5>Categories</h5>
+										 
+                                         
+                                         
+                                         <ul class="box-category list-unstyled list-cat">
+      <?php foreach ($side_categories as $category) { ?>
+      <li>
+        <?php if ($category['category_id'] == $category_id) { ?>
+        <a href="<?php echo $category['href']; ?>" class="active"><?php echo $category['name'];  ?></a>
+        <?php } else { ?>
+        <a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
+        <?php } ?>
+        <?php if ($category['children']) { ?>
+        <ul class="list-unstyled list-cat">
+          <?php foreach ($category['children'] as $child) { ?>
+          <li>
+            <?php if ($child['category_id'] == $child_id) { ?>
+            <a href="<?php echo $child['href']; ?>" class="active"> - <?php echo $child['name']; ?></a>
+            <?php } else { ?>
+            <a href="<?php echo $child['href']; ?>"> - <?php echo $child['name']; ?></a>
+            <?php } ?>
+          </li>
+          <?php } ?>
+        </ul>
+        <?php } ?>
+      </li>
+      <?php } ?>
+    </ul>
+										 
+									</div>
+
+								 
+                                  <?php echo $column_left; ?><?php echo $column_right; ?>
+                                 
+                                 
+                                 </div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>

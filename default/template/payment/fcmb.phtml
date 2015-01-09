@@ -1,0 +1,26 @@
+<form action="<?php echo $action; ?>" method="post">
+<table class="table table-striped txn_id_table">
+ <tr>
+ <td>Transaction ID:</td>
+  <td><?php echo $txn_ref?><br/>
+  <small><strong>Please note down this ID.</strong></small>
+  
+  </td>
+ </tr>
+</table>
+ 
+ 
+
+<input type="hidden" name="mercId" value="<?php echo $mercid; ?>" /> 
+  <input type="hidden" name="amt" value="<?php echo $total; ?>" />
+  <input type="hidden" name="currCode" value="<?php echo $currency; ?>" />
+  <input type="hidden" name="prod" value="<?php echo $prod; ?>" />
+  <input type="hidden" name="orderId" value="<?php echo $txn_ref; ?>" />
+  <input type="hidden" name="email" value="<?php echo $email; ?>" />
+ 
+  <div class="buttons">
+    <div class="right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="button btn btn-primary" />
+    </div>
+  </div>
+</form>

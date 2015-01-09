@@ -1,0 +1,333 @@
+<section class="page-top">
+				<div class="container">
+					<div class="page-top-in">
+						<h2><span><?php echo $heading_title; ?> <?php if (isset($weight) && $weight) { ?>
+    &nbsp;(<?php echo $weight; ?>)
+    <?php } ?></span></h2>
+					</div>
+				</div>
+			</section>
+			
+<div class="container" id="content">
+<?php if (@$attention) { ?>
+<div class="attention"><?php echo $attention; ?><img src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/close.png" alt="" class="close" /></div>
+<?php } ?>
+<?php if (@$success) { ?>
+<div class="success"><?php echo $success; ?><img src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/close.png" alt="" class="close" /></div>
+<?php } ?>
+<?php if (@$error_warning) { ?>
+<div class="warning"><?php echo $error_warning; ?><img src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/close.png" alt="" class="close" /></div>
+<?php } ?>
+<?php if($cart->hasProducts()): ?>
+<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+ 
+
+				<div class="row featured-boxes">
+					<div class="col-md-12"> 
+						<div class="featured-box featured-box-cart">
+							<div class="box-content">
+								<form method="post" action="shop-cart-full.html">
+                                <?php $this->headStyle()->captureStart(); ?>
+                                @-moz-document url-prefix(){
+                                fieldset{
+                                display: table-cell;
+                                }
+                                }
+                                <?php $this->headStyle()->captureEnd();?>
+								<div class="table-responsive">
+                                
+                                	<table cellspacing="0" class="cart-table table"  >
+										<thead>
+											<tr>
+												<th class="product-thumbnail">
+													<?php echo $column_image; ?>
+												</th>
+												<th class="product-name">
+													<?php echo $column_name; ?> (<?php echo $column_model; ?>)
+												</th>
+												<th class="product-price">
+													<?php echo $column_price; ?>
+												</th>
+												<th class="product-quantity">
+													<?php echo $column_quantity; ?>
+												</th>
+												<th class="product-subtotal">
+													<?php echo $column_total; ?>
+												</th>
+												<th class="product-remove">&nbsp;
+													
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+										 <?php foreach ($products as $product) { ?>
+											<tr class="cart_table_item">
+												
+												<td class="product-thumbnail">
+													<?php if ($product['thumb']) { ?>
+										              <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
+										              <?php } ?>
+												</td>
+												<td class="product-name">
+													<a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?> (<?php echo $product['model']; ?>)</a>
+										              <?php if (!$product['stock']) { ?>
+										              <span class="stock">***</span>
+										              <?php } ?>
+										              <div>
+                <?php foreach ($product['option'] as $option) { ?>
+                - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
+                <?php } ?>
+              </div>
+              <?php if ($product['reward']) { ?>
+              <small><?php echo $product['reward']; ?></small>
+              <?php } ?>
+												</td>
+												<td class="product-price">
+													 <?php echo $product['price']; ?> 
+												</td>
+												<td class="product-quantity">
+													
+														<div class="quantity">
+														 
+															<input type="text" class="input-text qty text" title="Qty"  name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" />
+														 <input type="image" style="height: 16px; width:16px; border:none; margin-top: 18px;" src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/update.png" alt="<?php echo $button_update; ?>" title="<?php echo $button_update; ?>" />
+														</div>
+													
+												</td>
+												<td class="product-subtotal">
+													<span class="amount"><?php echo $product['total']; ?></span>
+												</td>
+												<td class="product-remove">
+													
+													<a title="Remove this item" class="remove"  href="<?php echo $product['remove']; ?>">
+													<i class="fa fa-times-circle"></i>
+													</a>
+												</td>
+											</tr>
+											
+											      <?php } ?>
+											      
+											      
+											      
+											      
+											      
+											      
+											      <?php foreach ($vouchers as $vouchers) { ?>
+											<tr class="cart_table_item">
+												
+												<td class="product-thumbnail">
+													 
+												</td>
+												<td class="product-name">
+													<?php echo $vouchers['description']; ?>
+												</td>
+												<td class="product-price">
+													<span class="amount"><?php echo $vouchers['amount']; ?></span>
+												</td>
+												<td class="product-quantity">
+													
+														<div class="quantity">
+														 
+															<input type="text" name="" value="1" size="1" disabled="disabled" />
+    
+              
+              
+														</div>
+													
+												</td>
+												<td class="product-subtotal">
+													<span class="amount"><?php echo $vouchers['amount']; ?></span>
+												</td>
+												<td class="product-remove">
+													
+													<a title="Remove this item" class="remove"  href="<?php echo $vouchers['remove']; ?>">
+													<i class="fa fa-times-circle"></i>
+													</a>
+												</td>
+											</tr>
+											
+											      <?php } ?>
+											      
+											      
+											      
+											      
+											      
+											      
+											      
+											
+											 
+										</tbody>
+									</table>
+								</div>
+							</form></div>
+						</div>
+					</div>
+				</div>
+
+				
+				<?php if ($coupon_status || $voucher_status || $reward_status || $shipping_status) { ?>
+  <h2><?php echo $text_next; ?></h2>
+  <div class="content">
+    <p><?php echo $text_next_choice; ?></p>
+    <table class="radio">
+      <?php if ($coupon_status) { ?>
+      <tr class="highlight">
+        <td><?php if ($next == 'coupon') { ?>
+          <input type="radio" name="next" value="coupon" id="use_coupon" checked="checked" />
+          <?php } else { ?>
+          <input type="radio" name="next" value="coupon" id="use_coupon" />
+          <?php } ?></td>
+        <td><label for="use_coupon"><?php echo $text_use_coupon; ?></label></td>
+      </tr>
+      <?php } ?>
+      <?php if ($voucher_status) { ?>
+      <tr class="highlight">
+        <td><?php if ($next == 'voucher') { ?>
+          <input type="radio" name="next" value="voucher" id="use_voucher" checked="checked" />
+          <?php } else { ?>
+          <input type="radio" name="next" value="voucher" id="use_voucher" />
+          <?php } ?></td>
+        <td><label for="use_voucher"><?php echo $text_use_voucher; ?></label></td>
+      </tr>
+      <?php } ?>
+      <?php if ($reward_status) { ?>
+      <tr class="highlight">
+        <td><?php if ($next == 'reward') { ?>
+          <input type="radio" name="next" value="reward" id="use_reward" checked="checked" />
+          <?php } else { ?>
+          <input type="radio" name="next" value="reward" id="use_reward" />
+          <?php } ?></td>
+        <td><label for="use_reward"><?php echo $text_use_reward; ?></label></td>
+      </tr>
+      <?php } ?>
+      <?php if ($shipping_status) { ?>
+      <tr class="highlight">
+        <td><?php if ($next == 'shipping') { ?>
+          <input type="radio" name="next" value="shipping" id="shipping_estimate" checked="checked" />
+          <?php } else { ?>
+          <input type="radio" name="next" value="shipping" id="shipping_estimate" />
+          <?php } ?></td>
+        <td><label for="shipping_estimate"><?php echo $text_shipping_estimate; ?></label></td>
+      </tr>
+      <?php } ?>
+    </table>
+  </div>
+  <div class="cart-module">
+    <div id="coupon" class="content" style="display: <?php echo ($next == 'coupon' ? 'block' : 'none'); ?>;">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+        <?php echo $entry_coupon; ?>&nbsp;
+        <input   type="text" name="coupon" value="<?php echo $coupon; ?>" />
+        <input type="hidden" name="next" value="coupon" />
+        &nbsp;
+        <input type="submit" value="<?php echo $button_coupon; ?>" class="button btn btn-primary btn-sm" />
+      </form>
+    </div>
+    <div id="voucher" class="content" style="display: <?php echo ($next == 'voucher' ? 'block' : 'none'); ?>;">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+        <?php echo $entry_voucher; ?>&nbsp;
+        <input    type="text" name="voucher" value="<?php echo $voucher; ?>" />
+        <input type="hidden" name="next" value="voucher" />
+        &nbsp;
+        <input type="submit" value="<?php echo $button_voucher; ?>" class="button btn btn-primary btn-sm" />
+      </form>
+    </div>
+    <div id="reward" class="content" style="display: <?php echo ($next == 'reward' ? 'block' : 'none'); ?>;">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+        <?php echo $entry_reward; ?>&nbsp;
+        <input  type="text" name="reward" value="<?php echo $reward; ?>" />
+        <input type="hidden" name="next" value="reward" />
+        &nbsp;
+        <input type="submit" value="<?php echo $button_reward; ?>" class="button btn btn-primary btn-sm" />
+      </form>
+    </div>
+    <div id="shipping" class="content" style="display: <?php echo ($next == 'shipping' ? 'block' : 'none'); ?>;">
+      <p><?php echo $text_shipping_detail; ?></p>
+      <table>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_country; ?></td>
+          <td><select class="form-control"  name="country_id">
+              <option value=""><?php echo $text_select; ?></option>
+              <?php foreach ($countries as $country) { ?>
+              <?php if ($country['country_id'] == $country_id) { ?>
+              <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
+          <td><select class="form-control"  name="zone_id">
+            </select></td>
+        </tr>
+        <tr>
+          <td><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
+          <td><input class="form-control" type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
+        </tr>
+      </table>
+      <input type="button" value="<?php echo $button_quote; ?>" id="button-quote" class="button btn btn-primary btn-sm" />
+    </div>
+  </div>
+  <?php } ?>
+   
+  
+  
+				
+				
+				
+				
+				
+				<div class="row featured-boxes">
+					
+				 
+					
+					<div class="col-md-4 pull-right">
+						<div class="featured-box featured-box-secondary">
+							<div class="box-content">
+								<h4>Shopping Cart Summary</h4>
+								<table cellspacing="0" class="cart-table" width="100%">
+									<tbody>
+									
+									<?php foreach ($totals as $total) { ?>
+      <tr class="cart-subtotal">
+        <th ><?php echo $total['title']; ?></th>
+        <td ><span class="amount"><?php echo $total['text']; ?></span></td>
+      </tr>
+      <?php } ?>
+      
+									 
+									</tbody>
+								</table>
+								  <p><a href="<?php echo $checkout; ?>" class="btn btn-danger btn-block btn-lg" ><?php echo $button_checkout; ?></a></p>
+   								 <p><a href="<?php echo $continue; ?>"  class="btn  btn-block btn-lg" ><?php echo $button_shopping; ?></a></p>
+								
+								
+							</div>
+						</div>
+					</div>
+				</div>
+
+ 	 
+</form>			
+
+
+<?php require_once DIR_TEMPLATE.'/store/checkout/cart/cart_footer.phtml'; ?>
+<?php else: ?>
+<div style="margin-bottom: 100px">
+<h4>Your cart is empty</h4>
+</div>
+<?php endif;?>
+
+
+</div>
+
+	 
+<?php echo $column_left; ?><?php echo $column_right; ?>
+
+ 
+
+    <?php echo $this->headLink()->prependStylesheet($this->basePath() . '/static/css/cart.css')
+								
+   ?>

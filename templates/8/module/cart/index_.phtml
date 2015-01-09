@@ -1,0 +1,74 @@
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-cart"></i> <span class="shopping-bag"><?php echo intval($text_items);?></span></a>
+							<div class="dropdown-menu">
+								<h3><?php echo $heading_title; ?></h3>
+								
+								 <?php if ($products || $vouchers) { ?>
+								<ul class="list-unstyled list-thumbs-pro">
+								
+								<?php foreach ($products as $product) { ?>
+									<li class="product">
+										<div class="product-thumb-info">
+											<a href="javascript:;" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = '<?php echo $this->url('store/checkout',array('controller'=>'cart','action'=>'index'));?>?remove=<?php echo $product['key']; ?>' : $('#cart').load('<?php echo $this->url('store/module',array('controller'=>'cart','action'=>'index')); ?>?remove=<?php echo $product['key']; ?>');" class="product-remove"><i class="fa fa-trash-o"></i></a>
+											<div class="product-thumb-info-image">
+											
+											<?php if ($product['thumb']) { ?>
+												<a href="<?php echo $product['href']; ?>"><img alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>"  width="60" src="<?php echo $product['thumb']; ?>"></a>
+											<?php } ?>	
+												
+											</div>
+											
+											<div class="product-thumb-info-content">
+												<h4><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></h4>
+												<div>
+              <?php foreach ($product['option'] as $option) { ?>
+              <span class="item-cat"> <small><?php echo $option['name']; ?> <?php echo $option['value']; ?></small></span>
+              <?php } ?>
+            </div>
+												<span class="item-cat"><small>x&nbsp;<?php echo $product['quantity']; ?></small></span>
+												<span class="price"><?php echo $product['total']; ?></span>
+											</div>
+										</div>
+									</li>
+									<?php } ?>
+									
+									  <?php foreach ($vouchers as $voucher) { ?>
+									<li class="product">
+										<div class="product-thumb-info">
+											<a href="javascript:;" class="product-remove" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = '<?php echo $this->url('store/checkout',array('controller'=>'cart','action'=>'index'));?>?remove=<?php echo $voucher['key']; ?>' : $('#cart').load('<?php echo $this->url('store/module',array('controller'=>'cart','action'=>'index'));?>?remove=<?php echo $voucher['key']; ?>' );"><i class="fa fa-trash-o"></i></a>
+											<div class="product-thumb-info-image">
+												 
+											</div>
+											
+											<div class="product-thumb-info-content">
+												<h4><?php echo $voucher['description']; ?></h4>
+												<span class="item-cat"><small>x&nbsp;1</small></span>
+												<span class="price"><?php echo $voucher['amount']; ?></span>
+											</div>
+										</div>
+									</li>
+							 	<?php } ?>
+								</ul> 
+        <?php foreach ($totals as $total) { ?>
+       
+        <ul class="list-inline cart-subtotals text-right">
+									<li class="cart-subtotal"><strong><?php echo $total['title']; ?></strong></li>
+									<li class="price"><span class="amount"><strong id="cart-total"><?php echo $total['text']; ?></strong></span></li>
+								</ul>
+        <?php } ?> 
+								<?php if(false):?>
+								<ul class="list-inline cart-subtotals text-right">
+									<li class="cart-subtotal"><strong>Subtotal</strong></li>
+									<li class="price"><span class="amount"><strong id="cart-total"><?php echo $text_items; ?></strong></span></li>
+								</ul>
+								<?php endif; ?>
+								<div class="cart-buttons text-right"> 
+									<button  class="btn btn-white" onclick="document.location.replace('<?php echo $cart; ?>')" ><?php echo $text_cart; ?></button>
+									<button class="btn btn-primary" onclick="document.location.replace('<?php echo $checkout; ?>')" ><?php echo $text_checkout; ?></button>
+								</div>
+								  <?php } else { ?>
+								  <div class="empty"><?php echo $text_empty; ?></div>
+    							<?php } ?>
+								
+								
+							</div>
+						

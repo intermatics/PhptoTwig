@@ -1,0 +1,46 @@
+<form action="<?php echo $action; ?>" method="post">
+<table class="table table-striped txn_id_table">
+ <tr>
+ <td>Transaction ID:</td>
+  <td><?php echo $txn_ref?><br/>
+  <small><strong>Please note down this ID.</strong></small>
+  
+  </td>
+    <td><img src="<?php echo $this->basepath()?>/img/interswitchicon.png"></td>
+ </tr>
+</table>
+ 
+ 
+
+<input type="hidden" name="pay_item_id" value="<?php echo $pay_item_id; ?>" />
+<input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
+  <input type="hidden" name="amount" value="<?php echo $total; ?>" />
+  <input type="hidden" name="currency" value="<?php echo $currency; ?>" />
+  <input type="hidden" name="site_redirect_url" value="<?php echo $callback; ?>" />
+  <input type="hidden" name="txn_ref" value="<?php echo $txn_ref; ?>" />
+  <input type="hidden" name="hash" value="<?php echo $hash; ?>" />
+  
+  <?php if(!empty($site_name)):?>
+   <input type="hidden" name="site_name" value="<?php echo $site_name; ?>" />
+  <?php endif;?>
+  
+    <?php if(!empty($cust_id)):?>
+   <input type="hidden" name="cust_id" value="<?php echo $cust_id; ?>" />
+  <?php endif;?>
+  
+  
+    <?php if(!empty($cust_id_desc)):?>
+   <input type="hidden" name="cust_id_desc" value="<?php echo $cust_id_desc; ?>" />
+  <?php endif;?>
+  
+  
+    <?php if(!empty($cust_name)):?>
+   <input type="hidden" name="cust_name" value="<?php echo $cust_name; ?>" />
+  <?php endif;?>
+  
+  <div class="buttons">
+    <div class="right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="button btn btn-primary" />
+    </div>
+  </div>
+</form>

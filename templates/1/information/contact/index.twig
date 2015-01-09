@@ -1,0 +1,152 @@
+ 
+			<!-- Begin page top -->
+			<section class="page-top">
+				<div class="container">
+					<div class="page-top-in">
+						<h2><span>{{ heading_title }}</span></h2>
+					</div>
+				</div>
+			</section>
+			<!-- End page top -->
+			
+			
+	<!-- End page top -->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+					 <form action="{{ action }}" method="post" enctype="multipart/form-data">
+						<div class="contact-content">
+							<h4>{{ text_contact }}</h4>
+							<p>Instructions</p>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-xs-6">
+										<label for="yname">{{ entry_name }}*</label>
+										<input required="required" type="text" class="form-control" id="yname" name="name" value="{{ name }}" >
+									    <?php if ($error_name) { ?>
+									    <span class="error">{{ error_name }}</span>
+									    <?php } ?>
+									</div>
+									<div class="col-xs-6">
+										<label for="yemail">{{ entry_email }}*</label>
+										<input type="email" class="form-control" id="yemail" name="email" value="{{ email }}"  required="required">
+									   <?php if ($error_email) { ?>
+    <span class="error">{{ error_email }}</span>
+    <?php } ?>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="ymessage">{{ entry_enquiry }}</label>
+								<textarea class="form-control" id="ymessage" name="enquiry" rows="3"  required="required">{{ enquiry }}</textarea>
+								 <?php if ($error_enquiry) { ?>
+    <span class="error">{{ error_enquiry }}</span>
+    <?php } ?>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-xs-6">
+										<label for="subject">{{ entry_captcha }}</label>
+										<input type="text" class="form-control" id="subject"  name="captcha" value="{{ captcha }}" required="required">
+									  <?php if ($error_captcha) { ?>
+    <span class="error">{{ error_captcha }}</span>
+    <?php } ?>
+									</div>
+									<div class="col-xs-6" style="margin-top: 26px">
+									 
+										    <img src="{{ this->basepath();?>/store/information/contact/captcha" alt="" />
+									</div>
+								</div>
+							</div>
+							
+							
+							
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</div>
+						</div>
+					
+					
+					</div>
+					<div class="col-sm-6">
+						<div class="contact-content">
+							<h4>{{ text_location }}</h4>
+							<p>{{ store }}</p>
+							<address>
+								<i class="fa fa-map-marker"></i> {{ address }}<br>
+								 <i class="fa fa-phone"></i> <?php if ($telephone) { ?>
+						        
+						        {{ telephone }}<br />
+						        <br />
+						        <?php } ?><br>
+						        <?php if ($fax) { ?>
+								<i class="fa fa-print"></i>  {{ fax }}<br>
+								<?php } ?> 
+							</address>
+						</div>
+						{{ column_left }}{{ column_right }}
+					</div>
+				</div>
+			</div>
+			{{ content_bottom }}
+             <?php $map = $this->getTemplateRecord('map') }}
+             <?php if($map['enabled']): ?>
+			<!-- Google Map --> 
+			<div id="googlemaps"></div>
+			<!-- Google Map -->
+    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script src="{{ this->layoutPath() }}/vendor/jquery.gmap.js"></script>
+			<script>
+
+		/*
+		Map Settings
+
+			Find the Latitude and Longitude of your address:
+				- http://universimmedia.pagesperso-orange.fr/geo/loc.htm
+				- http://www.findlatitudeandlongitude.com/find-address-from-latitude-and-longitude/
+
+		*/
+
+		// Map Markers
+		var mapMarkers = [{
+			address: "{{ map['values']['address'] }}", 
+			popup: false,
+			icon: {
+				image: "{{ this->layoutPath() }}/images/maker.png",
+				iconsize: [28, 42],
+				iconanchor: [28, 32]
+			}
+		}];
+
+		// Map Initial Location
+		var initLatitude = {{ floatval($map['values']['lat']) }};
+		var initLongitude = {{ floatval($map['values']['long']) }};
+
+		// Map Extended Settings
+		var mapSettings = {
+			controls: {
+				panControl: true,
+				zoomControl: true,
+				mapTypeControl: true,
+				scaleControl: true,
+				streetViewControl: true,
+				overviewMapControl: true
+			},
+			scrollwheel: false,
+			markers: mapMarkers,
+			latitude: initLatitude,
+			longitude: initLongitude,
+			zoom: 15
+		};
+
+		var map = $("#googlemaps").gMap(mapSettings);
+
+		// Map Center At
+		var mapCenterAt = function(options, e) {
+			e.preventDefault();
+			$("#googlemaps").gMap("centerAt", options);
+		}
+
+	</script>
+    
+    <?php endif }}

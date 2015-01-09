@@ -1,0 +1,297 @@
+<? $this->layout('layout/templates/'.TID.'/default'); ?>		
+	 
+	<!--breadcrumbs-->
+			<div class="breadcrumbs bg_grey_light_2 fs_medium fw_light">
+				<div class="container">
+                
+                 <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <?php echo $breadcrumb['separator']; ?><a  class="sc_hover" href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <?php } ?>
+                
+				 
+                    
+                    
+				</div>
+			</div>
+            
+       
+			<!--main content-->
+			<div class="page_section_offset">
+				<div class="container">
+					<div class="row">
+						<aside class="col-lg-3 col-md-3 col-sm-3 m_xs_bottom_30 p_top_4">
+							 
+							<!--categories widget-->
+							<section class="m_bottom_30">
+								<h5 class="color_dark tt_uppercase second_font fw_light m_bottom_13">Categories</h5>
+								<hr class="divider_bg m_bottom_23">
+                                 
+								<ul class="categories_list second_font w_break">
+                                
+                                
+                                
+                                
+                                
+                                   <?php foreach ($side_categories as $category) { ?>
+      <li  class="relative">
+        <?php if ($category['category_id'] == $category_id) { ?>
+        <a  class="fs_large_0 d_inline_b tr_delay" href="<?php echo $category['href']; ?>" class="active"><?php echo $category['name'];  ?></a>
+        <?php if ($category['children']) { ?>
+        <button class="open_sub_categories fs_medium"></button>
+        <?php } ?>
+        
+        
+        <?php } else { ?>
+        <a  class="fs_large_0 d_inline_b tr_delay" href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
+        <?php if ($category['children']) { ?>
+        <button class="open_sub_categories fs_medium"></button>
+        <?php } ?>
+        
+        
+        <?php } ?>
+        <?php if ($category['children']) { ?>
+        <ul class="d_none">
+          <?php foreach ($category['children'] as $child) { ?>
+          <li class="relative">
+            <?php if ($child['category_id'] == $child_id) { ?>
+            <a class="tr_delay d_inline_b" href="<?php echo $child['href']; ?>" class="active"><?php echo $child['name']; ?></a>
+            <?php } else { ?>
+            <a class="tr_delay d_inline_b" href="<?php echo $child['href']; ?>"> <?php echo $child['name']; ?></a>
+            <?php } ?>
+          </li>
+          <?php } ?>
+        </ul>
+        <?php } ?>
+      </li>
+      <?php } ?> 
+      
+                       
+								</ul>
+							</section>
+						 
+							
+						 
+							
+						 
+						</aside>
+                      
+						<main class="col-lg-9 col-md-9 col-sm-9 m_bottom_30 m_xs_bottom_10">
+							<h2 class="fw_light second_font color_dark tt_uppercase m_bottom_27"><?php echo $heading_title; ?></h2>
+                            <?php if ($thumb || $description) { ?>
+							<figure class="clearfix m_bottom_50 m_xs_bottom_30">
+								<div class="f_left m_right_15 f_xs_none m_xs_right_0 m_xs_bottom_10 w_lg_auto col-md-7 col-sm-7 p_left_0 p_xs_right_0">
+									<div class="r_image_container">
+                                     <?php if ($thumb) { ?>
+										<img src="<?php echo $thumb; ?>" alt="<?php echo $heading_title; ?>">
+                                     <?php } ?>
+                                        
+									</div>
+								</div>
+								<figcaption>
+                                 <?php if ($description) { ?>
+									<p class="fw_light m_bottom_13 p_top_4"> <?php echo $description; ?></p>
+						  <?php } ?>
+								</figcaption>
+							</figure>
+							
+                            <?php } ?>
+                            
+                            
+                            
+                            
+							<div class="d_table w_full m_bottom_5">
+								<div class="col-lg-6 col-md-6 col-sm-6 d_xs_block v_align_m d_table_cell f_none fs_medium color_light fw_light m_xs_bottom_5">
+									<div class="d_inline_m m_right_5">Sort by:</div>
+									<div class="  relative d_inline_m m_right_2">
+										<div class="select_title type_3 fs_medium fw_light color_light relative d_none tr_all">
+                                    <?php foreach ($sorts as $sortss) { ?>
+									        <?php if ($sortss['value'] == $sort . '-' . $order) { ?>
+                                       <?php echo $sortss['text']; ?>
+                                        <?php } ?>
+                                         <?php } ?>
+                                        </div>
+										<select class="form-control"  onchange="location = this.value;" >
+										     <?php foreach ($sorts as $sortss) { ?>
+									        <?php if ($sortss['value'] == $sort . '-' . $order) { ?>
+									        <option value="<?php echo @$sorts['href']; ?>" selected="selected"><?php echo $sortss['text']; ?></option>
+									        <?php } else { ?>
+									        <option value="<?php echo $sortss['href']; ?>"><?php echo $sortss['text']; ?></option>
+									        <?php } ?>
+									        <?php } ?>
+										</select>
+										<ul class="options_list d_none tr_all hidden bg_grey_light_2"></ul>
+									</div>
+									 
+								</div>
+								 
+							</div>
+							<hr class="divider_light m_bottom_5">
+							<div class="d_table w_full m_bottom_15">
+								<div class="col-lg-6 col-md-6 col-sm-6 d_xs_block v_align_m d_table_cell f_none fs_medium color_light fw_light m_xs_bottom_5">
+									<div class="d_inline_m m_right_17"><?php echo $paginationObject->outputText?></div>
+									<div class="d_inline_m m_right_8">Show:</div>
+									<div class=" relative d_inline_m">
+									 
+										<select  class="form-control"  onchange="location = this.value;">
+											    <?php foreach ($limits as $limitss) { ?>
+								        <?php if ($limitss['value'] == $limit) { ?>
+								        <option value="<?php echo $limitss['href']; ?>" selected="selected"><?php echo $limitss['text']; ?></option>
+								        <?php } else { ?>
+								        <option value="<?php echo $limitss['href']; ?>"><?php echo $limitss['text']; ?></option>
+								        <?php } ?>
+								        <?php } ?>
+										</select>
+										<ul class="options_list d_none tr_all hidden bg_grey_light_2"></ul>
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6 col-sm-6 d_xs_block v_align_m d_table_cell f_none t_align_r t_xs_align_l p_xs_left_0">
+									<!--pagination-->
+									<nav class="d_inline_b">
+										<ul class="hr_list">
+                                        <?php foreach($paginationObject->outputLinksArray as $value):?>
+								<li class="m_right_3"><a href="<?php echo $value['href']?>" class="button_type_4 tr_delay grey state_2 d_block vc_child t_align_c"><span class="d_inline_m fs_small"><?php echo $value['text']?></span></a></li>
+								<?php endforeach;?>
+										 
+                                            
+                                            
+										</ul>
+									</nav>
+								</div>
+							</div>
+                            
+                                         <?php if ($categories) { ?>
+                        
+                         
+  <h3><?php echo $text_refine; ?></h3>
+  <div class="category-list">
+    <?php if (count($categories) <= 5) { ?>
+    <ul style=" width:100%">
+      <?php foreach ($categories as $category) { ?>
+      <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
+      <?php } ?>
+    </ul>
+    <?php } else { ?>
+    <?php for ($i = 0; $i < count($categories);) { ?>
+    <ul>
+      <?php $j = $i + ceil(count($categories) / 4); ?>
+      <?php for (; $i < $j; $i++) { ?>
+      <?php if (isset($categories[$i])) { ?>
+      <li><a href="<?php echo $categories[$i]['href']; ?>"><?php echo $categories[$i]['name']; ?></a></li>
+      <?php } ?>
+      <?php } ?>
+    </ul>
+    <?php } ?>
+    <?php } ?>
+  </div>
+  
+   
+  <?php } ?>
+                            
+							<!--isotope-->
+							<div id="can_change_layout" class="  three_columns wrapper m_bottom_10 m_xs_bottom_0"  >
+                            
+                            <?php foreach ($products as $product): ?>
+								<!--isotope item-->
+								<div class="category_isotope_item list_view_type">
+									<figure class="product_item type_2 c_image_container relative frame_container t_sm_align_c r_image_container qv_container">
+										<!--image & buttons & label-->
+										<div class="relative">
+											<div class="d_block">
+                                             <?php if ($product['thumb']) { ?>
+												<a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="" class="c_image_1 tr_all" style="border:none"></a>
+												  <?php } ?>
+											</div>
+											 
+										 
+										</div>
+										<figcaption class="bg_white relative p_bottom_0">
+											<div class="row">
+												<div class="col-lg-7 col-md-7 m_bottom_9">
+													<a class="second_font sc_hover d_xs_block" href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+													<div class="relative">
+														<a href="javascript:;" class="fw_light color_light sc_hover category_link tr_all"><?php echo $heading_title; ?></a><br class="d_none">
+                                                        
+                                                        <?php if ($product['rating']) { ?>
+														 <div class="rating"><img src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+                                                     
+                                                        
+														<span class="color_light reviews d_none">
+															<a href="<?php echo $product['href']; ?>" class="sc_hover fs_medium fw_light"><?php echo $product['reviews']; ?> Review(s)</a> | <a href="<?php echo $product['href']; ?>" class="color_dark sc_hover fs_medium fw_light">Add Your Review</a>
+														</span>
+                                                           <?php } ?>
+                                                        
+													</div>
+													<hr class="d_none divider_light m_bottom_15">
+													<p class="fw_light d_none m_bottom_14 color_grey"><?php echo $product['description']; ?></p>
+													<hr class="d_none divider_light m_bottom_15">
+												</div>
+                                                <?php if ($product['price']) { ?>
+												<div class="col-lg-5 col-md-5 color_light fs_large second_font t_align_r t_sm_align_c m_bottom_9">
+                                                 <?php if (!$product['special']) { ?>
+        <b class="scheme_color d_block"><?php echo $product['price']; ?></b>
+        <?php } else { ?>
+      <s><?php echo $product['price']; ?></s> <b class="scheme_color d_block"><?php echo $product['special']; ?></b>
+        <?php } ?>
+        <?php if ($product['tax']) { ?>
+        <br />
+        <small><?php echo $text_tax; ?> <?php echo $product['tax']; ?></small>
+        <?php } ?>
+													 
+												</div>
+                                                <?php } ?>
+                                                
+                                                
+											</div>
+											<button   onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button_type_2 m_bottom_9 d_block w_full t_align_c lbrown state_2 tr_all second_font fs_medium tt_uppercase"><i class="fa fa-shopping-cart d_inline_m m_right_9"></i>Add To Cart</button>
+											<button  onclick="addToWishList('<?php echo $product['product_id']; ?>');" class="button_type_8 grey state_2 tr_delay color_dark t_align_c vc_child f_left m_right_3 tooltip_container relative d_none"><i class="fa fa-heart fs_large d_inline_m"></i><span class="tooltip top fs_small color_white hidden animated" data-show="fadeInDown" data-hide="fadeOutUp">Add to Wishlist</span></button>
+											<button  onclick="addToCompare('<?php echo $product['product_id']; ?>');" class="button_type_8 grey state_2 tr_delay color_dark t_align_c vc_child f_left m_right_3 tooltip_container relative d_none"><i class="fa fa-arrow-right fs_small d_inline_m"></i><i class="fa fa-arrow-left fs_small d_inline_m"></i><span class="tooltip top fs_small color_white hidden animated" data-show="fadeInDown" data-hide="fadeOutUp">Add to Compare</span></button>
+											<div class="clearfix t_sm_align_c t_xs_align_l">
+												<a href="javascript:;"   onclick="addToWishList('<?php echo $product['product_id']; ?>');" class="second_font f_sm_none d_sm_inline_b f_xs_left fs_medium sc_hover f_left">Add to Wishlist</a>
+												<a href="javascript:;"  onclick="addToCompare('<?php echo $product['product_id']; ?>');" class="second_font f_sm_none d_sm_inline_b f_xs_right fs_medium sc_hover f_right">Add to Compare</a>
+											</div>
+										</figcaption>
+									</figure>
+								</div>
+							 <?php endforeach; ?>
+                             
+                                
+							</div>
+							<hr class="m_bottom_5 divider_light">
+							<div class="d_table w_full m_bottom_5">
+								<div class="col-lg-6 col-md-6 col-sm-6 d_xs_block v_align_m d_table_cell f_none fs_medium color_light fw_light m_xs_bottom_5">
+									<div class="d_inline_m m_right_17"><?php echo $paginationObject->outputText?></div>
+									<div class="d_inline_m m_right_8">Show:</div>
+									<div class=" relative d_inline_m">
+										<div class="select_title type_2 fs_medium fw_light color_light relative d_none tr_all">9</div>
+											<select  class="form-control"  onchange="location = this.value;">
+											    <?php foreach ($limits as $limits) { ?>
+								        <?php if ($limits['value'] == $limit) { ?>
+								        <option value="<?php echo $limits['href']; ?>" selected="selected"><?php echo $limits['text']; ?></option>
+								        <?php } else { ?>
+								        <option value="<?php echo $limits['href']; ?>"><?php echo $limits['text']; ?></option>
+								        <?php } ?>
+								        <?php } ?>
+										</select>
+										<ul class="options_list d_none tr_all hidden bg_grey_light_2"></ul>
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6 col-sm-6 d_xs_block v_align_m d_table_cell f_none t_align_r t_xs_align_l p_xs_left_0">
+									<!--pagination-->
+									<nav class="d_inline_b">
+										<ul class="hr_list">
+                                        
+										      <?php foreach($paginationObject->outputLinksArray as $value):?>
+								<li class="m_right_3"><a href="<?php echo $value['href']?>" class="button_type_4 tr_delay grey state_2 d_block vc_child t_align_c"><span class="d_inline_m fs_small"><?php echo $value['text']?></span></a></li>
+								<?php endforeach;?>
+                                            
+                                            
+										</ul>
+									</nav>
+								</div>
+							</div>
+						</main>
+                         
+					</div>
+				</div>
+			</div>
+ 

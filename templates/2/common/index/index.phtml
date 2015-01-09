@@ -1,0 +1,125 @@
+  <!--Middle Part Start-->
+    <div id="content">
+    
+       <?php
+$slideshow = $this->getTemplateRecord('slideshow');  
+$misc = $this->getTemplateRecord('misc');
+?>
+    <?php if($slideshow['enabled']): ?>
+     <!--Slideshow Part Start-->
+      <div class="slider-wrapper">
+        <div id="slideshow" class="nivoSlider"> 
+          <?php $options = $slideshow['values']; ?>
+                 <?php for($i=1; $i<=10;$i++): ?>
+                  <?php if(!empty($options['slideshow_image'.$i])): ?>
+        <a href="<?php echo $options['link'.$i] ?>"><img src="<?php   echo resizeMerchantImage($options['slideshow_image'.$i],920,300,$this->basePath()) ?>" alt="slideshow-<?php echo $i; ?>" /></a>  
+        		<?php endif;?>
+                <?php endfor; ?>
+         </div>
+      </div>
+      <script type="text/javascript">
+$(document).ready(function() {
+	$('#slideshow').nivoSlider();
+});
+</script>
+      <!--Slideshow Part End-->
+    <?php endif;?>
+   <?php
+//get products table
+$productTable = $this->getClass('Store\Model\Catalog\Product'); 
+$homefeaturedp = $this->getTemplateRecord('homefeaturedp');
+
+ ?>  
+ 
+   <?php if($homefeaturedp['enabled']): ?> 
+    <?php $homelp = $homefeaturedp;  ?>  
+ 
+    <!--Featured Product Part Start-->
+      <div class="box">
+        <div class="box-heading"><?php if(!empty($misc['values']['featured_products'])){ echo @$misc['values']['featured_products']; }else{ echo 'Featured'; }   ?></div>
+        <div class="box-content">
+          <div class="box-product">
+          
+           <?php for($i=1; $i<=10;$i++): ?>
+           
+             	 <?php if(!empty($homelp['values']['product'.$i]) && $productTable->productExists(trim($homelp['values']['product'.$i]))):?>
+                                             
+              <?php $product = $productTable->getProduct(trim($homelp['values']['product'.$i])); 
+											  		if ($product['image']) {
+					$image = resizeMerchantImage($product['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'),$this->basePath());
+				} else {
+					$image = false;
+				}
+	
+				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+					$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$price = false;
+				}
+	
+				if ((float)$product['special']) {
+					$special = $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$special = false;
+				}
+	
+				if ($this->config->get('config_tax')) {
+					$tax = $this->currency->format((float)$product['special'] ? $product['special'] : $product['price']);
+				} else {
+					$tax = false;
+				}
+	
+				if ($this->config->get('config_review_status')) {
+					$rating = (int)$product['rating'];
+				} else {
+					$rating = false;
+				}
+							  
+							
+							
+							 ?>        
+            <div>
+            <?php if ($image) { ?>
+              <div class="image"><a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>"><img src="<?php echo $image; ?>" alt="<?php echo $product['name']; ?>" /></a></div>
+                <?php } ?>
+              <div class="name"><a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>"><?php echo $product['name']; ?></a></div>
+              <div class="price"> 
+              
+              
+                                   <?php if (!$special) { ?>
+        <?php echo $price; ?> 
+        <?php } else { ?>
+      <s> <?php echo $price; ?></s> <b ><?php echo $special; ?></b>
+        <?php } ?>
+       		 <?php if ($tax) { ?> 
+        <br />
+        <small>Tax: <?php echo $tax; ?></small>
+        <?php } ?>
+                                 
+              
+              
+              
+               </div>
+              <div class="rating"><img src="<?php echo $this->layoutPath(); ?>/image/stars-<?php echo $product['reviews']; ?>.png" alt="Based on <?php echo $product['reviews']; ?> reviews." /></div>
+              <div class="cart">
+                <input type="button" value="Add to Cart" onClick="addToCart('<?php echo $product['product_id']; ?>');" class="button" />
+              </div>
+            </div>
+            <?php endif; ?>
+            
+            <?php endfor; ?>
+            
+      
+          </div>
+        </div>
+      </div>
+      <!--Featured Product Part End-->
+ 
+ <?php endif; ?>
+    
+     <?php echo $content_top; ?>
+   
+       <?php echo $content_bottom; ?>
+   
+   
+    </div>

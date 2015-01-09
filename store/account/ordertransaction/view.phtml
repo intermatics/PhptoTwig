@@ -1,0 +1,49 @@
+<?php echo $header; ?> 
+<div id="content"> 
+
+  <div class="oc_breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <?php } ?>
+  </div>
+  <h1><?php echo $heading_title; ?></h1> 
+  
+<table class="table table-striped txn_id_table" >
+
+<tr>
+<td>Status:</td>
+<td><?php echo getStatus($trow->status); ?></td>
+</tr>
+<tr>
+<td>Amount:</td>
+<td><?php echo number_format($trow->amount,2) ?></td>
+</tr>
+<tr>
+<td>Order Number:</td>
+<td><?php echo $trow->order_id; ?></td>
+</tr>
+<tr>
+<td>Payment Method:</td>
+<td><?php echo $trow->payment_method; ?></td>
+</tr>
+<?php $params = unserialize($trow->params); ?>
+<?php if(is_array($params)):?>
+<?php foreach($params as $key=>$value):?>
+<tr>
+<td><?php $key; ?>:</td>
+<td><?php echo $value; ?></td>
+</tr>
+<?php endforeach;?>
+<?php endif; ?>
+
+ 
+
+
+</table>
+  
+  
+  <div class="buttons">
+    <div class="right"><a href="<?php echo $continue; ?>" class="button btn btn-primary"><?php echo $button_continue; ?></a></div>
+  </div>
+  <?php echo $content_bottom; ?></div>
+<?php echo $footer; ?>

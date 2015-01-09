@@ -1,0 +1,588 @@
+<?php
+$slideshow = $this->getTemplateRecord('slideshow'); 
+$testimonials = $this->getTemplateRecord('testimony');
+	$shortmessages = $this->getTemplateRecord('shortmessage');
+?>
+<?php if($shortmessages['enabled']): ?>
+	<!-- OFFERS INFO -->
+	<div class="offers-info no320">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<p><?php echo @$shortmessages['values']['left']; ?></p>
+				</div>
+				<div class="col-md-4">
+					<p><?php echo @$shortmessages['values']['center']; ?></p>
+				</div>
+				<div class="col-md-4">
+					<p><?php echo @$shortmessages['values']['right']; ?></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- OFFERS INFO -->
+ <?php endif; ?>   
+<?php if($slideshow['enabled']): ?>
+	<!-- HOME SLIDER -->
+	<div class="slider-wrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="fullwidthbanner-container fwb2">
+						<div class="fullwidthbanner2">
+							<ul style="opacity:0;height:713px;">
+                            <?php $options = $slideshow['values']; ?>
+                                <?php for($i=1; $i<=10;$i++): ?>
+                                 <?php if(!empty($options['slideshow_image'.$i])): ?>
+								<li data-transition="random" data-slotamount="7" data-masterspeed="1000">
+									<img src="<?php   echo resizeMerchantImage($options['slideshow_image'.$i],1170,550,$this->basePath()) ?>" alt="slide" >
+                                    <?php if(!empty($options['toptext'.$i])): ?>
+									<div class="tp-caption large_black sfr" data-x="100" data-y="140" data-speed="1100" data-start="1400" data-easing="easeInOutBack"
+										style="font-family: Merriweather Sans; font-size: 47px; font-weight: bold; text-transform: uppercase; color: #fff;">
+										<?php echo $options['toptext'.$i] ?>
+									</div>
+                                    <?php endif; ?>
+                                     <?php if(!empty($options['subheading'.$i])): ?>
+									<div class="tp-caption large_black sfr" data-x="100" data-y="200" data-speed="1100" data-start="1400" data-easing="easeInOutBack"
+										style="font-family: Roboto Condensed; font-size: 34px; font-weight: bold; text-transform: uppercase; color: #fff;">
+										<?php echo $options['subheading'.$i] ?>
+									</div>
+                                     <?php endif; ?>
+                                     
+                                     <?php if(!empty($options['maintext'.$i])): ?>
+									<div class="tp-caption lfb" data-x="100" data-y="265" data-speed="1300" data-start="1700" data-easing="easeInOutBack" 
+										style="font-family: Tahoma; font-size: 12px; text-transform:uppercase; font-weight:300; color: #fff;line-height:18px;">
+										<?php echo $options['maintext'.$i] ?>
+									</div>
+                                    <?php endif; ?>
+                                    
+                                     <?php if(!empty($options['bt'.$i])): ?>
+									<div class="tp-caption lfb" data-x="100" data-y="350" data-speed="1300" data-start="1700" data-easing="easeInOutBack" 
+										style="font-family: Merriweather Sans; font-size: 14px; font-weight: bold; text-transform: uppercase; color: #fff;">
+										<a href="<?php echo $options['link'.$i] ?>" class="s-btn" style="color: #fff;border:2px solid #fff;display:table;padding:10px 15px;"><?php echo $options['bt'.$i] ?></a>
+									</div>
+                                    <?php endif; ?>
+                                    
+								</li>
+                                <?php endif; ?>
+                                <?php endfor; ?>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- HOME SLIDER -->
+ <?php endif; ?>   
+ 
+	<section class="service-wrap">
+    
+    <?php
+	$homesm = $this->getTemplateRecord('homesm'); 
+	 ?>
+     
+     <?php if($homesm['enabled']): ?>
+     
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 service-content1">
+					<p><?php echo @$homesm['values']['title']; ?><span><?php echo strip_tags(@$homesm['values']['message'],'<br/>'); ?></span></p>
+				</div>
+			</div>
+		</div>
+        
+  <?php endif; ?>   
+  
+  <?php
+//get products table
+$productTable = $this->getClass('Store\Model\Catalog\Product');
+$homelp = $this->getTemplateRecord('homelp');
+$homepagebest = $this->getTemplateRecord('homepagebest');
+$homepagena = $this->getTemplateRecord('homepagena');
+$homefeaturedp = $this->getTemplateRecord('homefeaturedp');
+$misc = $this->getTemplateRecord('misc');
+ ?>
+
+		<!-- PRODUCT TABS -->
+		<div class="product-tabs product-tabs1">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div id="tabs">
+							<ul class="tabs-head">
+                             <?php if($homelp ['enabled']): ?>
+								<li><a href="#tab-1"><?php echo @$misc['values']['latest_products']; ?></a></li>
+                               <?php endif; ?>
+                                <?php if($homefeaturedp['enabled']): ?> 
+								<li><a href="#tab-2"><?php echo @$misc['values']['featured_products']; ?></a></li>
+								 <?php endif; ?>
+                                 <?php if($homepagebest['enabled']): ?>
+                                <li><a href="#tab-3"><?php echo @$misc['values']['bestsellers']; ?></a></li>
+								 <?php endif; ?>
+                                 <?php if($homepagena['enabled']): ?>
+                                <li><a href="#tab-4"><?php echo @$misc['values']['newarrivals']; ?></a></li>
+                                 <?php endif; ?>
+							</ul>
+                             <?php if($homelp ['enabled']): ?>
+							<div id="tab-1" class="tab-content">
+								<div class="row">
+									<div class="col-md-12">
+										<ul class="p-list">
+                                        
+                                        <?php for($i=1; $i<=4;$i++): ?>
+                                        	 <?php if(!empty($homelp['values']['product'.$i]) && $productTable->productExists(trim($homelp['values']['product'.$i]))):?>
+                                             
+                                              <?php $product = $productTable->getProduct(trim($homelp['values']['product'.$i]));
+							
+							
+							
+								if ($product['image']) {
+					$image = resizeMerchantImage($product['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'),$this->basePath());
+				} else {
+					$image = false;
+				}
+	
+				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+					$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$price = false;
+				}
+	
+				if ((float)$product['special']) {
+					$special = $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$special = false;
+				}
+	
+				if ($this->config->get('config_tax')) {
+					$tax = $this->currency->format((float)$product['special'] ? $product['special'] : $product['price']);
+				} else {
+					$tax = false;
+				}
+	
+				if ($this->config->get('config_review_status')) {
+					$rating = (int)$product['rating'];
+				} else {
+					$rating = false;
+				}
+							  
+							
+							
+							 ?>
+                                             
+											<li>
+												<div class="plist-img">
+													<a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>" ><img src="<?php echo $image; ?>" class="img-responsive" alt=""/></a>
+													<div class="tm-overlay">
+														<span class="rating">
+														<span class="star">
+                                                        <?php if($rating): ?>
+                                                        
+                                                        <?php for($i=1;$i<=$rating;$i++): ?>
+														<span class="yes"><img src="<?php echo $this->layoutPath(); ?>/images/icon/star-white.png" alt=""/></span>
+                                                          <?php endfor; ?>
+							 							
+                                                        <?php endif; ?>
+														
+														</span>
+														<em><?php echo $product['reviews']; ?> review(s) | <a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>#tab-review" >Add Review</a></em>
+														</span>
+														<p> <?php $product['description']; ?></p>
+														<div class="plist-add">
+															<div class="plist-add-cart-btns">
+																<div class="plist-add-cb-btn-left"><a href="javascript:;" onclick="addToCart('<?php echo $product['product_id']; ?>');" >ADD TO CART</a></div>
+																<div class="plist-add-cb-btn-right"><a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>">MORE INFO</a></div>
+															</div>
+															<div class="cart-add">
+																<div><a href="javascript:;" onclick="addToWishList('<?php echo $product['product_id']; ?>');" >+ Add to Wishlist</a></div>
+																<div><a  onclick="addToCompare('<?php echo $product['product_id']; ?>');" href="javascript:;" class="pull-right">+ Add to Compare</a></div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-8">
+														<div class="product-title"><a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>"><?php echo $product['name']; ?></a></div>
+													</div>
+													<div class="col-md-4">
+														<div class="product-price">
+                                                        	
+											        <?php if (!$special) { ?>
+											        <?php echo $price; ?>
+											        <?php } else { ?>
+											        <span class="price-old"><?php echo $price; ?></span> <span class="price-new"><?php echo $special; ?></span>
+											        <?php } ?>
+											       
+                                                        </div>
+													</div>
+												</div>
+											</li>
+                                            <?php endif; ?>
+                                            
+                                         <?php endfor; ?>    
+                                             
+										</ul>
+									</div>
+								</div>
+							</div>
+                             <?php endif; ?>
+                             
+                             <?php if($homefeaturedp ['enabled']): ?>
+                               <?php $homelp = $homefeaturedp;  ?>  
+							<div id="tab-2" class="tab-content">
+								<div class="row">
+									<div class="col-md-12">
+										<ul class="p-list">
+                                        
+                                        <?php for($i=1; $i<=4;$i++): ?>
+                                        	 <?php if(!empty($homelp['values']['product'.$i]) && $productTable->productExists(trim($homelp['values']['product'.$i]))):?>
+                                             
+                                              <?php $product = $productTable->getProduct(trim($homelp['values']['product'.$i]));
+							
+							
+							
+								if ($product['image']) {
+					$image = resizeMerchantImage($product['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'),$this->basePath());
+				} else {
+					$image = false;
+				}
+	
+				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+					$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$price = false;
+				}
+	
+				if ((float)$product['special']) {
+					$special = $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$special = false;
+				}
+	
+				if ($this->config->get('config_tax')) {
+					$tax = $this->currency->format((float)$product['special'] ? $product['special'] : $product['price']);
+				} else {
+					$tax = false;
+				}
+	
+				if ($this->config->get('config_review_status')) {
+					$rating = (int)$product['rating'];
+				} else {
+					$rating = false;
+				}
+							  
+							
+							
+							 ?>
+                                             
+											<li>
+												<div class="plist-img">
+													<a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>" ><img src="<?php echo $image; ?>" class="img-responsive" alt=""/></a>
+													<div class="tm-overlay">
+														<span class="rating">
+														<span class="star">
+                                                        <?php if($rating): ?>
+                                                        
+                                                        <?php for($i=1;$i<=$rating;$i++): ?>
+														<span class="yes"><img src="<?php echo $this->layoutPath(); ?>/images/icon/star-white.png" alt=""/></span>
+                                                          <?php endfor; ?>
+							 							
+                                                        <?php endif; ?>
+														
+														</span>
+														<em><?php echo $reviews; ?>  review(s) | <a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>#tab-review" >Add Review</a></em>
+														</span>
+														<p> <?php $product['description']; ?></p>
+														<div class="plist-add">
+															<div class="plist-add-cart-btns">
+																<div class="plist-add-cb-btn-left"><a href="javascript:;" onclick="addToCart('<?php echo $product['product_id']; ?>');" >ADD TO CART</a></div>
+																<div class="plist-add-cb-btn-right"><a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>">MORE INFO</a></div>
+															</div>
+															<div class="cart-add">
+																<div><a href="javascript:;" onclick="addToWishList('<?php echo $product['product_id']; ?>');" >+ Add to Wishlist</a></div>
+																<div><a  onclick="addToCompare('<?php echo $product['product_id']; ?>');" href="javascript:;" class="pull-right">+ Add to Compare</a></div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-8">
+														<div class="product-title"><a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>"><?php echo $product['name']; ?></a></div>
+													</div>
+													<div class="col-md-4">
+														<div class="product-price">
+                                                        	
+											        <?php if (!$special) { ?>
+											        <?php echo $price; ?>
+											        <?php } else { ?>
+											        <span class="price-old"><?php echo $price; ?></span> <span class="price-new"><?php echo $special; ?></span>
+											        <?php } ?>
+											       
+                                                        </div>
+													</div>
+												</div>
+											</li>
+                                            <?php endif; ?>
+                                            
+                                         <?php endfor; ?>    
+                                             
+										</ul>
+									</div>
+								</div>
+							</div>
+                             <?php endif; ?>
+                             
+                               <?php if($homepagebest ['enabled']): ?>
+                               <?php $homelp = $homepagebest;  ?>  
+							<div id="tab-3" class="tab-content">
+								<div class="row">
+									<div class="col-md-12">
+										<ul class="p-list">
+                                        
+                                        <?php for($i=1; $i<=4;$i++): ?>
+                                        	 <?php if(!empty($homelp['values']['product'.$i]) && $productTable->productExists(trim($homelp['values']['product'.$i]))):?>
+                                             
+                                              <?php $product = $productTable->getProduct(trim($homelp['values']['product'.$i]));
+							
+							
+							
+								if ($product['image']) {
+					$image = resizeMerchantImage($product['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'),$this->basePath());
+				} else {
+					$image = false;
+				}
+	
+				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+					$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$price = false;
+				}
+	
+				if ((float)$product['special']) {
+					$special = $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$special = false;
+				}
+	
+				if ($this->config->get('config_tax')) {
+					$tax = $this->currency->format((float)$product['special'] ? $product['special'] : $product['price']);
+				} else {
+					$tax = false;
+				}
+	
+				if ($this->config->get('config_review_status')) {
+					$rating = (int)$product['rating'];
+				} else {
+					$rating = false;
+				}
+							  
+							
+							
+							 ?>
+                                             
+											<li>
+												<div class="plist-img">
+													<a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>" ><img src="<?php echo $image; ?>" class="img-responsive" alt=""/></a>
+													<div class="tm-overlay">
+														<span class="rating">
+														<span class="star">
+                                                        <?php if($rating): ?>
+                                                        
+                                                        <?php for($i=1;$i<=$rating;$i++): ?>
+														<span class="yes"><img src="<?php echo $this->layoutPath(); ?>/images/icon/star-white.png" alt=""/></span>
+                                                          <?php endfor; ?>
+							 							
+                                                        <?php endif; ?>
+														
+														</span>
+														<em><?php echo $reviews; ?>  review(s) | <a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>#tab-review" >Add Review</a></em>
+														</span>
+														<p> <?php $product['description']; ?></p>
+														<div class="plist-add">
+															<div class="plist-add-cart-btns">
+																<div class="plist-add-cb-btn-left"><a href="javascript:;" onclick="addToCart('<?php echo $product['product_id']; ?>');" >ADD TO CART</a></div>
+																<div class="plist-add-cb-btn-right"><a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>">MORE INFO</a></div>
+															</div>
+															<div class="cart-add">
+																<div><a href="javascript:;" onclick="addToWishList('<?php echo $product['product_id']; ?>');" >+ Add to Wishlist</a></div>
+																<div><a  onclick="addToCompare('<?php echo $product['product_id']; ?>');" href="javascript:;" class="pull-right">+ Add to Compare</a></div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-8">
+														<div class="product-title"><a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>"><?php echo $product['name']; ?></a></div>
+													</div>
+													<div class="col-md-4">
+														<div class="product-price">
+                                                        	
+											        <?php if (!$special) { ?>
+											        <?php echo $price; ?>
+											        <?php } else { ?>
+											        <span class="price-old"><?php echo $price; ?></span> <span class="price-new"><?php echo $special; ?></span>
+											        <?php } ?>
+											       
+                                                        </div>
+													</div>
+												</div>
+											</li>
+                                            <?php endif; ?>
+                                            
+                                         <?php endfor; ?>    
+                                             
+										</ul>
+									</div>
+								</div>
+							</div>
+                             <?php endif; ?>
+							
+                                 <?php if($homepagena ['enabled']): ?>
+                               <?php $homelp = $homepagena;  ?>  
+							<div id="tab-4" class="tab-content">
+								<div class="row">
+									<div class="col-md-12">
+										<ul class="p-list">
+                                        
+                                        <?php for($i=1; $i<=4;$i++): ?>
+                                        	 <?php if(!empty($homelp['values']['product'.$i]) && $productTable->productExists(trim($homelp['values']['product'.$i]))):?>
+                                             
+                                              <?php $product = $productTable->getProduct(trim($homelp['values']['product'.$i]));
+							
+							
+							
+								if ($product['image']) {
+					$image = resizeMerchantImage($product['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'),$this->basePath());
+				} else {
+					$image = false;
+				}
+	
+				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+					$price = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$price = false;
+				}
+	
+				if ((float)$product['special']) {
+					$special = $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$special = false;
+				}
+	
+				if ($this->config->get('config_tax')) {
+					$tax = $this->currency->format((float)$product['special'] ? $product['special'] : $product['price']);
+				} else {
+					$tax = false;
+				}
+	
+				if ($this->config->get('config_review_status')) {
+					$rating = (int)$product['rating'];
+				} else {
+					$rating = false;
+				}
+							  
+							
+							
+							 ?>
+                                             
+											<li>
+												<div class="plist-img">
+													<a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>" ><img src="<?php echo $image; ?>" class="img-responsive" alt=""/></a>
+													<div class="tm-overlay">
+														<span class="rating">
+														<span class="star">
+                                                        <?php if($rating): ?>
+                                                        
+                                                        <?php for($i=1;$i<=$rating;$i++): ?>
+														<span class="yes"><img src="<?php echo $this->layoutPath(); ?>/images/icon/star-white.png" alt=""/></span>
+                                                          <?php endfor; ?>
+							 							
+                                                        <?php endif; ?>
+														
+														</span>
+														<em><?php echo $reviews; ?>  review(s) | <a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>#tab-review" >Add Review</a></em>
+														</span>
+														<p> <?php $product['description']; ?></p>
+														<div class="plist-add">
+															<div class="plist-add-cart-btns">
+																<div class="plist-add-cb-btn-left"><a href="javascript:;" onclick="addToCart('<?php echo $product['product_id']; ?>');" >ADD TO CART</a></div>
+																<div class="plist-add-cb-btn-right"><a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>">MORE INFO</a></div>
+															</div>
+															<div class="cart-add">
+																<div><a href="javascript:;" onclick="addToWishList('<?php echo $product['product_id']; ?>');" >+ Add to Wishlist</a></div>
+																<div><a  onclick="addToCompare('<?php echo $product['product_id']; ?>');" href="javascript:;" class="pull-right">+ Add to Compare</a></div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-8">
+														<div class="product-title"><a href="<?php echo $this->basePath();?>/store/product/product?product_id=<?php echo trim($homelp['values']['product'.$i]); ?>"><?php echo $product['name']; ?></a></div>
+													</div>
+													<div class="col-md-4">
+														<div class="product-price">
+                                                        	
+											        <?php if (!$special) { ?>
+											        <?php echo $price; ?>
+											        <?php } else { ?>
+											        <span class="price-old"><?php echo $price; ?></span> <span class="price-new"><?php echo $special; ?></span>
+											        <?php } ?>
+											       
+                                                        </div>
+													</div>
+												</div>
+											</li>
+                                            <?php endif; ?>
+                                            
+                                         <?php endfor; ?>    
+                                             
+										</ul>
+									</div>
+								</div>
+							</div>
+                             <?php endif; ?>
+							
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- PRODUCT TABS -->
+
+<?php
+$testimony = $this->getTemplateRecord('testimony');
+?>		
+
+<?php if($testimony['enabled']): ?>
+		<!-- TESTIMONIAL -->
+		<div class="container">
+			<div class="testimonial">
+				<div class="row">
+					<div class="col-md-12">
+						<h3><?php echo @$misc['values']['testimonials']; ?></h3>
+						<div id="quote-slider" class="owl-carousel owl-theme">
+                        
+                         <?php for($i=1; $i<=10;$i++): ?>
+                         	
+                             <?php if(!empty($homelp['values']['name'.$i]) || !empty($homelp['values']['message'.$i]) ):?>
+                                             
+							<div class="item">
+								<p><?php echo $homelp['values']['message'.$i]  ?></p>
+								<h4><?php echo $homelp['values']['name'.$i];  ?></h4>
+							</div> 
+                            <?php endif; ?>
+                            
+                         <?php endfor; ?>   
+                            
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- TESTIMONIAL -->
+<?php endif; ?>		
+
+ </section>
+ <div style="clear:both"></div>

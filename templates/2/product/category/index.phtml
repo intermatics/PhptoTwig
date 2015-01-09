@@ -1,0 +1,145 @@
+  <!--Middle Part Start-->
+    <div id="content">
+      <!--Breadcrumb Part Start-->
+      <div class="breadcrumb">  
+      
+      	<?php $count = count($breadcrumbs); $counter=0;?>
+							    <?php foreach ($breadcrumbs as $breadcrumb) { $counter++; ?>
+							    
+     <a <?php if($counter < $count):?>href="<?php echo $breadcrumb['href']; ?>" <?php else:?> href="#" <?php endif; ?> > <?php echo $breadcrumb['text']; ?> <?php if($counter < $count):?>  » <?php endif; ?></a>
+    <?php } ?>
+      
+      </div>
+      <!--Breadcrumb Part End-->
+ 
+      
+      	<h1><?php echo $heading_title; ?></h1>
+								<?php if ($thumb || $description) { ?>
+								<p>
+								
+								 <?php if ($thumb) { ?>
+    <div class="image"><img src="<?php echo $thumb; ?>" alt="<?php echo $heading_title; ?>" /></div>
+    <?php } ?>
+    <?php if ($description) { ?>
+    <?php echo $description; ?>
+    <?php } ?>
+								</p>
+								<?php } ?>
+      
+        <?php if ($categories) { ?>
+  <h3><?php echo $text_refine; ?></h3>
+  <div class="category-list">
+    <?php if (count($categories) <= 5) { ?>
+    <ul>
+      <?php foreach ($categories as $category) { ?>
+      <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
+      <?php } ?>
+    </ul>
+    <?php } else { ?>
+    <?php for ($i = 0; $i < count($categories);) { ?>
+    <ul>
+      <?php $j = $i + ceil(count($categories) / 4); ?>
+      <?php for (; $i < $j; $i++) { ?>
+      <?php if (isset($categories[$i])) { ?>
+      <li><a href="<?php echo $categories[$i]['href']; ?>"><?php echo $categories[$i]['name']; ?></a></li>
+      <?php } ?>
+      <?php } ?>
+    </ul>
+    <?php } ?>
+    <?php } ?>
+  </div>
+  <?php } ?>
+  
+  
+      
+      <div class="product-filter">
+      <div class="display"><?php echo $paginationObject->outputText?>
+      <?php if(false): ?>
+        <b>Display:</b> <a href="category.html" class="list-icon" title="Grid View">Grid</a><span class="grid1-icon" title="List View">List</span>
+        <?php endif; ?>
+        </div>
+        
+        <div class="limit"><b>Show:</b>
+          	<select class="formDropdown"  onchange="location = this.value;">
+										 
+										    <?php foreach ($limits as $limits) { ?>
+								        <?php if ($limits['value'] == $limit) { ?>
+								        <option value="<?php echo $limits['href']; ?>" selected="selected"><?php echo $limits['text']; ?></option>
+								        <?php } else { ?>
+								        <option value="<?php echo $limits['href']; ?>"><?php echo $limits['text']; ?></option>
+								        <?php } ?>
+								        <?php } ?>
+									</select>
+        </div>
+        <div class="sort"><b>Sort By:</b>
+         	<select onchange="location = this.value;" class="formDropdown">
+										 
+										 
+									        <?php foreach ($sorts as $sorts) { ?>
+									        <?php if ($sorts['value'] == $sort . '-' . $order) { ?>
+									        <option value="<?php echo $sorts['href']; ?>" selected="selected"><?php echo $sorts['text']; ?></option>
+									        <?php } else { ?>
+									        <option value="<?php echo $sorts['href']; ?>"><?php echo $sorts['text']; ?></option>
+									        <?php } ?>
+									        <?php } ?>
+									     
+									</select>
+        </div>
+      </div>
+      <!--Product Grid Start-->
+      <div class="product-list">
+        <div>
+        
+         <?php foreach ($products as $product) {  ?>
+          <div class="right">
+            <div class="cart">
+              <input type="button" value="Add to Cart" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button add-to-cart-product"  />
+            </div>
+            <div class="wishlist"><a href="#" onclick="addToWishList('<?php echo $product['product_id']; ?>');">Add to Wish List</a></div>
+            <div class="compare"><a href="#"  onclick="addToCompare('<?php echo $product['product_id']; ?>');">Add to Compare</a></div>
+          </div>
+          <div class="left">
+            <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="iPhone" /></a></div>
+            <div class="price"> 
+                <?php if (!$product['special']) { ?>
+											        <?php echo $product['price']; ?>
+											        <?php } else { ?>
+											        <span class="price-old"><?php echo $product['price']; ?></span><br> <span class="price-new"><?php echo $product['special']; ?></span>
+											        <?php } ?>
+            
+             <?php if ($product['tax']) { ?> 
+											        <span class="price-tax"><?php echo $text_tax; ?> <?php echo $product['tax']; ?></span>
+											        <?php } ?>
+               </div>
+            <div class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></div>
+            <div class="rating"><img src="<?php echo $this->basePath(); ?>/static/oc_catalog/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+            <div class="description"><?php echo $product['description']; ?></div>
+          </div>
+        </div>
+        <div>
+        <?php } ?>
+        
+        
+        
+        
+        
+   
+      </div>
+      <!--Product Grid End-->
+      <!--Pagination Part Start-->
+      <div class="pagination">
+        <div class="links">  
+        <?php foreach($paginationObject->outputLinksArray as $value):?>
+								  <a href="<?php echo $value['href']?>"><?php echo $value['text']?></a> 
+								<?php endforeach;?>
+        
+        </div>
+        <div class="results"><?php echo $paginationObject->outputText?></div>
+      </div>
+      <!--Pagination Part End-->
+      
+      
+      
+      
+    </div>
+    <!--Middle Part End-->
